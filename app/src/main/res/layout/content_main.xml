@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.cobrodigital.com.cobrodigital2.MainActivity"
+    tools:showIn="@layout/app_bar_main">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="122dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Crear Pagador"
+                android:id="@+id/textView5"
+                android:gravity="center_vertical|center_horizontal"
+                android:textColor="#ede5e5"
+                android:background="#d94141"
+                android:onClick="OnClickPagadorNew" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="125dp"
+            android:text="Consultar Transacciones"
+            android:id="@+id/textView6"
+            android:gravity="center_vertical|center_horizontal"
+            android:textColor="#ede5e5"
+            android:background="#d94141"
+            android:layout_gravity="center_horizontal"
+            android:onClick="OnClickListarTransacciones" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:text="Editar Pagador"
+            android:id="@+id/textView7"
+            android:gravity="center_vertical|center_horizontal"
+            android:textColor="#ede5e5"
+            android:background="#d94141"
+            android:layout_gravity="center_horizontal"
+            android:onClick="OnclickVolver" />
+
+    </LinearLayout>
+</RelativeLayout>

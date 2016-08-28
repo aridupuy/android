@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="57dp">
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Fecha desde" />
+
+        <EditText
+            android:layout_height="wrap_content"
+            android:inputType="datetime"
+            android:layout_width="wrap_content"
+            android:ems="10"
+            android:id="@+id/fecha_desde" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="51dp">
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Fecha hasta" />
+
+        <EditText
+            android:layout_height="wrap_content"
+            android:inputType="datetime"
+            android:layout_width="wrap_content"
+            android:ems="10"
+            android:id="@+id/fecha_hasta" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="ver"
+            android:onClick="OnClickVer" />
+
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="volver"
+            android:onClick="OnClickVolver" />
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:ems="10"
+            android:id="@+id/respuestaTransacciones"
+
+            />
+    </LinearLayout>
+
+</LinearLayout>
+
+
