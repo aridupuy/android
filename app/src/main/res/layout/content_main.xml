@@ -9,8 +9,9 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.cobrodigital.com.cobrodigital2.MainActivity"
-    tools:showIn="@layout/app_bar_main">
+
+    tools:showIn="@layout/app_bar_main"
+    tools:context=".MainActivity">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -24,18 +25,17 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="122dp">
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Crear Pagador"
+                android:icon="@string/font_awesome_group_icon"
+                android:text="@string/Crear_Pagador"
                 android:id="@+id/textView5"
                 android:gravity="center_vertical|center_horizontal"
                 android:textColor="#ede5e5"
-                android:background="#d94141"
+                android:background="#e85252"
                 android:onClick="OnClickPagadorNew" />
         </LinearLayout>
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="125dp"
@@ -43,7 +43,7 @@
             android:id="@+id/textView6"
             android:gravity="center_vertical|center_horizontal"
             android:textColor="#ede5e5"
-            android:background="#d94141"
+            android:background="#e85252"
             android:layout_gravity="center_horizontal"
             android:onClick="OnClickListarTransacciones" />
 
@@ -54,7 +54,7 @@
             android:id="@+id/textView7"
             android:gravity="center_vertical|center_horizontal"
             android:textColor="#ede5e5"
-            android:background="#d94141"
+            android:background="#e85252"
             android:layout_gravity="center_horizontal"
             android:onClick="OnclickVolver" />
 

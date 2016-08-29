@@ -20,6 +20,10 @@
             android:name="com.cobrodigital.com.cobrodigital2.ListarTransacciones"
             android:label="@string/Transacciones"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="com.cobrodigital.com.cobrodigital2.Pagador"
+            android:label="@string/Crear_Pagador"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
