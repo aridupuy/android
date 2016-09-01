@@ -1,27 +1,41 @@
-package com.cobrodigital.com.cobrodigital2;
+package com.cobrodigital.com.cobrodigital2.core;
 
 //import com.sun.jndi.toolkit.url.UrlUtil;
 
-import android.os.*;
+import android.os.StrictMode;
 
-import java.io.*;
-import java.net.*;
-import java.security.*;
-import java.util.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-import javax.net.ssl.*;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Vector;
 
-import org.json.*;
+import javax.net.ssl.HttpsURLConnection;
 //import org.json.simple.JSONArray;
 //import org.json.simple.JSONObject;
 
-class CobroDigital {
+public class CobroDigital {
+    public static String sid="";
+    public static String idComercio="";
     public LinkedHashMap resultado = new LinkedHashMap();
     protected String metodo_web_service = "";
     protected String method = "POST";
     protected LinkedHashMap<Object, Object> array_a_enviar = new LinkedHashMap();
-    protected String idComercio = null;
-    protected String sid = null;
+//    protected String idComercio = null;
+//    protected String sid = null;
 
     /**
      * @param idComercio
