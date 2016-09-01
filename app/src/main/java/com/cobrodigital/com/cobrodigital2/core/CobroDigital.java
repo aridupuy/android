@@ -27,7 +27,7 @@ import javax.net.ssl.HttpsURLConnection;
 //import org.json.simple.JSONArray;
 //import org.json.simple.JSONObject;
 
-class CobroDigital {
+public class CobroDigital {
     public static String sid="";
     public static String idComercio="";
     public LinkedHashMap resultado = new LinkedHashMap();
