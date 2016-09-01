@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.cobrodigital.com.cobrodigital2.core.BaseDeDatos;
+import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 import com.cobrodigital.com.cobrodigital2.core.LectorQR;
 
 import java.util.HashMap;

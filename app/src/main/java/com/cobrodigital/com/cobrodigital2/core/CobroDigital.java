@@ -1,4 +1,4 @@
-package com.cobrodigital.com.cobrodigital2;
+package com.cobrodigital.com.cobrodigital2.core;
 
 //import com.sun.jndi.toolkit.url.UrlUtil;
 

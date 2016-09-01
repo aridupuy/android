@@ -9,6 +9,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -36,7 +38,7 @@ public class ListarTransacciones extends Activity {
         //String id_comercio="CI366779";
 //        String sid = "V2nJUHv7110BI4v1FLxdeQrFlWUw08j5L3VAxZB3P9Dm0EJbsDW5vJsi960";
         //String sid="MeAOO0d8tpk87Ud3AG0mZO7WCIP76GuKfU48UMVCuLO66aQGa0Iw3R6cDVs";
-        String id_comercio=CobroDigital.idComercio;
+        String id_comercio= CobroDigital.idComercio;
         String sid=CobroDigital.idComercio;
         CobroDigital cd = null;
         try {
