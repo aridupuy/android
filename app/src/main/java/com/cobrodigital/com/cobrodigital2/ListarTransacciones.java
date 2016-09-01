@@ -3,7 +3,6 @@ package com.cobrodigital.com.cobrodigital2;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TableLayout;
@@ -33,10 +32,12 @@ public class ListarTransacciones extends Activity {
 
         EditText desde = (EditText) findViewById(R.id.fecha_desde);
         EditText hasta = (EditText) findViewById(R.id.fecha_hasta);
-        String id_comercio = "KA289659";
+//        String id_comercio = "KA289659";
         //String id_comercio="CI366779";
-        String sid = "V2nJUHv7110BI4v1FLxdeQrFlWUw08j5L3VAxZB3P9Dm0EJbsDW5vJsi960";
+//        String sid = "V2nJUHv7110BI4v1FLxdeQrFlWUw08j5L3VAxZB3P9Dm0EJbsDW5vJsi960";
         //String sid="MeAOO0d8tpk87Ud3AG0mZO7WCIP76GuKfU48UMVCuLO66aQGa0Iw3R6cDVs";
+        String id_comercio=CobroDigital.idComercio;
+        String sid=CobroDigital.idComercio;
         CobroDigital cd = null;
         try {
             cd = new CobroDigital(id_comercio, sid);

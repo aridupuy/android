@@ -3,9 +3,6 @@ package com.cobrodigital.com.cobrodigital2;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,14 +11,39 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import com.cobrodigital.com.cobrodigital2.core.BaseDeDatos;
+import com.cobrodigital.com.cobrodigital2.core.LectorQR;
+
+import java.util.HashMap;
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        BaseDeDatos baseDeDatos= new BaseDeDatos(getApplicationContext());
+        baseDeDatos.onCreate(baseDeDatos.getWritableDatabase());
+        HashMap<String,String> credencial=baseDeDatos.obtener_credencial();
+        if(credencial!=null){
+            CobroDigital.idComercio=credencial.get("IdComercio");
+            CobroDigital.sid=credencial.get("sid");
+            setContentView(R.layout.activity_main);
+        }
+        else{
+            System.out.println("No hay Credenciales");
+            LectorQR lector_qr = new LectorQR();
+            credencial=lector_qr.leer();
+            CobroDigital.idComercio=credencial.get("IdComercio");
+            CobroDigital.sid=credencial.get("sid");
+            //aca debe cargar layout de bienvenida.
+            setContentView(R.layout.activity_main);
+            System.out.println("SID: "+CobroDigital.sid);
+            System.out.println("IDCOMERCIO: "+CobroDigital.idComercio);
+        }
+
         Typeface fontAwesomeFont = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
