@@ -16,6 +16,7 @@ import android.view.View;
 import com.cobrodigital.com.cobrodigital2.core.BaseDeDatos;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 import com.cobrodigital.com.cobrodigital2.core.LectorQR;
+import com.google.zxing.integration.android.IntentIntegrator;
 
 import java.util.HashMap;
 
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(credencial!=null){
             CobroDigital.idComercio=credencial.get("IdComercio");
             CobroDigital.sid=credencial.get("sid");
-            setContentView(R.layout.activity_main);
+            this.scanBarcode(new View(getApplicationContext()));
         }
         else{
             System.out.println("No hay Credenciales");
@@ -125,6 +126,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         /// setContentView(R.layout.listar_transacciones);
         Intent transacciones = new Intent(getApplicationContext(), ListarTransacciones.class);
         startActivity(transacciones);
+    }
+    public void scanBarcode(View view) {
+        new IntentIntegrator(this).initiateScan();
     }
 
 
