@@ -1,5 +1,6 @@
 package com.cobrodigital.com.cobrodigital2;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -7,12 +8,14 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,9 +28,12 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.google.zxing.oned.Code93Reader;
 import com.google.zxing.qrcode.QRCodeReader;
 import android.webkit.WebView;
+import android.widget.Toast;
+
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -63,12 +69,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             navigationView.setNavigationItemSelectedListener(this);
         } else {
-            IntentIntegrator scanIntent = new IntentIntegrator(MainActivity.this);
-            //scanIntent.setPackage(PACKAGE);
-            //scanIntent.addCategory(Intent.CATEGORY_DEFAULT);
-            //scanIntent.putExtra("SCAN_FORMATS", SCAN_FORMATS);
-            //scanIntent.putExtra("SCAN_MODE", SCAN_MODE);
-            scanIntent.initiateScan();
+            int permissionCheck = ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.CAMERA);
+            Intent intent = new Intent(SCANNER);
+            intent.setPackage(PACKAGE);
+            intent.putExtra("SCAN_FORMATS",SCAN_FORMATS);
+
+            intent.putExtra("SCAN_MODE", SCAN_MODE);
+            startActivityForResult(intent, 123);
         }
         System.out.println("No hay Credenciales");
 
@@ -134,17 +142,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(transacciones);
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if (requestCode == 0) {
-            if (resultCode == RESULT_OK) {
-                String contents = intent.getStringExtra("SCAN_RESULT");
-                String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
-                // Handle successful scan
-            } else if (resultCode == RESULT_CANCELED) {
-                // Handle cancel
-            }
-        }
-    }
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
