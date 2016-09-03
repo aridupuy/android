@@ -18,6 +18,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -28,6 +29,8 @@ import javax.net.ssl.HttpsURLConnection;
 //import org.json.simple.JSONObject;
 
 public class CobroDigital {
+    public static HashMap<String, String> credencial;
+    private static final String URL  = "https://www.cobrodigital.com:14365/ws3/";
     public static String sid="";
     public static String idComercio="";
     public LinkedHashMap resultado = new LinkedHashMap();
@@ -168,8 +171,7 @@ public class CobroDigital {
             array_a_enviar = (LinkedHashMap) array;
         }
         array_a_enviar.put("metodo_webservice", metodo_webservice);
-        String httpsurl = "https://www.cobrodigital.com:14365/ws3/";
-        enviar_https(httpsurl, array_a_enviar);
+        enviar_https(URL, array_a_enviar);
     }
 
     private void enviar_https(String httpsurl, Map<?, ?> array_a_enviar) throws IOException, Exception {
