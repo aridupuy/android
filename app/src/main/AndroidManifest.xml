@@ -24,6 +24,10 @@
         <activity
             android:name="com.cobrodigital.com.cobrodigital2.Pagador"
             android:label="@string/Crear_Pagador"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="com.cobrodigital.com.cobrodigital2.core.Configuracion"
+            android:label="@string/Configuracion"
             android:screenOrientation="portrait"></activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <activity

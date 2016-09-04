@@ -16,10 +16,12 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.cobrodigital.com.cobrodigital2.core.BaseDeDatos;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
+import com.cobrodigital.com.cobrodigital2.core.Configuracion;
 import com.cobrodigital.com.cobrodigital2.core.LectorQR;
 
 import org.json.JSONException;
@@ -27,7 +29,6 @@ import org.json.JSONException;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (ContextCompat.checkSelfPermission(this,
@@ -47,8 +48,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         BaseDeDatos baseDeDatos = new BaseDeDatos(getApplicationContext());
         baseDeDatos.onCreate(baseDeDatos.getWritableDatabase());
         CobroDigital.credencial = baseDeDatos.obtener_credencial();
-        System.out.println("Nuevas credenciales");
         setContentView(R.layout.activity_main);
+        if(CobroDigital.credencial!=null){
+            View cuenta=findViewById(R.id.textView7);
+            ((ViewGroup) cuenta.getParent()).removeView(cuenta);
+        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //        setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -56,11 +60,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
             drawer.setDrawerListener(toggle);
             toggle.syncState();
-
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             navigationView.setNavigationItemSelectedListener(this);
-
-
     }
     //clicks de botones
     @Override
@@ -68,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -84,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         return super.onOptionsItemSelected(item);
     }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -93,22 +92,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_camera) {
             if (CobroDigital.credencial == null) {
-
-                System.out.println("No hay Credenciales");
-                Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-                intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-                startActivityForResult(intent, 0);
-
+              this.escanear();
             }
         } else if (id == R.id.nav_gallery) {
+            this.OnClickListarTransacciones(findViewById(R.layout.listar_transacciones));
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
+        }  else if (id == R.id.nav_manage) {
+            this.Configurar();
 
         } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
 
         }
 
@@ -116,18 +108,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    private void Configurar() {
+        System.out.println("Configurar");
+        Intent configuracion = new Intent(this, Configuracion.class);
+        startActivity(configuracion);
 
-    public void OnClickPagadorNew(View view) {
-        Intent pagador = new Intent(getApplicationContext(), Pagador.class);
-        startActivity(pagador);
     }
-
+    public void onClickEscanear(View view){
+        this.escanear();
+    }
     public void OnClickListarTransacciones(View View) {
         /// setContentView(R.layout.listar_transacciones);
         Intent transacciones = new Intent(getApplicationContext(), ListarTransacciones.class);
         startActivity(transacciones);
     }
-
+    private void escanear() {
+        System.out.println("No hay Credenciales");
+        Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+        intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+        startActivityForResult(intent, 0);
+    }
+    public void OnClickPagadorNew(View view) {
+        Intent pagador = new Intent(getApplicationContext(), Pagador.class);
+        startActivity(pagador);
+    }
     @Override
     //capturo el resultado del scanner
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -139,9 +143,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     System.out.println(contents);
                   CobroDigital.credencial=lectorQR.leer(contents);
                 }catch (JSONException e){
+                    System.out.println(e.getMessage());
                     Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
                 }
                 BaseDeDatos db= new BaseDeDatos(getApplicationContext());
+                System.out.println(CobroDigital.credencial);
                 db.setCredencial(CobroDigital.credencial);
             } else if (resultCode == RESULT_CANCELED) {
                 Toast toast = Toast.makeText(this, "La operación fué cancelada",Toast.LENGTH_LONG);

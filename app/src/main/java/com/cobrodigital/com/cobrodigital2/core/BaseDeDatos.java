@@ -1,5 +1,6 @@
 package com.cobrodigital.com.cobrodigital2.core;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -55,10 +56,14 @@ public class BaseDeDatos extends SQLiteOpenHelper {
         System.out.println("sin credenciales");
         return null;
     }
-    public boolean setCredencial(HashMap credencial){
-        String sql="INSERT INTO Credencial (IdComercio,sid) VALUES (?,?)";
-        Object[] args={credencial.get("IdComercio"),credencial.get("sid")};
-        this.sqLiteDatabase.execSQL(sql,args);
-        return true;
+    public boolean setCredencial(HashMap<String,String> credencial){
+        ContentValues nuevoRegistro = new ContentValues();
+        nuevoRegistro.put("IdComercio", (String) credencial.get("IdComercio"));
+        nuevoRegistro.put("sid",(String) credencial.get("sid"));
+
+        if (sqLiteDatabase.insert("Credencial",null,nuevoRegistro)!=-1){
+            return true;
+        }
+        return false;
     }
 }
