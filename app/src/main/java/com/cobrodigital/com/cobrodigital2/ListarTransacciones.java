@@ -1,59 +1,108 @@
 package com.cobrodigital.com.cobrodigital2;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.cobrodigital.com.cobrodigital2.core.BaseDeDatos;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Vector;
 
 /**
  * Created by Ariel on 28/08/16.
  */
-public class ListarTransacciones extends Activity {
-
+public class ListarTransacciones extends Activity implements View.OnClickListener {
+    private DatePickerDialog fromDatePickerDialog;
+    private DatePickerDialog toDatePickerDialog;
+    private SimpleDateFormat dateFormatter;
+    public ListarTransacciones() {
+    }
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listar_transacciones);
+        BaseDeDatos basededatos=new BaseDeDatos(getApplicationContext());
+        CobroDigital.credencial=basededatos.obtener_credencial();
+        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+        setDateTimeField();
     }
+    private void setDateTimeField() {
+        EditText fechaDesde=(EditText)findViewById(R.id.fecha_desde);
+        fechaDesde.setOnClickListener(this);
+        EditText fechaHasta=(EditText)findViewById(R.id.fecha_hasta);
+        fechaHasta.setOnClickListener(this);
+        Calendar newCalendar = Calendar.getInstance();
+        fromDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                EditText fechaDesde=(EditText)findViewById(R.id.fecha_desde);
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                fechaDesde.setText(dateFormatter.format(newDate.getTime()));
+            }
 
-    public void OnClickVer(View view) {
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
-        EditText desde = (EditText) findViewById(R.id.fecha_desde);
-        EditText hasta = (EditText) findViewById(R.id.fecha_hasta);
-//        String id_comercio = "KA289659";
-        //String id_comercio="CI366779";
-//        String sid = "V2nJUHv7110BI4v1FLxdeQrFlWUw08j5L3VAxZB3P9Dm0EJbsDW5vJsi960";
-        //String sid="MeAOO0d8tpk87Ud3AG0mZO7WCIP76GuKfU48UMVCuLO66aQGa0Iw3R6cDVs";
-        String id_comercio= CobroDigital.idComercio;
-        String sid=CobroDigital.idComercio;
-        CobroDigital cd = null;
-        try {
-            cd = new CobroDigital(id_comercio, sid);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        toDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                EditText fechaHasta=(EditText)findViewById(R.id.fecha_hasta);
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                fechaHasta.setText(dateFormatter.format(newDate.getTime()));
+            }
+
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+    }
+    public void onClick(View view) {
+        if(view == findViewById(R.id.fecha_desde)) {
+            fromDatePickerDialog.show();
+        } else if(view == findViewById(R.id.fecha_hasta)) {
+            toDatePickerDialog.show();
         }
+    }
+    public void OnClickVer(View view) throws ParseException {
+        EditText textdesde = (EditText) findViewById(R.id.fecha_desde);
+        EditText texthasta = (EditText) findViewById(R.id.fecha_hasta);
+        Date date=dateFormatter.parse(textdesde.getText().toString());
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyyMMdd", Locale.US);
+        String desde=dateFormatter.format(date);
+
+        date=this.dateFormatter.parse(texthasta.getText().toString());
+        String hasta=dateFormatter.format(date);
+        HashMap<String,String> credencial=CobroDigital.credencial;
+        CobroDigital cd = null;
+        Vector vectordatos =null;
         try {
-            cd.consultar_transacciones(desde.getText().toString(), hasta.getText().toString(), new LinkedHashMap());
+            cd = new CobroDigital(credencial);
+            cd.consultar_transacciones(desde, hasta, new LinkedHashMap());
+            String ejecucion_correcta = cd.obtener_resultado();
+            vectordatos = cd.obtener_datos();
         } catch (IOException e) {
             System.out.println(e.getMessage());
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-        String respuesta = "";
-        String ejecucion_correcta = cd.obtener_resultado();
-        Vector vectordatos = cd.obtener_datos();
         setContentView(R.layout.tabla_transacciones);
         TableLayout tabla = (TableLayout) findViewById(R.id.tabla);
         if (vectordatos == null) {

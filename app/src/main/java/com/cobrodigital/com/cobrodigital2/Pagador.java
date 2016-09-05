@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
+import com.cobrodigital.com.cobrodigital2.core.*;
 
 import java.util.LinkedHashMap;
 import java.util.Vector;

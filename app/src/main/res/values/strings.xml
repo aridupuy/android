@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Cobrodigital</string>
+    <string name="app_name">CobroDigital</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -13,4 +13,6 @@
     <string name="font_awesome_cubes_icon">&#xf1b3;</string>
     <string name="font_awesome_mobile_phone_icon">&#xf10b;</string>
     <string name="font_awesome_group_icon">&#xf0c0;</string>
+    <string name="from_date">Fecha Desde</string>
+    <string name="to_date">Fecha Hasta</string>
 </resources>
