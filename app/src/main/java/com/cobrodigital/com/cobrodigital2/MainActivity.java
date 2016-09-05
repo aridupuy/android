@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.cobrodigital.com.cobrodigital2.Services.serviceTransacciones;
 import com.cobrodigital.com.cobrodigital2.core.BaseDeDatos;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 import com.cobrodigital.com.cobrodigital2.core.Configuracion;
@@ -62,6 +63,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             toggle.syncState();
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             navigationView.setNavigationItemSelectedListener(this);
+            Intent service = new Intent(this, serviceTransacciones.class);
+            startService(service);
+
     }
     //clicks de botones
     @Override

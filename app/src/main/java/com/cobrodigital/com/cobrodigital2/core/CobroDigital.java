@@ -40,11 +40,17 @@ public class CobroDigital {
 //    protected String idComercio = null;
 //    protected String sid = null;
 
-    /**
-     * @param idComercio
-     * @param sid
-     * @throws Exception
-     */
+
+    public CobroDigital(HashMap<String,String> credencial) throws Exception{
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        if (idComercio == "" ) {
+            idComercio=credencial.get("IdComercio");
+        }
+        if (sid == "") {
+            sid=credencial.get("sid");
+        }
+    }
     public CobroDigital(String idComercio, String sid) throws Exception {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 

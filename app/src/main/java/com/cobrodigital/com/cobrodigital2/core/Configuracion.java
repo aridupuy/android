@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.cobrodigital.com.cobrodigital2.R;
 
@@ -20,11 +21,11 @@ public class Configuracion extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.configuracion);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarConfiguracion);
+        DrawerLayout drawerlayout = (DrawerLayout) findViewById(R.id.drawer_layout_configuracion);
         ActionBarDrawerToggle menu = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(menu);
+                this, drawerlayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerlayout.setDrawerListener(menu);
         menu.syncState();
     }
     @Override
@@ -47,10 +48,10 @@ public class Configuracion extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    public void onClickDesvincular(){
+    public void onClickDesvincular(View view){
 
     }
-    public void onClickFrecuencia(){
+    public void onClickFrecuencia(View view){
 
     }
 

@@ -8,9 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-
-    tools:showIn="@layout/configuracion"
-    tools:context=".MainActivity">
+    tools:context=".core.Configuracion">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -25,25 +23,21 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="122dp"></LinearLayout>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:text="Frecuencia de notificaciones"
-            android:id="@+id/textView6"
-            android:gravity="center_vertical|center_horizontal"
-            android:textColor="#ede5e5"
-            android:background="#e85252"
-            android:layout_gravity="center_vertical|bottom"
-            android:onClick="onClickFrecuencia" />
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="122dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="122dp" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:text="Desvincular tu cuenta"
-            android:id="@+id/textView7"
+            android:text="Desvincular cuenta"
             android:gravity="center_vertical|center_horizontal"
             android:textColor="#ede5e5"
             android:background="#e85252"

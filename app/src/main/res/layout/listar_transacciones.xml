@@ -19,11 +19,13 @@
             android:text="Fecha desde" />
 
         <EditText
-            android:layout_height="wrap_content"
-            android:inputType="datetime"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="date"
             android:ems="10"
-            android:id="@+id/fecha_desde" />
+            android:id="@+id/fecha_desde"
+            android:hint="@string/from_date"
+            android:layout_weight="1" />
 
     </LinearLayout>
 
@@ -40,9 +42,10 @@
 
         <EditText
             android:layout_height="wrap_content"
-            android:inputType="datetime"
+            android:inputType="time"
             android:layout_width="wrap_content"
             android:ems="10"
+            android:hint="@string/to_date"
             android:id="@+id/fecha_hasta" />
 
     </LinearLayout>
