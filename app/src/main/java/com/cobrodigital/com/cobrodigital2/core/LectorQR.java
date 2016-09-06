@@ -22,15 +22,12 @@ public class LectorQR extends Activity {
         return sid;
     }
     public HashMap<String,String> leer(String content) throws JSONException {
-        JSONArray jsonArray = new JSONArray(content);
-        JSONObject jsonidcomercio = jsonArray.getJSONObject(0);
-        JSONObject jsonsid = jsonArray.getJSONObject(1);
-        System.out.println(jsonsid);
-        System.out.println(jsonidcomercio);
+        JSONObject jsonObject = new JSONObject(content);
+        this.IdComercio = jsonObject.getString("IdComercio").toString();
+        this.sid = jsonObject.getString("sid");
         HashMap<String,String> credencial=new HashMap<String,String>();
-        System.out.println(content);
-        credencial.put("IdComercio",jsonidcomercio.getString("idComercio"));
-        credencial.put("sid",jsonsid.getString("sid"));
+        credencial.put("IdComercio",IdComercio);
+        credencial.put("sid",sid);
         return credencial;
     }
 

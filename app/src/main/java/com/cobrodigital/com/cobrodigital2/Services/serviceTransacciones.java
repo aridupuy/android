@@ -79,7 +79,7 @@ public class serviceTransacciones extends Service {
             NotificationManager nManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             NotificationCompat.Builder builder = new NotificationCompat.Builder(
                     getBaseContext())
-                    .setSmallIcon(android.R.drawable.ic_dialog_info)
+                    .setSmallIcon(android.R.mipmap.sym_def_app_icon)
                     .setContentTitle("Transacciones")
                     .setContentText("Se Han recaudado $"+ serviceTransacciones.total+" el dia de hoy")
                     .setWhen(System.currentTimeMillis());
