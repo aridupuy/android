@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.cobrodigital.com.cobrodigital2.Model.Credencial;
 import com.cobrodigital.com.cobrodigital2.R;
 import com.cobrodigital.com.cobrodigital2.core.BaseDeDatos;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
@@ -47,9 +48,8 @@ public class serviceTransacciones extends Service {
             @Override
             public void run() {
                 try {
-                    BaseDeDatos baseDeDatos = new BaseDeDatos(getApplicationContext());
-                    HashMap<String, String> credencial = baseDeDatos.obtener_credencial();
-                    CobroDigital cobroDigital = new CobroDigital(credencial);
+                    Credencial credencial= new Credencial(getApplicationContext());
+                    CobroDigital cobroDigital = new CobroDigital(credencial.obtenerCredencial());
                     cobroDigital.consultar_transacciones(format.format(Fecha), format.format(Fecha), new LinkedHashMap());
                     Vector respuesta = cobroDigital.obtener_datos();
                     serviceTransacciones.total = 0;

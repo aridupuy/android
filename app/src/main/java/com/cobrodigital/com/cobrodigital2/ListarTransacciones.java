@@ -11,6 +11,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.cobrodigital.com.cobrodigital2.Model.Credencial;
 import com.cobrodigital.com.cobrodigital2.core.BaseDeDatos;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 
@@ -42,8 +43,8 @@ public class ListarTransacciones extends Activity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listar_transacciones);
-        BaseDeDatos basededatos=new BaseDeDatos(getApplicationContext());
-        CobroDigital.credencial=basededatos.obtener_credencial();
+        Credencial credencial=new Credencial(getApplicationContext());
+        CobroDigital.credencial=credencial.obtenerCredencial();
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -92,7 +93,7 @@ public class ListarTransacciones extends Activity implements View.OnClickListene
 
         date=this.dateFormatter.parse(texthasta.getText().toString());
         String hasta=dateFormatter.format(date);
-        HashMap<String,String> credencial=CobroDigital.credencial;
+        Credencial credencial=CobroDigital.credencial;
         CobroDigital cd = null;
         Vector vectordatos =null;
         try {

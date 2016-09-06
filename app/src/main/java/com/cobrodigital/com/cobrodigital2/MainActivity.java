@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.cobrodigital.com.cobrodigital2.Model.Credencial;
 import com.cobrodigital.com.cobrodigital2.Services.serviceTransacciones;
 import com.cobrodigital.com.cobrodigital2.core.BaseDeDatos;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
@@ -46,9 +47,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
         super.onCreate(savedInstanceState);
-        BaseDeDatos baseDeDatos = new BaseDeDatos(getApplicationContext());
-        baseDeDatos.onCreate(baseDeDatos.getWritableDatabase());
-        CobroDigital.credencial = baseDeDatos.obtener_credencial();
+        Credencial credencial= new Credencial(getApplicationContext());
+        credencial.onCreate(credencial.getWritableDatabase());
+        CobroDigital.credencial = credencial.obtenerCredencial();
         setContentView(R.layout.activity_main);
         if(CobroDigital.credencial!=null){
             View cuenta=findViewById(R.id.textView7);
@@ -142,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
                 String contents = intent.getStringExtra("SCAN_RESULT");
-                LectorQR lectorQR=new LectorQR();
+                LectorQR lectorQR=new LectorQR(getApplicationContext());
                 try{
                     System.out.println(contents);
                   CobroDigital.credencial=lectorQR.leer(contents);
@@ -150,9 +151,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     System.out.println(e.getMessage());
                     Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
                 }
-                BaseDeDatos db= new BaseDeDatos(getApplicationContext());
                 System.out.println(CobroDigital.credencial);
-                db.setCredencial(CobroDigital.credencial);
+                CobroDigital.credencial.set();
+
             } else if (resultCode == RESULT_CANCELED) {
                 Toast toast = Toast.makeText(this, "La operación fué cancelada",Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.TOP, 25, 400);

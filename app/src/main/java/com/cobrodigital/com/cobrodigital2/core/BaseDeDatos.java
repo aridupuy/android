@@ -27,7 +27,7 @@ public class BaseDeDatos extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
-        String sql="CREATE TABLE IF NOT EXISTS Credencial( id_credencial INTEGER PRIMARY KEY AUTOINCREMENT," +
+        String sql="CREATE TABLE IF NOT EXISTS Credencial( id_credencial ," +
                     "IdComercio TEXT NOT NULL, " +
                     "sid TEXT NOT NULL , " +
                     "UNIQUE( IdComercio,sid))";

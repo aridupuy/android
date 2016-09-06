@@ -4,6 +4,8 @@ package com.cobrodigital.com.cobrodigital2.core;
 
 import android.os.StrictMode;
 
+import com.cobrodigital.com.cobrodigital2.Model.Credencial;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -29,7 +31,7 @@ import javax.net.ssl.HttpsURLConnection;
 //import org.json.simple.JSONObject;
 
 public class CobroDigital {
-    public static HashMap<String, String> credencial;
+    public static Credencial credencial;
     private static final String URL  = "https://www.cobrodigital.com:14365/ws3/";
     public static String sid="";
     public static String idComercio="";
@@ -41,14 +43,14 @@ public class CobroDigital {
 //    protected String sid = null;
 
 
-    public CobroDigital(HashMap<String,String> credencial) throws Exception{
+    public CobroDigital(Credencial credencial) throws Exception{
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         if (idComercio == "" ) {
-            idComercio=credencial.get("IdComercio");
+            idComercio=credencial.get_IdComercio();
         }
         if (sid == "") {
-            sid=credencial.get("sid");
+            sid=credencial.get_sid();
         }
     }
     public CobroDigital(String idComercio, String sid) throws Exception {
