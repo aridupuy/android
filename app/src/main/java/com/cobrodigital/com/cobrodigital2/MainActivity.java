@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     System.out.println(e.getMessage());
                     Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
                 }
-                System.out.println(CobroDigital.credencial);
+                System.out.println("credencial"+CobroDigital.credencial);
                 CobroDigital.credencial.set();
 
             } else if (resultCode == RESULT_CANCELED) {

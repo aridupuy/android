@@ -93,11 +93,11 @@ public class ListarTransacciones extends Activity implements View.OnClickListene
 
         date=this.dateFormatter.parse(texthasta.getText().toString());
         String hasta=dateFormatter.format(date);
-        Credencial credencial=CobroDigital.credencial;
+        Credencial credencial=new Credencial(getApplicationContext());
         CobroDigital cd = null;
         Vector vectordatos =null;
         try {
-            cd = new CobroDigital(credencial);
+            cd = new CobroDigital(credencial.obtenerCredencial());
             cd.consultar_transacciones(desde, hasta, new LinkedHashMap());
             String ejecucion_correcta = cd.obtener_resultado();
             vectordatos = cd.obtener_datos();

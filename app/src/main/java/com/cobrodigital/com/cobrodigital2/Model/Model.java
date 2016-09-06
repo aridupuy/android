@@ -28,9 +28,6 @@ public abstract class Model extends SQLiteOpenHelper{
     public Model(Context contexto){
         super(contexto,NOMBRE_BASE_DATOS,null,VERSION_ACTUAL);
         this.contexto=contexto;
-        WriterSqLiteDatabase=getWritableDatabase();
-        sqLiteDatabase=getWritableDatabase();
-        ReaderSqLiteDatabase=getReadableDatabase();
     }
     private Vector<Method> get_metodos(){
         Method[] metodos=this.getClass().getDeclaredMethods();
@@ -76,11 +73,10 @@ public abstract class Model extends SQLiteOpenHelper{
             i++;
         }
 
-        Cursor recordset=ReaderSqLiteDatabase.query(this.getClass().getSimpleName(),Columnas,"",param,null,null,null);
+        Cursor recordset=getReadableDatabase().query(this.getClass().getSimpleName(),Columnas,"",param,null,null,null);
         return recordset;
     }
     private void insert(Vector<Method> Columnas) throws InvocationTargetException, IllegalAccessException {
-        WriterSqLiteDatabase.beginTransaction();
         String Tabla = this.getClass().getName();
         ContentValues Values= new ContentValues();
         for (Method columna: Columnas) {
@@ -88,15 +84,10 @@ public abstract class Model extends SQLiteOpenHelper{
                 if(columna.invoke(columna.getName().toString(), new Object[] {}).toString()!=null)
                     Values.put(columna.getName().replace(PREFIJO_GETTER,"").replace(PREFIJO_SETTER,""), (String) columna.invoke(columna.getName().toString(), new Object[] {}));
         }
-        WriterSqLiteDatabase.insert(Tabla,null,Values);
-        try {
-            WriterSqLiteDatabase.setTransactionSuccessful();
-        } finally {
-            WriterSqLiteDatabase.endTransaction();
-        }
+        getWritableDatabase().insert(Tabla,null,Values);
     }
     private void update(Vector<Method> Columnas) throws InvocationTargetException, IllegalAccessException {
-        WriterSqLiteDatabase.beginTransaction();
+
         String Tabla = this.getClass().getName();
         ContentValues Values= new ContentValues();
         for (Method columna: Columnas) {
@@ -106,7 +97,7 @@ public abstract class Model extends SQLiteOpenHelper{
         }
         String [] whereARGS;
         whereARGS = new String[] {Integer.toString(this.getId())};
-        WriterSqLiteDatabase.update(Tabla,Values,this.ID_Tabla+"=?",whereARGS);
+        getWritableDatabase().update(Tabla,Values,this.ID_Tabla+"=?",whereARGS);
     }
 
     @Override
