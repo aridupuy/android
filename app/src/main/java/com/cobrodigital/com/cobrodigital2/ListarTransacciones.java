@@ -34,6 +34,8 @@ import java.util.Vector;
 public class ListarTransacciones extends Activity implements View.OnClickListener {
     private DatePickerDialog fromDatePickerDialog;
     private DatePickerDialog toDatePickerDialog;
+//    KA289659
+//            V2nJUHv7110BI4v1FLxdeQrFlWUw08j5L3VAxZB3P9Dm0EJbsDW5vJsi960
     private SimpleDateFormat dateFormatter;
     public ListarTransacciones() {
     }
