@@ -21,14 +21,11 @@ import android.widget.Toast;
 
 import com.cobrodigital.com.cobrodigital2.Model.Credencial;
 import com.cobrodigital.com.cobrodigital2.Services.serviceTransacciones;
-import com.cobrodigital.com.cobrodigital2.core.BaseDeDatos;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 import com.cobrodigital.com.cobrodigital2.core.Configuracion;
 import com.cobrodigital.com.cobrodigital2.core.LectorQR;
 
 import org.json.JSONException;
-
-import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     @Override
@@ -47,26 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
         super.onCreate(savedInstanceState);
-        Credencial credencial= new Credencial(getApplicationContext());
-        credencial.onCreate(credencial.getWritableDatabase());
-        CobroDigital.credencial = credencial.obtenerCredencial();
-        setContentView(R.layout.activity_main);
-        if(CobroDigital.credencial!=null){
-            View cuenta=findViewById(R.id.textView7);
-            ((ViewGroup) cuenta.getParent()).removeView(cuenta);
-        }
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //        setSupportActionBar(toolbar);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-            drawer.setDrawerListener(toggle);
-            toggle.syncState();
-            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-            navigationView.setNavigationItemSelectedListener(this);
-            Intent service = new Intent(this, serviceTransacciones.class);
-            startService(service);
-
+       this.ejecutar();
     }
     //clicks de botones
     @Override
@@ -137,6 +115,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent pagador = new Intent(getApplicationContext(), Pagador.class);
         startActivity(pagador);
     }
+    private void ejecutar(){
+        Credencial credencial= new Credencial(getApplicationContext());
+        credencial.onCreate(credencial.getWritableDatabase());
+        CobroDigital.credencial = credencial.obtenerCredencial();
+        setContentView(R.layout.activity_main);
+        if(CobroDigital.credencial!=null){
+            credencial.set();
+            View cuenta=findViewById(R.id.textView7);
+            ((ViewGroup) cuenta.getParent()).removeView(cuenta);
+        }
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        Intent service = new Intent(this, serviceTransacciones.class);
+        startService(service);
+    }
     @Override
     //capturo el resultado del scanner
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -151,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     System.out.println(e.getMessage());
                     Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
                 }
-                System.out.println("credencial"+CobroDigital.credencial);
+
                 CobroDigital.credencial.set();
 
             } else if (resultCode == RESULT_CANCELED) {
@@ -160,5 +159,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 toast.show();
             }
         }
+        ejecutar();
+        Toast toast = Toast.makeText(getApplicationContext(),"Usuario loggeado correctamente.",Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        ejecutar();
     }
 }

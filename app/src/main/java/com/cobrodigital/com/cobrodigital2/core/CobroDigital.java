@@ -33,8 +33,6 @@ import javax.net.ssl.HttpsURLConnection;
 public class CobroDigital {
     public static Credencial credencial;
     private static final String URL  = "https://www.cobrodigital.com:14365/ws3/";
-    public static String sid="";
-    public static String idComercio="";
     public LinkedHashMap resultado = new LinkedHashMap();
     protected String metodo_web_service = "";
     protected String method = "POST";
@@ -46,11 +44,8 @@ public class CobroDigital {
     public CobroDigital(Credencial credencial) throws Exception{
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        if (idComercio == "" ) {
-            idComercio=credencial.get_IdComercio();
-        }
-        if (sid == "") {
-            sid=credencial.get_sid();
+        if(credencial!=null){
+            this.credencial=credencial;
         }
     }
     public CobroDigital(String idComercio, String sid) throws Exception {
@@ -64,8 +59,8 @@ public class CobroDigital {
         if (sid == "") {
             throw new Exception("No definio sid");
         }
-        this.idComercio = idComercio;
-        this.sid = sid;
+        this.credencial.set_IdComercio(idComercio);
+        this.credencial.set_sid(sid);
     }
 
     //Funciones que dan una interfaz al usuario///
@@ -167,8 +162,8 @@ public class CobroDigital {
     //Fin de funciones/////
     private void ejecutar(String metodo_webservice, LinkedHashMap array) throws UnsupportedEncodingException, MalformedURLException, IOException, KeyManagementException, NoSuchAlgorithmException, Exception {
         System.out.println("ejecutar con parametros");
-        this.array_a_enviar.put("idComercio", this.idComercio);
-        this.array_a_enviar.put("sid", this.sid);
+        this.array_a_enviar.put("idComercio", this.credencial.get_IdComercio());
+        this.array_a_enviar.put("sid", this.credencial.get_sid());
         if (metodo_webservice == null) {
             metodo_webservice = this.metodo_web_service;
         }

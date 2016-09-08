@@ -6,9 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.security.Key;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Vector;
 
@@ -29,92 +32,142 @@ public abstract class Model extends SQLiteOpenHelper{
         super(contexto,NOMBRE_BASE_DATOS,null,VERSION_ACTUAL);
         this.contexto=contexto;
     }
-    private Vector<Method> get_metodos(){
-        Method[] metodos=this.getClass().getDeclaredMethods();
-        Vector<Method> columnas=new Vector<Method>();
-        for (Method method: metodos) {
-            if(method.getName().substring(0,4).equals(PREFIJO_GETTER)){
-                System.out.println(method.getName());
-                columnas.add(method);
-            }
+    private Vector<String> get_campos(){
+        Field [] Campos=this.getClass().getDeclaredFields();
+        Vector<String> columnas=new Vector<String>();
+        for (Field campo: Campos) {
+            if (campo.getName()!="Id" && campo.getName()!="ID_Tabla" &&  campo.getName()!="contexto")
+            columnas.add(campo.getName());
+
         }
         return columnas;
+    }
+    private Vector<String> get_values(){
+        Method [] metodos=this.getClass().getDeclaredMethods();
+        Vector<String> Values=new Vector<String>();
+        for (Method metodo: metodos) {
+            System.out.println(metodo.getName());
+            if (metodo.getName().startsWith("get_") && !metodo.getName().endsWith("Id")&&!metodo.getName().endsWith("ID_Tabla") && !metodo.getName().endsWith("Class")) {
+                try {
+                    Values.add((String) metodo.invoke(this, (Object[]) null));
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        System.out.println(Values);
+        return Values;
     }
     public abstract int getId();
     public abstract String getid_tabla();
     public void set(){
-        Vector<Method> metodos=this.get_metodos();
-        if(this.getId()!=0) {
+        Vector<String> campos=this.get_campos();
+        System.out.println("estoy en set id es :"+this.getId());
+        System.out.println(campos);
+        if(this.getId()==0) {
+            System.out.println("entro en insert");
             try {
-                this.insert(metodos);
+                this.insert(campos);
             }catch (Exception e){
                 System.out.println(e.getMessage());
             }
         }
         else{
+            System.out.println("entro en update");
             try {
-                this.update(metodos);
+                this.update(campos);
             }catch (Exception e){
                 System.out.println(e.getMessage());
             }
         }
     }
     public Cursor get(int id){
-        Vector<Method> metodos=this.get_metodos();
-        Cursor recordSet=this.select(new String[]{Integer.toString(id)});
+        Vector<String> Campos=this.get_campos();
+        HashMap<String,String> variables=new HashMap<String, String>();
+        variables.put(getid_tabla(),Integer.toString(id));
+        Cursor recordSet=this.select(variables);
         return recordSet;
     }
-    public Cursor select(String[] param){
-        Vector<Method> Metodos= this.get_metodos();
-        String [] Columnas=new String[Metodos.size()];
+    public Cursor select(HashMap<String,String> Variables){
+        String Tabla=this.getClass().getSimpleName();
+        String sql="SELECT * FROM "+Tabla;
+
+        String[] array=new String[Variables.size()];
+        int i = 0;
+        if(Variables.size()>0){
+            String where=" WHERE ";
+            for (HashMap.Entry<String,String> variable :Variables.entrySet()){
+                where+="AND "+variable.getKey()+"=? ";
+                array[i]=variable.getValue();
+                i++;
+            }
+            sql+=where;
+        }
+        System.out.println(sql);
+        Cursor RecordSet=getReadableDatabase().rawQuery(sql,array);
+        return RecordSet;
+    }
+    private void insert(Vector<String> campos) throws InvocationTargetException, IllegalAccessException {
+        String Tabla = this.getClass().getSimpleName();
+        Vector<String> Valores=get_values();
+        String sql="INSERT INTO "+Tabla+" (";
+        for (String campo: campos) {
+            sql+=campo+",";
+        }
+        System.out.println("sql:"+sql);
+        sql=sql.substring(0,sql.length()-1);
+        sql+=") VALUES (";
+        System.out.println(sql);
+        for (String Valor: Valores) {
+            sql +="'"+Valor+"'"+ ",";
+        }
+        sql=sql.substring(0,sql.length()-1);
+        sql+=")";
+        System.out.println(sql);
+        getWritableDatabase().execSQL(sql);
+
+    }
+    private void update(Vector<String> campos) throws InvocationTargetException, IllegalAccessException {
+        String Tabla = this.getClass().getSimpleName();
+        Vector<String> Valores=get_values();
+        String sql="UPDATE "+Tabla+" set ";
         int i=0;
-        for (Method metodo: Metodos) {
-            Columnas[i]=metodo.getName().replace(PREFIJO_GETTER,"").replace(PREFIJO_SETTER,"");
-            i++;
+        for (String campo: campos) {
+            sql+=campo+"="+ Valores.get(i)+", ";
         }
+        System.out.println("sql:"+sql);
+        sql=sql.substring(0,sql.length()-2);
+        sql+=" WHERE "+getid_tabla()+"="+getId();
+        System.out.println(sql);
+        getWritableDatabase().execSQL(sql);
 
-        Cursor recordset=getReadableDatabase().query(this.getClass().getSimpleName(),Columnas,"",param,null,null,null);
-        return recordset;
     }
-    private void insert(Vector<Method> Columnas) throws InvocationTargetException, IllegalAccessException {
-        String Tabla = this.getClass().getName();
-        ContentValues Values= new ContentValues();
-        for (Method columna: Columnas) {
-            if(columna.getName().substring(0,3)==PREFIJO_GETTER)
-                if(columna.invoke(columna.getName().toString(), new Object[] {}).toString()!=null)
-                    Values.put(columna.getName().replace(PREFIJO_GETTER,"").replace(PREFIJO_SETTER,""), (String) columna.invoke(columna.getName().toString(), new Object[] {}));
-        }
-        getWritableDatabase().insert(Tabla,null,Values);
+    public void delete(){
+        String Tabla = this.getClass().getSimpleName();
+        String sql="DELETE FROM "+Tabla+" ";
+        sql+="WHERE "+getid_tabla()+"="+getId();
+        System.out.println(sql);
+        getWritableDatabase().execSQL(sql);
     }
-    private void update(Vector<Method> Columnas) throws InvocationTargetException, IllegalAccessException {
-
-        String Tabla = this.getClass().getName();
-        ContentValues Values= new ContentValues();
-        for (Method columna: Columnas) {
-            if(columna.getName().substring(0,3)==PREFIJO_GETTER)
-                if(columna.invoke(columna.getName().toString(), new Object[] {}).toString()!=null)
-                    Values.put(columna.getName().replace(PREFIJO_GETTER,"").replace(PREFIJO_SETTER,""), (String) columna.invoke(columna.getName().toString(), new Object[] {}));
-        }
-        String [] whereARGS;
-        whereARGS = new String[] {Integer.toString(this.getId())};
-        getWritableDatabase().update(Tabla,Values,this.ID_Tabla+"=?",whereARGS);
-    }
-
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        Vector<Method> metodos=get_metodos();
-        String campos=""+getid_tabla()+"INTEGER PRIMARY KEY ";
-        System.out.println(metodos.size());
-        for(int i =0 ; i<metodos.size();i++){
-            campos+= ", "+metodos.get(i).getName().replace(PREFIJO_GETTER,"").replace(PREFIJO_SETTER,"")+" TEXT NOT NULL";
+
+        //sqLiteDatabase.execSQL("DROP TABLE "+this.getClass().getSimpleName());
+        Vector<String> campos=get_campos();
+        String columnas=""+getid_tabla()+" INTEGER PRIMARY KEY ";
+        for (String campo: campos) {
+            columnas+=","+campo+" String not null ";
         }
-        String sql="CREATE TABLE IF NOT EXISTS "+this.getClass().getSimpleName()+"("+campos+") ";
+        String sql="CREATE TABLE IF NOT EXISTS "+this.getClass().getSimpleName()+"("+columnas+") ";
+        System.out.println(sql);
         sqLiteDatabase.execSQL(sql);
     }
-
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1){
-
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + this.getClass().getSimpleName());
+        onCreate(sqLiteDatabase);
     }
 
 }

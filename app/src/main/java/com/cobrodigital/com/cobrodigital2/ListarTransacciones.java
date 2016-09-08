@@ -12,19 +12,16 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.cobrodigital.com.cobrodigital2.Model.Credencial;
-import com.cobrodigital.com.cobrodigital2.core.BaseDeDatos;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Vector;

@@ -1,6 +1,7 @@
 package com.cobrodigital.com.cobrodigital2.core;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -14,7 +15,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import com.cobrodigital.com.cobrodigital2.MainActivity;
 import com.cobrodigital.com.cobrodigital2.R;
 
 public class Configuracion extends AppCompatActivity {
@@ -49,7 +52,10 @@ public class Configuracion extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     public void onClickDesvincular(View view){
-
+        CobroDigital.credencial.BorrarCredencial();
+        Toast.makeText(getApplicationContext(),"se ha desvinculado correctamente.",Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
     public void onClickFrecuencia(View view){
 

@@ -1,36 +1,26 @@
 package com.cobrodigital.com.cobrodigital2.Services;
 
-import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.ShareCompat;
 import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
 
 import com.cobrodigital.com.cobrodigital2.Model.Credencial;
 import com.cobrodigital.com.cobrodigital2.R;
-import com.cobrodigital.com.cobrodigital2.core.BaseDeDatos;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Locale;
 import java.util.TimerTask;
 import java.util.Vector;
-import java.util.logging.SimpleFormatter;
 
 public class serviceTransacciones extends Service {
     private static final String TAG = "Transacciones";
