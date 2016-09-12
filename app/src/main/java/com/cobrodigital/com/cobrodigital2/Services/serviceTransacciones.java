@@ -5,21 +5,27 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.cobrodigital.com.cobrodigital2.Model.Credencial;
+import com.cobrodigital.com.cobrodigital2.Model.Transaccion;
 import com.cobrodigital.com.cobrodigital2.R;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.TimerTask;
 import java.util.Vector;
 
@@ -49,9 +55,10 @@ public class serviceTransacciones extends Service {
                         try {
                             JSONArray datos = new JSONArray((String) transicion[0]);
                             for (int i = 0; i < datos.length(); i++) {
-                                JSONObject dato = datos.getJSONObject(i);
-                                serviceTransacciones.total += Float.parseFloat(dato.get("Neto").toString().replace(",", "."));
-
+                                Transaccion transaccion=new Transaccion(getApplicationContext());
+                                transaccion=transaccion.leerTransaccion(datos.getJSONObject(i));
+                                serviceTransacciones.total +=transaccion.get_Neto();
+                                transaccion.set();
                             }
                         } catch (Exception e) {
                             System.out.println(e.getMessage());
@@ -63,15 +70,21 @@ public class serviceTransacciones extends Service {
                     e.printStackTrace();
                 }
                 if (serviceTransacciones.total > 0.0) {
+                    long[] pattern = {500,500,};
+                    Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                     NotificationManager nManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                     NotificationCompat.Builder builder = new NotificationCompat.Builder(
                             getBaseContext())
                             .setSmallIcon(R.mipmap.ic_launcher)
+                            .setVibrate(pattern)
+                            .setSound(alarmSound)
+                            .setStyle(new NotificationCompat.InboxStyle())
                             .setContentTitle("Transacciones")
                             .setContentText("Se han recaudado $" + serviceTransacciones.total + " el dia de hoy")
                             .setWhen(System.currentTimeMillis());
                     nManager.notify(12345, builder.build());
                     Log.d(TAG, "sleep finished");
+                    serviceTransacciones.total=0;
                     }
                 }
         }).start();
@@ -84,7 +97,6 @@ public class serviceTransacciones extends Service {
             @Override
             public void run() {
                 if (System.currentTimeMillis() - scheduledExecutionTime() >=10){
-                    System.out.println("paso");
                     return;
                 }
                 Intent service = new Intent(serviceTransacciones.this, serviceTransacciones.class);
@@ -93,8 +105,5 @@ public class serviceTransacciones extends Service {
             }
         };
         task.run();
-
-
-
     }
 }

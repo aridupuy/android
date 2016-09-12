@@ -20,7 +20,6 @@ public class Credencial extends Model{
     private int Id;
     private String sid;
     private String IdComercio;
-    private String contexto;
     public Credencial(Context contexto) {
         super(contexto);
     }
@@ -68,9 +67,6 @@ public class Credencial extends Model{
             this.sid=recordset.getString(recordset.getColumnIndex("sid"));
             recordset.moveToNext();
         }
-        System.out.println(Id);
-        System.out.println(IdComercio);
-        System.out.println(sid);
         if(IdComercio==null || sid==null)
             return null;
         return this;

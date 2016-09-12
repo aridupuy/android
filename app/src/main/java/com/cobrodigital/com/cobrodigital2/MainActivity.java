@@ -1,6 +1,8 @@
 package com.cobrodigital.com.cobrodigital2;
 
 import android.Manifest;
+import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -20,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.cobrodigital.com.cobrodigital2.Model.Credencial;
+import com.cobrodigital.com.cobrodigital2.Services.serviceBoot;
 import com.cobrodigital.com.cobrodigital2.Services.serviceTransacciones;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 import com.cobrodigital.com.cobrodigital2.core.Configuracion;
@@ -92,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
     private void Configurar() {
-        System.out.println("Configurar");
         Intent configuracion = new Intent(this, Configuracion.class);
         startActivity(configuracion);
 
@@ -101,12 +103,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.escanear();
     }
     public void OnClickListarTransacciones(View View) {
-        /// setContentView(R.layout.listar_transacciones);
         Intent transacciones = new Intent(getApplicationContext(), ListarTransacciones.class);
         startActivity(transacciones);
     }
     private void escanear() {
-        System.out.println("No hay Credenciales");
         Intent intent = new Intent("com.google.zxing.client.android.SCAN");
         intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
         startActivityForResult(intent, 0);
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         CobroDigital.credencial = credencial.obtenerCredencial();
         setContentView(R.layout.activity_main);
         if(CobroDigital.credencial!=null){
-            credencial.set();
+            credencial.set(); //revisar que no se hagan updates al cuete
             View cuenta=findViewById(R.id.textView7);
             ((ViewGroup) cuenta.getParent()).removeView(cuenta);
         }
@@ -133,8 +133,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        Intent service = new Intent(this, serviceTransacciones.class);
-        startService(service);
+        serviceBoot sb=new serviceBoot(this.getApplicationContext());
+        sb.startTimer();
     }
     @Override
     //capturo el resultado del scanner
@@ -144,10 +144,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 String contents = intent.getStringExtra("SCAN_RESULT");
                 LectorQR lectorQR=new LectorQR(getApplicationContext());
                 try{
-                    System.out.println(contents);
                   CobroDigital.credencial=lectorQR.leer(contents);
                 }catch (JSONException e){
-                    System.out.println(e.getMessage());
                     Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
                 }
 
@@ -168,5 +166,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         ejecutar();
+    }
+    static public Context getContext(){
+        MainActivity activity=new MainActivity();
+        return activity.getBaseContext();
     }
 }

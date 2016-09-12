@@ -12,6 +12,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.cobrodigital.com.cobrodigital2.Model.Credencial;
+import com.cobrodigital.com.cobrodigital2.Model.Transaccion;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 
 import org.json.JSONArray;
@@ -110,7 +111,6 @@ public class ListarTransacciones extends Activity implements View.OnClickListene
             Object dato[] = vector.toArray();
 
             for (int i = 0; i < dato.length; i++) {
-                System.out.println("dato");
                 TableRow row = new TableRow(this);
                 TextView celda = new TextView(this);
                 celda.setText((String) dato[i]);
@@ -119,29 +119,30 @@ public class ListarTransacciones extends Activity implements View.OnClickListene
             }
         } else {
             Object transicion[] = vectordatos.toArray();
+            Transaccion transaccion=new Transaccion(getApplicationContext());
             try {
                 JSONArray datos = new JSONArray((String) transicion[0]);
                 for (int i = 0; i < datos.length(); i++) {
-                    JSONObject dato = datos.getJSONObject(i);
+                    transaccion.leerTransaccion(datos.getJSONObject(i),true);
                     TableRow row = new TableRow(this);
                     row.setBackgroundResource(R.drawable.celda);
                     TextView celda = new TextView(this);
                     celda.setTextSize(9);
                     celda.setPadding(5, 5, 5, 5);
                     celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-                    celda.setText((String) dato.get("Fecha"));
+                    celda.setText(transaccion.get_Fecha());
                     row.addView(celda);
                     celda = new TextView(this);
                     celda.setTextSize(9);
                     celda.setPadding(5, 5, 5, 5);
                     celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-                    celda.setText((String) dato.get("Nro Boleta"));
+                    celda.setText(transaccion.get_Nro_boleta());
                     celda.setTextSize(9);
                     celda.setPadding(5, 5, 5, 5);
                     celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
                     row.addView(celda);
                     celda = new TextView(this);
-                    celda.setText((String) dato.get("Identificación"));
+                    celda.setText( transaccion.get_Identificacion());
                     celda.setTextSize(9);
                     celda.setPadding(5, 5, 5, 5);
                     celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
@@ -150,20 +151,19 @@ public class ListarTransacciones extends Activity implements View.OnClickListene
                     celda.setTextSize(9);
                     celda.setPadding(5, 5, 5, 5);
                     celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-                    celda.setText((String) dato.get("Nombre"));
+                    celda.setText( transaccion.get_Nombre());
                     row.addView(celda);
                     celda = new TextView(this);
                     celda.setTextSize(9);
                     celda.setPadding(5, 5, 5, 5);
                     celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-                    celda.setText((String) dato.get("Info"));
+                    celda.setText( transaccion.get_Info());
                     row.addView(celda);
                     celda = new TextView(this);
-                    Object concepto = dato.get("Concepto");
-                    System.out.println(concepto.toString());
+                    Object concepto = transaccion.get_Concepto();
                     if (concepto.toString() == "null")
                         concepto = "";
-                    celda.setText((String) concepto);
+                    celda.setText((String)concepto);
                     celda.setTextSize(9);
                     celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
                     celda.setPadding(5, 5, 5, 5);
@@ -172,30 +172,29 @@ public class ListarTransacciones extends Activity implements View.OnClickListene
                     celda.setTextSize(9);
                     celda.setPadding(5, 5, 5, 5);
                     celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-                    celda.setText((String) dato.get("Bruto"));
+                    celda.setText( transaccion.get_Bruto());
                     row.addView(celda);
                     celda = new TextView(this);
                     celda.setTextSize(9);
                     celda.setPadding(5, 5, 5, 5);
                     celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-                    celda.setText((String) dato.get("Comisión"));
+                    celda.setText( transaccion.get_Comision());
                     row.addView(celda);
                     celda = new TextView(this);
                     celda.setTextSize(9);
                     celda.setPadding(5, 5, 5, 5);
                     celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-                    celda.setText((String) dato.get("Neto"));
+                    celda.setText(transaccion.get_Neto().toString());
                     row.addView(celda);
                     celda = new TextView(this);
                     celda.setTextSize(9);
                     celda.setPadding(5, 5, 5, 5);
                     celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-                    celda.setText((String) dato.get("Saldo acumulado"));
+                    celda.setText( transaccion.get_Saldo_acumulado());
                     row.addView(celda);
                     tabla.addView(row);
                 }
             } catch (Exception e) {
-                System.out.println(e.getMessage());
                 System.out.println(e.getStackTrace());
             }
         }

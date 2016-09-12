@@ -67,7 +67,6 @@ public class CobroDigital {
     public String crear_pagador(LinkedHashMap nuevo_pagador) throws Exception {
         this.metodo_web_service = "crear_pagador";
         this.array_a_enviar.put("pagador", nuevo_pagador);
-        System.out.println(this.array_a_enviar.toString());
         this.ejecutar();
         return this.obtener_resultado();
     }
@@ -129,14 +128,12 @@ public class CobroDigital {
     public boolean consultar_transacciones(String fecha_desde, String fecha_hasta, LinkedHashMap filtros) throws MalformedURLException, IOException {
         try {
             metodo_web_service = "consultar_transacciones";
-            System.out.println(array_a_enviar.toString());
             array_a_enviar.put("desde", fecha_desde);
             array_a_enviar.put("hasta", fecha_hasta);
             if (!filtros.isEmpty())
                 array_a_enviar.put("filtros", filtros);
             ejecutar();
         } catch (Exception e) {
-//            System.out.println("hola error");
             System.out.println(e.getLocalizedMessage());
         }
         if (obtener_resultado() == "1") {
@@ -161,7 +158,6 @@ public class CobroDigital {
 
     //Fin de funciones/////
     private void ejecutar(String metodo_webservice, LinkedHashMap array) throws UnsupportedEncodingException, MalformedURLException, IOException, KeyManagementException, NoSuchAlgorithmException, Exception {
-        System.out.println("ejecutar con parametros");
         this.array_a_enviar.put("idComercio", this.credencial.get_IdComercio());
         this.array_a_enviar.put("sid", this.credencial.get_sid());
         if (metodo_webservice == null) {
@@ -191,9 +187,6 @@ public class CobroDigital {
         wr.flush();
         wr.close();
         int responseCode = con.getResponseCode();
-        System.out.println("\nSending 'POST' request to URL : " + httpsurl);
-        System.out.println("Post parameters : " + url_parameters);
-        System.out.println("Response Code : " + responseCode);
         InputStream ins = con.getInputStream();
         InputStreamReader isr = new InputStreamReader(ins);
         BufferedReader in = new BufferedReader(isr);
@@ -202,7 +195,6 @@ public class CobroDigital {
         while ((inputLine = in.readLine()) != null) {
             response += inputLine;
         }
-        System.out.println(response);
         JSONObject jo = new JSONObject(response);
         JSONArray logs = jo.getJSONArray("log");
         Vector log = new Vector();
@@ -215,13 +207,10 @@ public class CobroDigital {
             }
         }
         if (jo.has("log")) {
-            System.out.println("tamaño" + logs.length());
             for (int j = 0; j < logs.length(); j++) {
                 String logstring = logs.getString(j);
                 log.add(j, (logstring));
-                System.out.println(log.toString());
             }
-            System.out.println("loooooog");
         }
         this.resultado.put("ejecucion_correcta", jo.get("ejecucion_correcta"));
         this.resultado.put("log", log);

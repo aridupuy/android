@@ -63,7 +63,6 @@ public class Pagador extends Activity {
         EditText identificador = (EditText) findViewById(R.id.identificador);
         EditText apellido = (EditText) findViewById(R.id.apellido);
         LinkedHashMap pagador = new LinkedHashMap();
-        //System.out.println("nombre "+nombre.getText().toString());
         pagador.put("nombre", nombre.getText().toString());
         pagador.put("identificador", identificador.getText().toString());
         pagador.put("apellido", apellido.getText().toString());
@@ -73,7 +72,6 @@ public class Pagador extends Activity {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        System.out.println(cd.obtener_log());
         Vector vector = cd.obtener_log();
         Object[] log = vector.toArray();
         String respuesta = "";

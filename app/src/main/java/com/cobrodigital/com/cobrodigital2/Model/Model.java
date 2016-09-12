@@ -135,7 +135,8 @@ public abstract class Model extends SQLiteOpenHelper{
         String sql="UPDATE "+Tabla+" set ";
         int i=0;
         for (String campo: campos) {
-            sql+=campo+"="+ Valores.get(i)+", ";
+            sql+=campo+"= '"+ Valores.get(i)+"', ";
+            i++;
         }
         System.out.println("sql:"+sql);
         sql=sql.substring(0,sql.length()-2);
@@ -169,5 +170,7 @@ public abstract class Model extends SQLiteOpenHelper{
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + this.getClass().getSimpleName());
         onCreate(sqLiteDatabase);
     }
-
+    public Cursor Ejecutar_consulta(String sql, String [] args){
+        return this.sqLiteDatabase.rawQuery(sql,args);
+    }
 }
