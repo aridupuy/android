@@ -15,7 +15,8 @@ public class serviceBoot extends BroadcastReceiver {
     Timer timer;
     TimerTask timerTask;
     final Handler handler = new Handler();
-    final Context context;
+    private Context context;
+    public serviceBoot() {}
     public serviceBoot(Context context) {
         this.context=context;
     }
@@ -25,10 +26,10 @@ public class serviceBoot extends BroadcastReceiver {
             startTimer();
         }
     }
-
     //metodo que ejecuta la llamada del sistema
     @Override
     public void onReceive(Context context, Intent intent) {
+        this.context=context;
         if(!Status){
             Status=true;
             startTimer();
@@ -62,7 +63,6 @@ public class serviceBoot extends BroadcastReceiver {
             }
         };
     }
-
     public void startTimer() {
         //set a new Timer
             timer = new Timer();

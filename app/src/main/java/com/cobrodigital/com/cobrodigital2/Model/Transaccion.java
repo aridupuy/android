@@ -15,7 +15,7 @@ import org.json.JSONObject;
 
 public class Transaccion extends Model {
 
-    private String ID_Tabla="id_transaccion";
+    final private String ID_Tabla="id_transaccion";
     private int Id;
     private String fecha;
     private String nro_boleta;
@@ -157,7 +157,7 @@ public class Transaccion extends Model {
         return tr;
     }
     public Transaccion obtener_ultima_transaccion_json(JSONArray datos){
-        Transaccion transaccion=null
+        Transaccion transaccion=null;
         try {
                 JSONObject dato = datos.getJSONObject(datos.length()-1);
                 transaccion=this.leerTransaccion(dato);

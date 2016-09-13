@@ -54,9 +54,11 @@ public class serviceTransacciones extends Service {
                         Object transicion[] = respuesta.toArray();
                         try {
                             JSONArray datos = new JSONArray((String) transicion[0]);
+                            System.out.println(datos.length());
                             for (int i = 0; i < datos.length(); i++) {
                                 Transaccion transaccion=new Transaccion(getApplicationContext());
                                 transaccion=transaccion.leerTransaccion(datos.getJSONObject(i));
+                                System.out.println(transaccion);
                                 serviceTransacciones.total +=transaccion.get_Neto();
                                 transaccion.set();
                             }
@@ -83,27 +85,17 @@ public class serviceTransacciones extends Service {
                             .setContentText("Se han recaudado $" + serviceTransacciones.total + " el dia de hoy")
                             .setWhen(System.currentTimeMillis());
                     nManager.notify(12345, builder.build());
-                    Log.d(TAG, "sleep finished");
                     serviceTransacciones.total=0;
                     }
+                System.out.println("Transacciones es 0");
                 }
         }).start();
-        this.stopSelf();
+        System.out.println("termine");
+        //this.stopSelf();
         return super.onStartCommand(intent, flags, startId);
     }
     @Override
     public void onDestroy() {
-        TimerTask task=new TimerTask() {
-            @Override
-            public void run() {
-                if (System.currentTimeMillis() - scheduledExecutionTime() >=10){
-                    return;
-                }
-                Intent service = new Intent(serviceTransacciones.this, serviceTransacciones.class);
-                startService(service);
-
-            }
-        };
-        task.run();
+        System.out.println("destruido");
     }
 }

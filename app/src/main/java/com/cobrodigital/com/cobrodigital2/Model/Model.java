@@ -31,6 +31,14 @@ public abstract class Model extends SQLiteOpenHelper{
     public Model(Context contexto){
         super(contexto,NOMBRE_BASE_DATOS,null,VERSION_ACTUAL);
         this.contexto=contexto;
+        Vector<String> campos=get_campos();
+        String columnas=""+this.getid_tabla()+" INTEGER PRIMARY KEY ";
+        for (String campo: campos) {
+            columnas+=","+campo+" String not null ";
+        }
+        String sql="CREATE TABLE IF NOT EXISTS "+this.getClass().getSimpleName()+"("+columnas+") ";
+        System.out.println(sql);
+        getWritableDatabase().execSQL(sql);
     }
     private Vector<String> get_campos(){
         Field [] Campos=this.getClass().getDeclaredFields();
@@ -49,7 +57,10 @@ public abstract class Model extends SQLiteOpenHelper{
             System.out.println(metodo.getName());
             if (metodo.getName().startsWith("get_") && !metodo.getName().endsWith("Id")&&!metodo.getName().endsWith("ID_Tabla") && !metodo.getName().endsWith("Class")) {
                 try {
-                    Values.add((String) metodo.invoke(this, (Object[]) null));
+                    if(metodo.invoke(this, (Object[]) null).getClass().isInstance("String"))
+                        Values.add((String) metodo.invoke(this, (Object[]) null));
+                    else
+                        Values.add(String.valueOf(metodo.invoke(this, (Object[]) null)));
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 } catch (InvocationTargetException e) {
@@ -127,7 +138,7 @@ public abstract class Model extends SQLiteOpenHelper{
         sql+=")";
         System.out.println(sql);
         getWritableDatabase().execSQL(sql);
-
+        System.out.println("inserte");
     }
     private void update(Vector<String> campos) throws InvocationTargetException, IllegalAccessException {
         String Tabla = this.getClass().getSimpleName();
@@ -154,16 +165,8 @@ public abstract class Model extends SQLiteOpenHelper{
     }
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-
         //sqLiteDatabase.execSQL("DROP TABLE "+this.getClass().getSimpleName());
-        Vector<String> campos=get_campos();
-        String columnas=""+getid_tabla()+" INTEGER PRIMARY KEY ";
-        for (String campo: campos) {
-            columnas+=","+campo+" String not null ";
-        }
-        String sql="CREATE TABLE IF NOT EXISTS "+this.getClass().getSimpleName()+"("+columnas+") ";
-        System.out.println(sql);
-        sqLiteDatabase.execSQL(sql);
+
     }
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1){

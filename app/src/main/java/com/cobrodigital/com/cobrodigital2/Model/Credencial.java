@@ -16,7 +16,7 @@ import java.util.Vector;
  */
 public class Credencial extends Model{
 
-    private String ID_Tabla="id_credencial";
+    final private String ID_Tabla="id_credencial";
     private int Id;
     private String sid;
     private String IdComercio;

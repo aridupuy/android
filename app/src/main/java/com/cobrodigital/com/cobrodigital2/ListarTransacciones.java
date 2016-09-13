@@ -119,10 +119,12 @@ public class ListarTransacciones extends Activity implements View.OnClickListene
             }
         } else {
             Object transicion[] = vectordatos.toArray();
-            Transaccion transaccion=new Transaccion(getApplicationContext());
+
             try {
                 JSONArray datos = new JSONArray((String) transicion[0]);
+                System.out.println(datos.length());
                 for (int i = 0; i < datos.length(); i++) {
+                    Transaccion transaccion=new Transaccion(getApplicationContext());
                     transaccion.leerTransaccion(datos.getJSONObject(i),true);
                     TableRow row = new TableRow(this);
                     row.setBackgroundResource(R.drawable.celda);
@@ -184,7 +186,7 @@ public class ListarTransacciones extends Activity implements View.OnClickListene
                     celda.setTextSize(9);
                     celda.setPadding(5, 5, 5, 5);
                     celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-                    celda.setText(transaccion.get_Neto().toString());
+                    celda.setText(String.valueOf(transaccion.get_Neto()));
                     row.addView(celda);
                     celda = new TextView(this);
                     celda.setTextSize(9);
@@ -193,6 +195,8 @@ public class ListarTransacciones extends Activity implements View.OnClickListene
                     celda.setText( transaccion.get_Saldo_acumulado());
                     row.addView(celda);
                     tabla.addView(row);
+                    transaccion.set();
+                    System.out.println(i);
                 }
             } catch (Exception e) {
                 System.out.println(e.getStackTrace());
