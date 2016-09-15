@@ -32,6 +32,7 @@ import java.util.Vector;
 public class serviceTransacciones extends Service {
     private static final String TAG = "Transacciones";
     public static float total;
+
     public Thread service;
     @Nullable
     @Override

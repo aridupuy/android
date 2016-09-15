@@ -24,7 +24,7 @@ public abstract class Model extends SQLiteOpenHelper{
     private static final String NOMBRE_BASE_DATOS = "CobroDigital.db";
     private static final int VERSION_ACTUAL = 1;
     public  String ID_Tabla;
-    private final Context contexto;
+    public final Context contexto;
     private SQLiteDatabase WriterSqLiteDatabase;
     private SQLiteDatabase ReaderSqLiteDatabase;
     private SQLiteDatabase sqLiteDatabase;
@@ -109,10 +109,22 @@ public abstract class Model extends SQLiteOpenHelper{
         int i = 0;
         if(Variables.size()>0){
             String where=" WHERE ";
+            if(Variables.containsKey("desde") && !Variables.containsKey("hasta"))
+                return null;
+            if(Variables.containsKey("hasta") && !Variables.containsKey("desde"))
+                return null;
+            if(Variables.containsKey("desde") && Variables.containsKey("hasta")){
+                where+="date(fecha) between date(?) AND date(?)";
+                array[i]=(String)Variables.get("desde");
+                array[i+1]=(String)Variables.get("hasta");
+                Variables.remove("desde");
+                Variables.remove("hasta");
+            }
+
             for (HashMap.Entry<String,String> variable :Variables.entrySet()){
-                where+="AND "+variable.getKey()+"=? ";
+                where+=" AND "+variable.getKey()+"=?";
                 array[i]=variable.getValue();
-                i++;
+                    i++;
             }
             sql+=where;
         }
@@ -166,7 +178,6 @@ public abstract class Model extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         //sqLiteDatabase.execSQL("DROP TABLE "+this.getClass().getSimpleName());
-
     }
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1){

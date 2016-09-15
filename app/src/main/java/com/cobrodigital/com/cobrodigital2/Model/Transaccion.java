@@ -13,6 +13,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Vector;
+
 public class Transaccion extends Model {
 
     final private String ID_Tabla="id_transaccion";
@@ -27,10 +31,8 @@ public class Transaccion extends Model {
     private String comision;
     private String neto;
     private String saldo_acumulado;
-
     public Transaccion(Context context){
         super(context);
-
     }
 
     @Override
@@ -156,21 +158,36 @@ public class Transaccion extends Model {
         }
         return tr;
     }
-    public Transaccion obtener_ultima_transaccion_json(JSONArray datos){
-        Transaccion transaccion=null;
-        try {
-                JSONObject dato = datos.getJSONObject(datos.length()-1);
-                transaccion=this.leerTransaccion(dato);
-
-            } catch (JSONException e) {
-            e.printStackTrace();
+    public static Vector<Transaccion> obtener_transacciones_locales(Context context,String desde, String hasta, HashMap<String,String> variables){
+        Transaccion transaccion=new Transaccion(context);
+        String sql="SELECT * FROM Transaccion " +
+                "WHERE DATE(substr(fecha,7,4)\n" +
+                "||substr(fecha,4,2)\n" +
+                "||substr(fecha,1,2)) \n" +
+                "BETWEEN DATE(?) AND DATE(?) ORDER by fecha desc; ";
+        String[] valores=new String[]{desde,hasta};
+        Cursor RecordSet=transaccion.getReadableDatabase().rawQuery(sql,valores);
+        System.out.println(sql);
+        //Cursor RecordSet=transaccion.getReadableDatabase().rawQuery(sql,new String[]{} );
+        Vector<Transaccion> transacciones=new Vector<Transaccion>();
+        if(RecordSet.moveToFirst()) {
+            while (!RecordSet.isAfterLast()){
+                transaccion = new Transaccion(context);
+                transaccion.set_Fecha(RecordSet.getString(RecordSet.getColumnIndex("fecha")));
+                transaccion.set_Nro_boleta(RecordSet.getString(RecordSet.getColumnIndex("nro_boleta")));
+                transaccion.set_Identificacion(RecordSet.getString(RecordSet.getColumnIndex("identificacion")));
+                transaccion.set_Nombre(RecordSet.getString(RecordSet.getColumnIndex("nombre")));
+                transaccion.set_Info(RecordSet.getString(RecordSet.getColumnIndex("info")));
+                transaccion.set_Concepto(RecordSet.getString(RecordSet.getColumnIndex("concepto")));
+                transaccion.set_Bruto(RecordSet.getString(RecordSet.getColumnIndex("bruto")));
+                transaccion.set_Comision(RecordSet.getString(RecordSet.getColumnIndex("comision")));
+                transaccion.set_Neto(RecordSet.getString(RecordSet.getColumnIndex("neto")));
+                transaccion.set_Saldo_acumulado(RecordSet.getString(RecordSet.getColumnIndex("saldo_acumulado")));
+                transacciones.add(transaccion);
+                RecordSet.moveToNext();
+            }
         }
-        return transaccion;
-    }
-    public Cursor select_ultima_transaccion(){
-        String sql="SELECT max(id_transaccion) FROM Transaccion";
-        String [] variables=new String[]{};
-        return this.Ejecutar_consulta(sql,variables);
+        return transacciones;
     }
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {

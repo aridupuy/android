@@ -23,6 +23,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Vector;
@@ -93,114 +94,90 @@ public class ListarTransacciones extends Activity implements View.OnClickListene
         String hasta=dateFormatter.format(date);
         Credencial credencial=new Credencial(getApplicationContext());
         CobroDigital cd = null;
-        Vector vectordatos =null;
-        try {
-            cd = new CobroDigital(credencial.obtenerCredencial());
-            cd.consultar_transacciones(desde, hasta, new LinkedHashMap());
-            String ejecucion_correcta = cd.obtener_resultado();
-            vectordatos = cd.obtener_datos();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        HashMap<String,String> variables=new HashMap<String, String>();
+        variables.put("desde",desde);
+        variables.put("hasta",hasta);
+        Vector<Transaccion> transacciones = Transaccion.obtener_transacciones_locales(getApplicationContext(),desde,hasta,new HashMap<String, String>());
         setContentView(R.layout.tabla_transacciones);
         TableLayout tabla = (TableLayout) findViewById(R.id.tabla);
-        if (vectordatos == null) {
-            Vector vector = cd.obtener_log();
-            Object dato[] = vector.toArray();
+        if (transacciones==null) {
+            TableRow row = new TableRow(this);
+            row.setBackgroundResource(R.drawable.celda);
+            TextView celda = new TextView(this);
+            celda.setText("No existen datos disponibles");
+            return;
 
-            for (int i = 0; i < dato.length; i++) {
-                TableRow row = new TableRow(this);
-                TextView celda = new TextView(this);
-                celda.setText((String) dato[i]);
-                row.addView(celda);
-                tabla.addView(row);
-            }
-        } else {
-            Object transicion[] = vectordatos.toArray();
-
-            try {
-                JSONArray datos = new JSONArray((String) transicion[0]);
-                System.out.println(datos.length());
-                for (int i = 0; i < datos.length(); i++) {
-                    Transaccion transaccion=new Transaccion(getApplicationContext());
-                    transaccion.leerTransaccion(datos.getJSONObject(i),true);
-                    TableRow row = new TableRow(this);
-                    row.setBackgroundResource(R.drawable.celda);
-                    TextView celda = new TextView(this);
-                    celda.setTextSize(9);
-                    celda.setPadding(5, 5, 5, 5);
-                    celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-                    celda.setText(transaccion.get_Fecha());
-                    row.addView(celda);
-                    celda = new TextView(this);
-                    celda.setTextSize(9);
-                    celda.setPadding(5, 5, 5, 5);
-                    celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-                    celda.setText(transaccion.get_Nro_boleta());
-                    celda.setTextSize(9);
-                    celda.setPadding(5, 5, 5, 5);
-                    celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-                    row.addView(celda);
-                    celda = new TextView(this);
-                    celda.setText( transaccion.get_Identificacion());
-                    celda.setTextSize(9);
-                    celda.setPadding(5, 5, 5, 5);
-                    celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-                    row.addView(celda);
-                    celda = new TextView(this);
-                    celda.setTextSize(9);
-                    celda.setPadding(5, 5, 5, 5);
-                    celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-                    celda.setText( transaccion.get_Nombre());
-                    row.addView(celda);
-                    celda = new TextView(this);
-                    celda.setTextSize(9);
-                    celda.setPadding(5, 5, 5, 5);
-                    celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-                    celda.setText( transaccion.get_Info());
-                    row.addView(celda);
-                    celda = new TextView(this);
-                    Object concepto = transaccion.get_Concepto();
-                    if (concepto.toString() == "null")
-                        concepto = "";
-                    celda.setText((String)concepto);
-                    celda.setTextSize(9);
-                    celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-                    celda.setPadding(5, 5, 5, 5);
-                    row.addView(celda);
-                    celda = new TextView(this);
-                    celda.setTextSize(9);
-                    celda.setPadding(5, 5, 5, 5);
-                    celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-                    celda.setText( transaccion.get_Bruto());
-                    row.addView(celda);
-                    celda = new TextView(this);
-                    celda.setTextSize(9);
-                    celda.setPadding(5, 5, 5, 5);
-                    celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-                    celda.setText( transaccion.get_Comision());
-                    row.addView(celda);
-                    celda = new TextView(this);
-                    celda.setTextSize(9);
-                    celda.setPadding(5, 5, 5, 5);
-                    celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-                    celda.setText(String.valueOf(transaccion.get_Neto()));
-                    row.addView(celda);
-                    celda = new TextView(this);
-                    celda.setTextSize(9);
-                    celda.setPadding(5, 5, 5, 5);
-                    celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-                    celda.setText( transaccion.get_Saldo_acumulado());
-                    row.addView(celda);
-                    tabla.addView(row);
-                    transaccion.set();
-                    System.out.println(i);
-                }
-            } catch (Exception e) {
-                System.out.println(e.getStackTrace());
-            }
+        }
+       for(Transaccion transaccion: transacciones) {
+            TableRow row = new TableRow(this);
+            row.setBackgroundResource(R.drawable.celda);
+            TextView celda = new TextView(this);
+            celda.setTextSize(9);
+            celda.setPadding(5, 5, 5, 5);
+            celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
+            celda.setText(transaccion.get_Fecha());
+            row.addView(celda);
+            celda = new TextView(this);
+            celda.setTextSize(9);
+            celda.setPadding(5, 5, 5, 5);
+            celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
+            celda.setText(transaccion.get_Nro_boleta());
+            celda.setTextSize(9);
+            celda.setPadding(5, 5, 5, 5);
+            celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
+            row.addView(celda);
+            celda = new TextView(this);
+            celda.setText( transaccion.get_Identificacion());
+            celda.setTextSize(9);
+            celda.setPadding(5, 5, 5, 5);
+            celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
+            row.addView(celda);
+            celda = new TextView(this);
+            celda.setTextSize(9);
+            celda.setPadding(5, 5, 5, 5);
+            celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
+            celda.setText( transaccion.get_Nombre());
+            row.addView(celda);
+            celda = new TextView(this);
+            celda.setTextSize(9);
+            celda.setPadding(5, 5, 5, 5);
+            celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
+            celda.setText( transaccion.get_Info());
+            row.addView(celda);
+            celda = new TextView(this);
+            Object concepto = transaccion.get_Concepto();
+            if (concepto.toString() == "null")
+                concepto = "";
+            celda.setText((String)concepto);
+            celda.setTextSize(9);
+            celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
+            celda.setPadding(5, 5, 5, 5);
+            row.addView(celda);
+            celda = new TextView(this);
+            celda.setTextSize(9);
+            celda.setPadding(5, 5, 5, 5);
+            celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
+            celda.setText( transaccion.get_Bruto());
+            row.addView(celda);
+            celda = new TextView(this);
+            celda.setTextSize(9);
+            celda.setPadding(5, 5, 5, 5);
+            celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
+            celda.setText( transaccion.get_Comision());
+            row.addView(celda);
+            celda = new TextView(this);
+            celda.setTextSize(9);
+            celda.setPadding(5, 5, 5, 5);
+            celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
+            celda.setText(String.valueOf(transaccion.get_Neto()));
+            row.addView(celda);
+            celda = new TextView(this);
+            celda.setTextSize(9);
+            celda.setPadding(5, 5, 5, 5);
+            celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
+            celda.setText( transaccion.get_Saldo_acumulado());
+            row.addView(celda);
+            tabla.addView(row);
         }
     }
 
