@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        tools:context=".ListarTransacciones">
+
+
+        <ScrollView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:scrollbarStyle="insideOverlay"
+            android:clipToPadding="true"
+            android:paddingTop="?attr/actionBarSize">
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="410dp"
+                    android:baselineAligned="false">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_height="match_parent"
+                    android:layout_width="fill_parent"
+                    android:background="#d94141"
+                    android:weightSum="1">
+
+
+                </LinearLayout>
+
+                <TableLayout
+                    android:id="@+id/tabla"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent">
+
+                    <TableRow
+                        android:id="@+id/titulo"
+                        android:textAlignment="textEnd"
+                        android:background="#A3A09F"
+                        android:baselineAligned="false"
+                        android:layout_width="wrap_content">
+
+                        <TextView
+                            android:text="Fecha"
+                            android:textSize="9sp"
+                            android:textAlignment="center"
+                            android:padding="5dp" />
+
+                        <TextView
+                            android:text="Nro Boleta"
+                            android:textSize="9sp"
+                            android:textAlignment="center"
+                            android:padding="5dp" />
+
+                        <TextView
+                            android:textSize="9sp"
+                            android:text="Identificación"
+                            android:textAlignment="center"
+                            android:padding="5dp" />
+
+                        <TextView
+                            android:textSize="9sp"
+                            android:text="Nombre"
+                            android:textAlignment="center"
+                            android:padding="5dp" />
+
+                        <TextView
+                            android:textSize="9sp"
+                            android:text="Info"
+                            android:textAlignment="center"
+                            android:padding="5dp" />
+
+                        <TextView
+                            android:text="Concepto"
+                            android:textSize="9sp"
+                            android:textAlignment="center"
+                            android:padding="5dp" />
+
+                        <TextView
+                            android:textSize="9sp"
+                            android:text="Bruto"
+                            android:textAlignment="center"
+                            android:padding="5dp" />
+
+                        <TextView
+                            android:textSize="9sp"
+                            android:text="Comisión"
+                            android:textAlignment="center"
+                            android:padding="5dp" />
+
+                        <TextView
+                            android:textSize="9sp"
+                            android:text="Neto"
+                            android:textAlignment="center"
+                            android:padding="5dp" />
+
+                        <TextView
+                            android:textSize="9sp"
+                            android:text="Saldo Acumulado"
+                            android:textAlignment="center"
+                            android:padding="5dp" />
+
+                    </TableRow>
+
+                </TableLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </HorizontalScrollView>
+</LinearLayout>

@@ -32,9 +32,11 @@ public abstract class Model extends SQLiteOpenHelper{
         super(contexto,NOMBRE_BASE_DATOS,null,VERSION_ACTUAL);
         this.contexto=contexto;
         Vector<String> campos=get_campos();
-        String columnas=""+this.getid_tabla()+" INTEGER PRIMARY KEY ";
+        String columnas=""+getid_tabla()+" INTEGER PRIMARY KEY ";
+        System.out.println(columnas);
+
         for (String campo: campos) {
-            columnas+=","+campo+" String not null ";
+            columnas+=","+campo+" String";
         }
         String sql="CREATE TABLE IF NOT EXISTS "+this.getClass().getSimpleName()+"("+columnas+") ";
         System.out.println(sql);
@@ -44,9 +46,8 @@ public abstract class Model extends SQLiteOpenHelper{
         Field [] Campos=this.getClass().getDeclaredFields();
         Vector<String> columnas=new Vector<String>();
         for (Field campo: Campos) {
-            if (campo.getName()!="Id" && campo.getName()!="ID_Tabla" &&  campo.getName()!="contexto")
-            columnas.add(campo.getName());
-
+            if (!campo.getName().equals("Id") && !campo.getName().equals("ID_Tabla") && !campo.getName().equals("contexto"))
+                columnas.add((String) campo.getName());
         }
         return columnas;
     }
@@ -54,7 +55,6 @@ public abstract class Model extends SQLiteOpenHelper{
         Method [] metodos=this.getClass().getDeclaredMethods();
         Vector<String> Values=new Vector<String>();
         for (Method metodo: metodos) {
-            System.out.println(metodo.getName());
             if (metodo.getName().startsWith("get_") && !metodo.getName().endsWith("Id")&&!metodo.getName().endsWith("ID_Tabla") && !metodo.getName().endsWith("Class")) {
                 try {
                     if(metodo.invoke(this, (Object[]) null).getClass().isInstance("String"))
@@ -75,8 +75,6 @@ public abstract class Model extends SQLiteOpenHelper{
     public abstract String getid_tabla();
     public void set(){
         Vector<String> campos=this.get_campos();
-        System.out.println("estoy en set id es :"+this.getId());
-        System.out.println(campos);
         if(this.getId()==0) {
             System.out.println("entro en insert");
             try {
@@ -142,7 +140,6 @@ public abstract class Model extends SQLiteOpenHelper{
         System.out.println("sql:"+sql);
         sql=sql.substring(0,sql.length()-1);
         sql+=") VALUES (";
-        System.out.println(sql);
         for (String Valor: Valores) {
             sql +="'"+Valor+"'"+ ",";
         }

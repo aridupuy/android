@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="all">
+        <item
+            android:id="@+id/fecha_desde"
+            android:title="Desde"
+           />
+        <item
+            android:id="@+id/fecha_hasta"
+            android:title="Hasta"></item>
+        <item
+            android:id="@+id/ID"
+            android:title="Id" />
+        <item android:title="Nro Boleta"
+            android:id="@+id/nro_boleta">
+        </item>
+        <item android:title="Nombre"
+            android:id="@+id/nombre">
+        </item>
+        <item android:title="Mostrar"
+            android:id="@+id/mostrar">
+            <menu>
+                <group>
+                    <item
+                        android:title="Ingresos"
+                        android:id="@+id/ingresos"
+                        />
+                    <item
+                        android:title="Egresos"
+                        android:id="@+id/ingresos"
+                        />
+                    <item
+                        android:title="Débito automatico"
+                        android:id="@+id/debito_automatico"
+                        />
+                    <item
+                        android:title="Tarjeta_de_credito"
+                        android:id="@+id/tc"
+                        />
+                    <item
+                        android:title="Rapipago"
+                        android:id="@+id/rapipago"
+                        />
+                    <item
+                        android:title="Pago Facil"
+                        android:id="@+id/pagofacil"
+                        />
+                    <item
+                        android:title="Provincia Pagos"
+                        android:id="@+id/ppagos"
+                        />
+                    <item
+                        android:title="Cobro Express"
+                        android:id="@+id/cobroexpress"
+                        />
+                    <item
+                        android:title="Ripsa"
+                        android:id="@+id/ripsa"
+                        />
+                    <item
+                        android:title="Multipago"
+                        android:id="@+id/multipago"
+                        />
+                    <item
+                        android:title="Pago mis cuentas"
+                        android:id="@+id/pmc"
+                        />
+                    <item
+                        android:title="Bica"
+                        android:id="@+id/bica"
+                        />
+                    <item
+                        android:title="Pronto pago"
+                        android:id="@+id/prontopago"
+                        />
+                    <item
+                        android:title="Link Pagos"
+                        android:id="@+id/link"
+                        />
+                </group>
+            </menu>
+        </item>
+    </group>
+
+
+</menu>

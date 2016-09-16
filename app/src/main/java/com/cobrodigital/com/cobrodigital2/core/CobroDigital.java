@@ -134,9 +134,9 @@ public class CobroDigital {
                 array_a_enviar.put("filtros", filtros);
             ejecutar();
         } catch (Exception e) {
-            System.out.println(e.getLocalizedMessage());
+            System.out.println(e);
         }
-        if (obtener_resultado() == "1") {
+        if ( Integer.parseInt(obtener_resultado()) == 1) {
             return true;
         }
         return false;
