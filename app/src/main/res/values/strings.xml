@@ -15,4 +15,5 @@
     <string name="font_awesome_group_icon">&#xf0c0;</string>
     <string name="from_date">Fecha Desde</string>
     <string name="to_date">Fecha Hasta</string>
+    <string name="hint_password">escriba aqui...</string>
 </resources>

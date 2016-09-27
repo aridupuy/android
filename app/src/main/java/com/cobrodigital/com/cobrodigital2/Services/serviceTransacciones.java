@@ -18,6 +18,7 @@ import com.cobrodigital.com.cobrodigital2.R;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
@@ -55,13 +56,11 @@ public class serviceTransacciones extends Service {
                         Object transicion[] = respuesta.toArray();
                         try {
                             JSONArray datos = new JSONArray((String) transicion[0]);
-                            System.out.println(datos.length());
                             for (int i = 0; i < datos.length(); i++) {
                                 Transaccion transaccion=new Transaccion(getApplicationContext());
                                 transaccion=transaccion.leerTransaccion(datos.getJSONObject(i));
-                                System.out.println(transaccion);
-                                serviceTransacciones.total +=transaccion.get_Neto();
-                                transaccion.set();
+                                if(!transaccion.get_Info().contains("Retiro"))
+                                    serviceTransacciones.total +=transaccion.get_Neto();
                             }
                         } catch (Exception e) {
                             System.out.println(e.getMessage());
@@ -69,10 +68,15 @@ public class serviceTransacciones extends Service {
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                } catch (Exception e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
+                    e.getCause();
+                    e.getMessage();
+                    e.getLocalizedMessage();
+                }catch (Exception ex) {
+                    ex.printStackTrace();
                 }
-                if (serviceTransacciones.total > 0.0) {
+                if (serviceTransacciones.total != 0.0) {
                     long[] pattern = {500,500,};
                     Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                     NotificationManager nManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -88,10 +92,8 @@ public class serviceTransacciones extends Service {
                     nManager.notify(12345, builder.build());
                     serviceTransacciones.total=0;
                     }
-                System.out.println("Transacciones es 0");
                 }
         }).start();
-        System.out.println("termine");
         //this.stopSelf();
         return super.onStartCommand(intent, flags, startId);
     }

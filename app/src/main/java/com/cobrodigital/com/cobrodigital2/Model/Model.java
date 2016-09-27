@@ -19,6 +19,7 @@ import java.util.Vector;
  * Created by Ariel on 6/09/16.
  */
 public abstract class Model extends SQLiteOpenHelper{
+    protected final Boolean ACTIVAR_DEBUG=true;
     private final String PREFIJO_GETTER="get_";
     private final String PREFIJO_SETTER="set_";
     private static final String NOMBRE_BASE_DATOS = "CobroDigital.db";
@@ -33,13 +34,14 @@ public abstract class Model extends SQLiteOpenHelper{
         this.contexto=contexto;
         Vector<String> campos=get_campos();
         String columnas=""+getid_tabla()+" INTEGER PRIMARY KEY ";
-        System.out.println(columnas);
-
+        if (ACTIVAR_DEBUG)
+            System.out.println(columnas);
         for (String campo: campos) {
             columnas+=","+campo+" String";
         }
         String sql="CREATE TABLE IF NOT EXISTS "+this.getClass().getSimpleName()+"("+columnas+") ";
-        System.out.println(sql);
+        if (ACTIVAR_DEBUG)
+            System.out.println(sql);
         getWritableDatabase().execSQL(sql);
     }
     private Vector<String> get_campos(){
@@ -68,7 +70,8 @@ public abstract class Model extends SQLiteOpenHelper{
                 }
             }
         }
-        System.out.println(Values);
+        if (ACTIVAR_DEBUG)
+            System.out.println(Values);
         return Values;
     }
     public abstract int getId();
@@ -76,7 +79,6 @@ public abstract class Model extends SQLiteOpenHelper{
     public void set(){
         Vector<String> campos=this.get_campos();
         if(this.getId()==0) {
-            System.out.println("entro en insert");
             try {
                 this.insert(campos);
             }catch (Exception e){
@@ -84,7 +86,6 @@ public abstract class Model extends SQLiteOpenHelper{
             }
         }
         else{
-            System.out.println("entro en update");
             try {
                 this.update(campos);
             }catch (Exception e){
@@ -137,7 +138,6 @@ public abstract class Model extends SQLiteOpenHelper{
         for (String campo: campos) {
             sql+=campo+",";
         }
-        System.out.println("sql:"+sql);
         sql=sql.substring(0,sql.length()-1);
         sql+=") VALUES (";
         for (String Valor: Valores) {
@@ -145,9 +145,9 @@ public abstract class Model extends SQLiteOpenHelper{
         }
         sql=sql.substring(0,sql.length()-1);
         sql+=")";
-        System.out.println(sql);
+        if (ACTIVAR_DEBUG)
+            System.out.println(sql);
         getWritableDatabase().execSQL(sql);
-        System.out.println("inserte");
     }
     private void update(Vector<String> campos) throws InvocationTargetException, IllegalAccessException {
         String Tabla = this.getClass().getSimpleName();
@@ -158,10 +158,10 @@ public abstract class Model extends SQLiteOpenHelper{
             sql+=campo+"= '"+ Valores.get(i)+"', ";
             i++;
         }
-        System.out.println("sql:"+sql);
         sql=sql.substring(0,sql.length()-2);
         sql+=" WHERE "+getid_tabla()+"="+getId();
-        System.out.println(sql);
+        if (ACTIVAR_DEBUG)
+            System.out.println(sql);
         getWritableDatabase().execSQL(sql);
 
     }
@@ -178,10 +178,17 @@ public abstract class Model extends SQLiteOpenHelper{
     }
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1){
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + this.getClass().getSimpleName());
+        String sql="DROP TABLE IF EXISTS " + this.getClass().getSimpleName();
+        sqLiteDatabase.execSQL(sql);
+        if(ACTIVAR_DEBUG)
+            System.out.println("sql:"+sql);
         onCreate(sqLiteDatabase);
     }
     public Cursor Ejecutar_consulta(String sql, String [] args){
+        if(ACTIVAR_DEBUG){
+            System.out.println(sql);
+            System.out.println(args);
+        }
         return this.sqLiteDatabase.rawQuery(sql,args);
     }
 }

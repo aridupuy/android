@@ -1,35 +1,36 @@
 package com.cobrodigital.com.cobrodigital2;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.cobrodigital.com.cobrodigital2.Model.Credencial;
 import com.cobrodigital.com.cobrodigital2.Model.Transaccion;
-import com.cobrodigital.com.cobrodigital2.Services.serviceTransacciones;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -42,34 +43,35 @@ import java.util.Vector;
 /**
  * Created by Ariel on 28/08/16.
  */
-public class ListarTransacciones extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
+public class Transacciones extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
     private DatePickerDialog fromDatePickerDialog;
     private DatePickerDialog toDatePickerDialog;
     private SimpleDateFormat dateFormatter;
+    private String dato;
     private String fecha_desde;
     private String fecha_hasta;
-    public ListarTransacciones() {
+    public Transacciones() {
     }
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.tabla_transacciones);
         Credencial credencial=new Credencial(getApplicationContext());
         CobroDigital.credencial=credencial.obtenerCredencial();
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         setDateTimeField();
+        try {
+            this.listar();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarTransaccion);
         DrawerLayout drawerlayout = (DrawerLayout) findViewById(R.id.drawer_layout_transacciones);
         ActionBarDrawerToggle menu = new ActionBarDrawerToggle(
                 this, drawerlayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerlayout.setDrawerListener(menu);
         menu.syncState();
-        try {
-            this.listar();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+
     }
     private void setDateTimeField() {
         MenuItem fechaDesde=(MenuItem) findViewById(R.id.fecha_desde);
@@ -114,33 +116,43 @@ public class ListarTransacciones extends AppCompatActivity implements Navigation
     public void OnclickVolver(View view) {
         finish();
     }
-
     private void listar() throws ParseException {
         Credencial credencial;
-        CobroDigital cd;
+        CobroDigital core = null;
+        String hasta=fecha_hasta;
+        String desde=fecha_desde;
+        Vector<Transaccion>  transacciones=new Vector<Transaccion>();
         HashMap<String,String> variables=obtener_filtros();
         // Transaccion.(getApplicationContext(),variables.get("desde"),variables.get("hasta"),new HashMap<String, String>());
-        setContentView(R.layout.tabla_transacciones);
+        setContentView(R.layout.activity_transacciones);
         TableLayout tabla = (TableLayout) findViewById(R.id.tabla);
-        Vector<Transaccion>  transacciones=new Vector<Transaccion>();
         try {
             System.out.println("Busco en el ws");
             credencial = new Credencial(getApplicationContext());
-            cd= new CobroDigital(credencial.obtenerCredencial());
+            core= new CobroDigital(credencial.obtenerCredencial());
             LinkedHashMap filtros=new LinkedHashMap();
-            String desde=(String)variables.get("desde");
-            String hasta=(String)variables.get("hasta");
-            variables.remove("desde");
-            variables.remove("hasta");
-            if(cd.consultar_transacciones(desde, hasta, filtros)==true){
-                Object transicion[]= cd.obtener_datos().toArray();
+            if(variables.size()>0){
+                desde=(String)variables.get("desde");
+                hasta=(String)variables.get("hasta");
+                variables.remove("desde");
+                variables.remove("hasta");
+            }
+            else{
+                Date Fecha = new Date();
+                SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+                desde=format.format(Fecha);
+                hasta=format.format(Fecha);
+            }
+            core.consultar_transacciones(desde, hasta, filtros);
+            if(core.obtener_resultado().equals("1")){
+                Object transicion[]= core.obtener_datos().toArray();
                 if(transicion.length>0) {
-                    System.out.println(cd.obtener_datos().size());
                     JSONArray datos = new JSONArray((String) transicion[0]);
                     for (int i = 0; i < datos.length(); i++) {
                         Transaccion transaccion = new Transaccion(getApplicationContext());
                         transaccion = transaccion.leerTransaccion(datos.getJSONObject(i));
-                        transacciones.add(transaccion);
+                        if(transaccion!=null)
+                            transacciones.add(transaccion);
                     }
                 }
                 else{
@@ -149,12 +161,16 @@ public class ListarTransacciones extends AppCompatActivity implements Navigation
                 }
             }
             else{
-                System.out.println("Fallo la consulta");
+                System.out.println("Comunicacion fallida!");
                 return;
             }
 
         } catch (Exception e) {
             e.printStackTrace();
+            e.getCause();
+            e.getMessage();
+            e.getLocalizedMessage();
+            System.out.println(core.obtener_log());
         }
         for(Transaccion transaccion: transacciones) {
             TableRow row = new TableRow(this);
@@ -230,8 +246,16 @@ public class ListarTransacciones extends AppCompatActivity implements Navigation
     }
     private HashMap<String,String> obtener_filtros () throws ParseException{
         HashMap<String , String > filtros=new HashMap<String, String>();
-        EditText textdesde = (EditText) findViewById(R.id.fecha_desde);
-        EditText texthasta = (EditText) findViewById(R.id.fecha_hasta);
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyyMMdd", Locale.US);
+        String fecha;
+        if(fecha_desde!=null){
+            fecha=dateFormatter.format(fecha_desde);
+            filtros.put("desde",fecha);
+        }
+        if(fecha_hasta!=null){
+            fecha=dateFormatter.format(fecha_hasta);
+            filtros.put("hasta",fecha);
+        }
         //EditText nro_boleta = (EditText) findViewById(R.id.Nro_boleta);
        /* EditText id = (EditText) findViewById(R.id.ID);
         EditText nombre = (EditText) findViewById(R.id.Nombre);
@@ -255,20 +279,11 @@ public class ListarTransacciones extends AppCompatActivity implements Navigation
             filtros.put("ingresos",ingresos.getText().toString());*/
         return filtros;
     }
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
+        System.out.println("vouasdasdasdasdasd");
         if (id == R.id.action_settings) {
-            //al seleccionar esta opcion que valla a un menu de configuracion.
             return true;
         }
 
@@ -278,18 +293,23 @@ public class ListarTransacciones extends AppCompatActivity implements Navigation
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        System.out.println("voy por aca");
         if (id == R.id.fecha_desde) {
-            setDateTimeField();
+            fecha_desde=crear_alert_dialog();
+
         } else if (id == R.id.fecha_hasta) {
-            setDateTimeField();
+            fecha_hasta=crear_alert_dialog();
         }  else if (id == R.id.nav_manage) {
 
 
         } else if (id == R.id.nav_share) {
 
         }
-
+        try {
+            listar();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_transacciones);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -297,5 +317,24 @@ public class ListarTransacciones extends AppCompatActivity implements Navigation
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
     }
-
+    protected String crear_alert_dialog(){
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Ingrese filtro");
+        final EditText input = (EditText) findViewById(R.id.dato);
+        alert.setView(R.layout.menu_emergente);
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dato=input.getText().toString();
+            }
+        });
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog a = alert.create();
+        a.show();
+        return dato;
+    }
 }
+

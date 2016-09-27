@@ -136,7 +136,7 @@ public class CobroDigital {
         } catch (Exception e) {
             System.out.println(e);
         }
-        if ( Integer.parseInt(obtener_resultado()) == 1) {
+        if (obtener_resultado().equals("1")) {
             return true;
         }
         return false;
@@ -264,7 +264,9 @@ public class CobroDigital {
     }
 
     public String obtener_resultado() {
-        return (String) this.resultado.get("ejecucion_correcta");
+        if(this.resultado.size()>0 && ((String)this.resultado.get("ejecucion_correcta")).equals("1"))
+            return "1";
+        return "0";
     }
 
     public Vector obtener_log() {

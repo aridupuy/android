@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ListarTransacciones"
+            android:name=".Transacciones"
             android:label="@string/Transacciones"
             android:screenOrientation="portrait" />
         <activity

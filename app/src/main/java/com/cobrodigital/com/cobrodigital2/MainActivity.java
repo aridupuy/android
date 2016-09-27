@@ -1,7 +1,6 @@
 package com.cobrodigital.com.cobrodigital2;
 
 import android.Manifest;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -21,9 +20,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.cobrodigital.com.cobrodigital2.Clases.Loading_screen;
 import com.cobrodigital.com.cobrodigital2.Model.Credencial;
 import com.cobrodigital.com.cobrodigital2.Services.serviceBoot;
-import com.cobrodigital.com.cobrodigital2.Services.serviceTransacciones;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 import com.cobrodigital.com.cobrodigital2.core.Configuracion;
 import com.cobrodigital.com.cobrodigital2.core.LectorQR;
@@ -81,7 +80,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
               this.escanear();
             }
         } else if (id == R.id.nav_gallery) {
-            this.OnClickListarTransacciones(findViewById(R.layout.listar_transacciones));
+            this.OnClickListarTransacciones(findViewById(R.layout.activity_transacciones));
+            return true;
 
         }  else if (id == R.id.nav_manage) {
             this.Configurar();
@@ -103,8 +103,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.escanear();
     }
     public void OnClickListarTransacciones(View View) {
-        Intent transacciones = new Intent(getApplicationContext(), ListarTransacciones.class);
-        startActivity(transacciones);
+        Intent transacciones = new Intent(getApplicationContext(), Transacciones.class);
+        Loading_screen screen = new Loading_screen(MainActivity.this);
+        screen.execute(transacciones);
     }
     private void escanear() {
         Intent intent = new Intent("com.google.zxing.client.android.SCAN");
