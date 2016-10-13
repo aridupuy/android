@@ -23,7 +23,8 @@
                 android:textSize="0.2in"
                 android:layout_marginLeft="3dp"
                 android:text="@string/app_name"
-                android:gravity="fill_horizontal|center_vertical" />
+                android:gravity="fill_horizontal|center_vertical"
+                tools:ignore="RtlHardcoded" />
 
         </android.support.v7.widget.Toolbar>
 

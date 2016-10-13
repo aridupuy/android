@@ -16,4 +16,11 @@
     <string name="from_date">Fecha Desde</string>
     <string name="to_date">Fecha Hasta</string>
     <string name="hint_password">escriba aqui...</string>
+    <string name="saldo">Saldo</string>
+    <string name="ver_mas_movimientos">Ver Mas movimientos</string>
+    <string name="aaa">aaa</string>
+    <string name="con_ctate_con_tu_cuenta">Conéctate con tu cuenta</string>
+    <string name="cobrodigital_s_r_l">CobroDigital S.R.L.</string>
+    <string name="atencionaclientes_cobrodigital_coms">atencionaclientes@cobrodigital.coms</string>
+    <string name="cobrodigital">Cobrodigital</string>
 </resources>

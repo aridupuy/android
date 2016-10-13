@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
     android:background="@drawable/side_nav_bar"
@@ -14,23 +15,27 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="238dp"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
         android:src="@mipmap/ic_launcher"
-        android:layout_weight="0.75" />
+        android:layout_weight="0.75"
+        android:contentDescription="@string/cobrodigital"
+        android:adjustViewBounds="true"
+        android:cropToPadding="false"
+        android:layout_gravity="left"
+        tools:ignore="RtlHardcoded" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="CobroDigital S.R.L."
+        android:text="@string/cobrodigital_s_r_l"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="atencionaclientes@cobrodigital.coms" />
+        android:text="@string/atencionaclientes_cobrodigital_coms" />
 
 </LinearLayout>

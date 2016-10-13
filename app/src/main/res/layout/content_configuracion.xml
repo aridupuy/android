@@ -16,23 +16,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".core.Configuracion"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        tools:ignore="UselessParent"
+        android:gravity="bottom">
 
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="122dp"></LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="122dp" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="122dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -42,7 +29,8 @@
             android:textColor="#ede5e5"
             android:background="#e85252"
             android:layout_gravity="center_vertical|bottom"
-            android:onClick="onClickDesvincular" />
+            android:onClick="onClickDesvincular"
+            tools:ignore="HardcodedText" />
 
     </LinearLayout>
 </RelativeLayout>

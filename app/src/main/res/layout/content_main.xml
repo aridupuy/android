@@ -20,33 +20,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        tools:ignore="UselessParent"
+        android:gravity="bottom">
 
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="122dp"></LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="122dp" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="122dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:text="Conéctate con tu cuenta"
+            android:text="@string/con_ctate_con_tu_cuenta"
             android:id="@+id/textView7"
             android:gravity="center_vertical|center_horizontal"
             android:textColor="#ede5e5"
             android:background="#e85252"
-            android:layout_gravity="center_vertical|bottom"
             android:onClick="onClickEscanear" />
 
     </LinearLayout>

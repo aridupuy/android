@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,6 +45,7 @@ import java.util.Vector;
  * Created by Ariel on 28/08/16.
  */
 public class Transacciones extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
+    final private int cantidad_transacciones_a_mostrar=10;
     private DatePickerDialog fromDatePickerDialog;
     private DatePickerDialog toDatePickerDialog;
     private SimpleDateFormat dateFormatter;
@@ -100,18 +102,8 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
 
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
     }
-    public void onClick(View view) {
-        if(view == findViewById(R.id.fecha_desde)) {
-            fromDatePickerDialog.show();
-        } else if(view == findViewById(R.id.fecha_hasta)) {
-            toDatePickerDialog.show();
-        }
-    }
     public void OnClickVer(View view) throws ParseException {
         try{listar();}catch (ParseException e){System.out.println(e.getMessage());}
-    }
-    public void OnClickFiltro(View view) throws ParseException {
-        listar();
     }
     public void OnclickVolver(View view) {
         finish();
@@ -172,39 +164,38 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
             e.getLocalizedMessage();
             System.out.println(core.obtener_log());
         }
-        for(Transaccion transaccion: transacciones) {
+        Transaccion transaccion=null;
+        String saldo="";
+
+        for(int i=0; i< this.cantidad_transacciones_a_mostrar && i<transacciones.size();i++) {
+            transaccion=(Transaccion) transacciones.get(i);
             TableRow row = new TableRow(this);
+            row.setGravity(Gravity.CENTER_HORIZONTAL);
             row.setBackgroundResource(R.drawable.celda);
             TextView celda = new TextView(this);
             celda.setTextSize(9);
-            celda.setPadding(5, 5, 5, 5);
+            celda.setPadding(10, 10, 10, 10);
             celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
             celda.setText(transaccion.get_Fecha());
             row.addView(celda);
             celda = new TextView(this);
             celda.setTextSize(9);
-            celda.setPadding(5, 5, 5, 5);
+            celda.setPadding(10, 10, 10, 10);
             celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
             celda.setText(transaccion.get_Nro_boleta());
             celda.setTextSize(9);
-            celda.setPadding(5, 5, 5, 5);
+            celda.setPadding(10, 10, 10, 10);
             celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
             row.addView(celda);
             celda = new TextView(this);
+            celda.setTextSize(9);
+            celda.setPadding(10, 10, 10, 10);
+            celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
             celda.setText( transaccion.get_Identificacion());
-            celda.setTextSize(9);
-            celda.setPadding(5, 5, 5, 5);
-            celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
             row.addView(celda);
             celda = new TextView(this);
             celda.setTextSize(9);
-            celda.setPadding(5, 5, 5, 5);
-            celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-            celda.setText( transaccion.get_Nombre());
-            row.addView(celda);
-            celda = new TextView(this);
-            celda.setTextSize(9);
-            celda.setPadding(5, 5, 5, 5);
+            celda.setPadding(10, 10, 10, 10);
             celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
             celda.setText( transaccion.get_Info());
             row.addView(celda);
@@ -215,34 +206,20 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
             celda.setText((String)concepto);
             celda.setTextSize(9);
             celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-            celda.setPadding(5, 5, 5, 5);
+            celda.setPadding(10, 10, 10, 10);
             row.addView(celda);
             celda = new TextView(this);
             celda.setTextSize(9);
-            celda.setPadding(5, 5, 5, 5);
+            celda.setPadding(10, 10, 10, 10);
             celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-            celda.setText( transaccion.get_Bruto());
+            celda.setText("$"+String.valueOf(transaccion.get_Neto()));
             row.addView(celda);
-            celda = new TextView(this);
-            celda.setTextSize(9);
-            celda.setPadding(5, 5, 5, 5);
-            celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-            celda.setText( transaccion.get_Comision());
-            row.addView(celda);
-            celda = new TextView(this);
-            celda.setTextSize(9);
-            celda.setPadding(5, 5, 5, 5);
-            celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-            celda.setText(String.valueOf(transaccion.get_Neto()));
-            row.addView(celda);
-            celda = new TextView(this);
-            celda.setTextSize(9);
-            celda.setPadding(5, 5, 5, 5);
-            celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-            celda.setText( transaccion.get_Saldo_acumulado());
-            row.addView(celda);
+            saldo=transaccion.get_Saldo_acumulado();
             tabla.addView(row);
         }
+        TextView Saldo_vista=(TextView) findViewById(R.id.Saldo);
+        Saldo_vista.setText("$"+saldo);
+
     }
     private HashMap<String,String> obtener_filtros () throws ParseException{
         HashMap<String , String > filtros=new HashMap<String, String>();
@@ -282,11 +259,9 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        System.out.println("vouasdasdasdasdasd");
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
     @SuppressWarnings("StatementWithEmptyBody")

@@ -20,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.cobrodigital.com.cobrodigital2.Clases.Loading_screen;
 import com.cobrodigital.com.cobrodigital2.Model.Credencial;
 import com.cobrodigital.com.cobrodigital2.Services.serviceBoot;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
@@ -104,8 +103,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     public void OnClickListarTransacciones(View View) {
         Intent transacciones = new Intent(getApplicationContext(), Transacciones.class);
-        Loading_screen screen = new Loading_screen(MainActivity.this);
-        screen.execute(transacciones);
+        startActivity(transacciones);
+        //screen.execute(transacciones);
     }
     private void escanear() {
         Intent intent = new Intent("com.google.zxing.client.android.SCAN");
