@@ -21,7 +21,7 @@ import java.util.LinkedHashMap;
 import java.util.Vector;
 
 public class serviceTransacciones extends Service {
-    private static final String TAG = "Transacciones";
+    private static final String TAG = "transacciones";
     public static float total;
 
     public Thread service;
@@ -75,7 +75,7 @@ public class serviceTransacciones extends Service {
                             .setVibrate(pattern)
                             .setSound(alarmSound)
                             .setStyle(new NotificationCompat.InboxStyle())
-                            .setContentTitle("Transacciones")
+                            .setContentTitle("transacciones")
                             .setContentText("Se han recaudado $" + serviceTransacciones.total + " el dia de hoy")
                             .setWhen(System.currentTimeMillis());
                     nManager.notify(12345, builder.build());
