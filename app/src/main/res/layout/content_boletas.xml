@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_boletas"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.cobrodigital.com.cobrodigital2.Boletas"
+    tools:showIn="@layout/activity_boletas"
+    android:orientation="vertical"
+    tools:ignore="ExtraText"
+    android:gravity="center"
+    android:layout_marginTop="?attr/actionBarSize"
+    >
+
+    <TextView
+        android:text="Generar Boletas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:textSize="36sp"
+        tools:ignore="HardcodedText" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/campo_a_buscar"
+        android:hint="@string/campo_a_buscar"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintBottom_toTopOf="@+id/concepto"
+        app:layout_constraintRight_toRightOf="@+id/concepto"
+
+        android:maxLines="1" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/identificador"
+        android:hint="@string/valor"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintBottom_toTopOf="@+id/campo_a_buscar"
+        app:layout_constraintRight_toRightOf="@+id/campo_a_buscar"
+        android:maxLines="1" />
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/concepto"
+        android:hint="@string/concepto"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintBottom_toTopOf="@+id/importe_1"
+        app:layout_constraintRight_toRightOf="@+id/importe_1"
+        android:maxLines="1" />
+    <EditText
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/fecha_1"
+        android:hint="@string/fecha_1er_vto"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintBottom_toTopOf="@+id/importe_2"
+        app:layout_constraintRight_toRightOf="@+id/importe_2"
+        android:maxLines="1" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/importe_1"
+        android:hint="@string/importe_1"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintBottom_toTopOf="@+id/fecha_1"
+        app:layout_constraintRight_toRightOf="@+id/fecha_1"
+        android:maxLines="1" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/fecha_2"
+        android:hint="@string/fecha_2do_vto"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintBottom_toTopOf="@+id/importe_3"
+        app:layout_constraintRight_toRightOf="@+id/importe_2"
+        android:maxLines="1" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/importe_2"
+        android:hint="@string/importe_2"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintBottom_toTopOf="@+id/fecha_2"
+        tools:layout_editor_absoluteX="70dp"
+        android:maxLines="1" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/fecha_3"
+        android:hint="@string/fecha_3er_vto"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintBottom_toTopOf="@+id/button5"
+        app:layout_constraintRight_toRightOf="@+id/importe_3"
+        android:maxLines="1" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        tools:layout_editor_absoluteY="422dp"
+        android:id="@+id/importe_3"
+        android:hint="@string/importe_3"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintRight_toRightOf="@+id/fecha_2"
+        android:maxLines="1" />
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal">
+        <Button
+            android:text="@string/aceptar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button4"
+            tools:ignore="ButtonStyle,MissingConstraints"
+            app:layout_constraintRight_toRightOf="@+id/fecha_3"
+            app:layout_constraintTop_toBottomOf="@+id/fecha_3" />
+
+        <Button
+            android:text="@string/cancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteY="514dp"
+            tools:layout_editor_absoluteX="78dp"
+            android:id="@+id/button5"
+            tools:ignore="ButtonStyle,MissingConstraints" />
+
+    </LinearLayout>
+</LinearLayout>

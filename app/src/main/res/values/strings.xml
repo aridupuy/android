@@ -23,4 +23,16 @@
     <string name="cobrodigital_s_r_l">CobroDigital S.R.L.</string>
     <string name="atencionaclientes_cobrodigital_coms">atencionaclientes@cobrodigital.coms</string>
     <string name="cobrodigital">Cobrodigital</string>
+    <string name="title_activity_boletas">Boletas</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="campo_a_buscar">Campo a buscar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="concepto">Concepto</string>
+    <string name="fecha_1er_vto">Fecha 1er vto</string>
+    <string name="fecha_2do_vto">Fecha 2do vto</string>
+    <string name="fecha_3er_vto">Fecha 3er vto</string>
+    <string name="importe_1">Importe 1</string>
+    <string name="importe_2">Importe 2</string>
+    <string name="importe_3">Importe 3</string>
+    <string name="valor">Valor</string>
 </resources>

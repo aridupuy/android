@@ -1,6 +1,5 @@
 package com.cobrodigital.com.cobrodigital2.Services;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
@@ -10,24 +9,15 @@ import android.net.Uri;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
-
-import com.cobrodigital.com.cobrodigital2.Model.Credencial;
+import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_credenciales;
 import com.cobrodigital.com.cobrodigital2.Model.Transaccion;
 import com.cobrodigital.com.cobrodigital2.R;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
-
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.Locale;
-import java.util.TimerTask;
 import java.util.Vector;
 
 public class serviceTransacciones extends Service {
@@ -47,8 +37,7 @@ public class serviceTransacciones extends Service {
             @Override
             public void run() {
                 try {
-                    Credencial credencial= new Credencial(getApplicationContext());
-                    CobroDigital cobroDigital = new CobroDigital(credencial.obtenerCredencial());
+                    CobroDigital cobroDigital = new CobroDigital(Gestor_de_credenciales.re_asociar(getApplicationContext()));
                     cobroDigital.consultar_transacciones(format.format(Fecha), format.format(Fecha), new LinkedHashMap());
                     Vector respuesta = cobroDigital.obtener_datos();
                     serviceTransacciones.total = 0;

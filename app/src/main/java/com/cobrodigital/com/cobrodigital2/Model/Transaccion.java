@@ -1,22 +1,10 @@
 package com.cobrodigital.com.cobrodigital2.Model;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.widget.TableRow;
-import android.widget.TextView;
-
-import com.cobrodigital.com.cobrodigital2.R;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Vector;
-
 public class Transaccion extends Model {
 
     final private String ID_Tabla="id_transaccion";

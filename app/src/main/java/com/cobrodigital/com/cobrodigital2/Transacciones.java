@@ -2,7 +2,6 @@ package com.cobrodigital.com.cobrodigital2;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.NavigationView;
@@ -13,25 +12,18 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
-import com.cobrodigital.com.cobrodigital2.Model.Credencial;
+import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_credenciales;
+import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
 import com.cobrodigital.com.cobrodigital2.Model.Transaccion;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
-
 import org.json.JSONArray;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -45,7 +37,7 @@ import java.util.Vector;
  * Created by Ariel on 28/08/16.
  */
 public class Transacciones extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
-    final private int cantidad_transacciones_a_mostrar=10;
+    final private int cantidad_transacciones_a_mostrar=20;
     private DatePickerDialog fromDatePickerDialog;
     private DatePickerDialog toDatePickerDialog;
     private SimpleDateFormat dateFormatter;
@@ -56,8 +48,7 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
     }
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Credencial credencial=new Credencial(getApplicationContext());
-        CobroDigital.credencial=credencial.obtenerCredencial();
+        Gestor_de_credenciales.re_asociar(getApplicationContext());
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -109,7 +100,6 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
         finish();
     }
     private void listar() throws ParseException {
-        Credencial credencial;
         CobroDigital core = null;
         String hasta=fecha_hasta;
         String desde=fecha_desde;
@@ -120,8 +110,7 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
         TableLayout tabla = (TableLayout) findViewById(R.id.tabla);
         try {
             System.out.println("Busco en el ws");
-            credencial = new Credencial(getApplicationContext());
-            core= new CobroDigital(credencial.obtenerCredencial());
+            core= new CobroDigital(Gestor_de_credenciales.re_asociar(getApplicationContext()));
             LinkedHashMap filtros=new LinkedHashMap();
             if(variables.size()>0){
                 desde=(String)variables.get("desde");
@@ -149,11 +138,14 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
                 }
                 else{
                     System.out.println("No hay datos disponibles");
-                    return;
+                    Gestor_de_mensajes_usuario.mensaje("No hay datos disponibles.",getApplicationContext());
+                    finish();
                 }
             }
             else{
                 System.out.println("Comunicacion fallida!");
+                Gestor_de_mensajes_usuario.mensaje("Comunicacion fallida!",getApplicationContext());
+                finish();
                 return;
             }
 

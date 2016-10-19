@@ -1,18 +1,13 @@
 package com.cobrodigital.com.cobrodigital2.Model;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.security.Key;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 import java.util.Vector;
 
 /**
@@ -42,7 +37,15 @@ public abstract class Model extends SQLiteOpenHelper{
         String sql="CREATE TABLE IF NOT EXISTS "+this.getClass().getSimpleName()+"("+columnas+") ";
         if (ACTIVAR_DEBUG)
             System.out.println(sql);
-        getWritableDatabase().execSQL(sql);
+        int pasa=0;
+        while(pasa==0) {
+            try {
+                getWritableDatabase().execSQL(sql);
+                pasa = 1;
+            } catch (Exception e) {
+                pasa = 0;
+            }
+        }
     }
     private Vector<String> get_campos(){
         Field [] Campos=this.getClass().getDeclaredFields();

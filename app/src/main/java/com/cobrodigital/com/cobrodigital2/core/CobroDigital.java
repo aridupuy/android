@@ -5,10 +5,8 @@ package com.cobrodigital.com.cobrodigital2.core;
 import android.os.StrictMode;
 
 import com.cobrodigital.com.cobrodigital2.Model.Credencial;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -20,15 +18,11 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Vector;
-
 import javax.net.ssl.HttpsURLConnection;
-//import org.json.simple.JSONArray;
-//import org.json.simple.JSONObject;
 
 public class CobroDigital {
     public static Credencial credencial;

@@ -1,18 +1,7 @@
 package com.cobrodigital.com.cobrodigital2.core;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.support.v4.app.ActivityCompat;
-import android.util.JsonReader;
-import android.widget.Toast;
-
-import java.util.HashMap;
-
 import com.cobrodigital.com.cobrodigital2.Model.Credencial;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 public class LectorQR extends Activity {

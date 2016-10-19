@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_credenciales;
+import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
 import com.cobrodigital.com.cobrodigital2.MainActivity;
 import com.cobrodigital.com.cobrodigital2.R;
 
@@ -46,8 +48,8 @@ public class Configuracion extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     public void onClickDesvincular(View view){
-        CobroDigital.credencial.BorrarCredencial();
-        Toast.makeText(getApplicationContext(),"se ha desvinculado correctamente.",Toast.LENGTH_SHORT).show();
+        Gestor_de_credenciales.desasociar(getApplicationContext());
+        Gestor_de_mensajes_usuario.mensaje("se ha desvinculado correctamente.",getApplicationContext());
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

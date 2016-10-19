@@ -1,0 +1,65 @@
+package com.cobrodigital.com.cobrodigital2;
+
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+
+import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
+import com.cobrodigital.com.cobrodigital2.Model.Boleta;
+import com.cobrodigital.com.cobrodigital2.Model.Transaccion;
+import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
+
+import org.json.JSONArray;
+
+import java.util.Vector;
+
+public class Boletas extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_boletas);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+   }
+    protected void generar_boleta(String identificador, String campo_a_buscar, String concepto, String fecha_1, String importe_1, String modelo, String fecha_2, String importe_2, String fecha_3, String importe_3){
+        try {
+            CobroDigital core=new CobroDigital(CobroDigital.credencial);
+            Vector<Boleta> boletas=new Vector<Boleta>();
+            core.generar_boleta(identificador, campo_a_buscar, concepto, fecha_1, importe_1, modelo, fecha_2, importe_2, fecha_3, importe_3);
+            Boleta boleta=new Boleta(getApplicationContext());
+            if(core.obtener_resultado().equals("1")){
+                Object transicion[]= core.obtener_datos().toArray();
+                if(transicion.length>0) {
+                    JSONArray datos = new JSONArray((String) transicion[0]);
+                    for (int i = 0; i < datos.length(); i++) {
+                        boleta = boleta.leerBoleta(datos.getJSONObject(i));
+                        if(boleta!=null)
+                            boletas.add(boleta);
+                    }
+                    Gestor_de_mensajes_usuario.mensaje("Boleta generada correctamente.",getApplicationContext());
+                }
+                else{
+                    System.out.println("No hay datos disponibles");
+                    Gestor_de_mensajes_usuario.mensaje("No hay datos disponibles.",getApplicationContext());
+                    finish();
+                }
+            }
+            else{
+                System.out.println("Comunicacion fallida!");
+                Gestor_de_mensajes_usuario.mensaje("Comunicacion fallida!",getApplicationContext());
+                finish();
+                return;
+            }
+
+        } catch (Exception e) {
+            Gestor_de_mensajes_usuario.mensaje(e.getMessage(),getApplicationContext());
+        }
+
+    }
+
+}

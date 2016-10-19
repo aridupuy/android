@@ -18,13 +18,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.cobrodigital.com.cobrodigital2.Model.Credencial;
+import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_credenciales;
+import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
 import com.cobrodigital.com.cobrodigital2.Services.serviceBoot;
-import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 import com.cobrodigital.com.cobrodigital2.core.Configuracion;
-import com.cobrodigital.com.cobrodigital2.core.LectorQR;
 
 import org.json.JSONException;
 
@@ -75,8 +73,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            if (CobroDigital.credencial == null) {
+            if (!Gestor_de_credenciales.esta_asociado()) {
               this.escanear();
+            }
+            else{
+                Gestor_de_mensajes_usuario.mensaje("Usted ya esta asociado a una cuenta CobroDigital.",getApplicationContext());
             }
         } else if (id == R.id.nav_gallery) {
             this.OnClickListarTransacciones(findViewById(R.layout.activity_transacciones));
@@ -87,6 +88,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.nav_share) {
 
+        }
+        else if(id==R.id.nav_view){
+            generar_boleta();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -116,14 +120,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(pagador);
     }
     private void ejecutar(){
-        Credencial credencial= new Credencial(getApplicationContext());
-        credencial.onCreate(credencial.getWritableDatabase());
-        CobroDigital.credencial = credencial.obtenerCredencial();
+        Gestor_de_credenciales.re_asociar(getApplicationContext());
         setContentView(R.layout.activity_main);
-        if(CobroDigital.credencial!=null){
-            credencial.set(); //revisar que no se hagan updates al cuete
+        if(Gestor_de_credenciales.esta_asociado()){
             View cuenta=findViewById(R.id.textView7);
             ((ViewGroup) cuenta.getParent()).removeView(cuenta);
+            startActivity(new Intent(this,Transacciones.class));
         }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -136,32 +138,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         serviceBoot sb=new serviceBoot(this.getApplicationContext());
         sb.startTimer();
     }
+    private void generar_boleta(){
+        startActivity(new Intent(this,Boletas.class));
+    }
     @Override
     //capturo el resultado del scanner
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
-                String contents = intent.getStringExtra("SCAN_RESULT");
-                LectorQR lectorQR=new LectorQR(getApplicationContext());
-                try{
-                  CobroDigital.credencial=lectorQR.leer(contents);
-                }catch (JSONException e){
-                    Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
-                }
-
-                CobroDigital.credencial.set();
-
+                Gestor_de_credenciales.asociar(getApplicationContext(),intent);
+                Gestor_de_mensajes_usuario.mensaje("Usuario loggeado correctamente.",getApplicationContext());
             } else if (resultCode == RESULT_CANCELED) {
-                Toast toast = Toast.makeText(this, "La operación fué cancelada",Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.TOP, 25, 400);
-                toast.show();
+                Gestor_de_mensajes_usuario mensajes_usuario=new Gestor_de_mensajes_usuario(getApplicationContext());
+                mensajes_usuario.mensaje("La operación fué cancelada");
             }
         }
         ejecutar();
-        Toast toast = Toast.makeText(getApplicationContext(),"Usuario loggeado correctamente.",Toast.LENGTH_SHORT);
-        toast.show();
     }
-
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);

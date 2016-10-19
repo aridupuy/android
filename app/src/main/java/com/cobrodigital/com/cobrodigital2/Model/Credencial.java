@@ -1,16 +1,10 @@
 package com.cobrodigital.com.cobrodigital2.Model;
 
-import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-
-import com.cobrodigital.com.cobrodigital2.MainActivity;
-
 import java.util.HashMap;
-import java.util.Vector;
-
 /**
  * Created by Ariel on 6/09/16.
  */
