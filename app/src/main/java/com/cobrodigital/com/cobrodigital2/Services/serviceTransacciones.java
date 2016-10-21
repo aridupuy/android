@@ -37,7 +37,8 @@ public class serviceTransacciones extends Service {
             @Override
             public void run() {
                 try {
-                    CobroDigital cobroDigital = new CobroDigital(Gestor_de_credenciales.re_asociar(getApplicationContext()));
+                    Gestor_de_credenciales.re_asociar(getApplicationContext());
+                    CobroDigital cobroDigital = new CobroDigital(CobroDigital.credencial);
                     cobroDigital.consultar_transacciones(format.format(Fecha), format.format(Fecha), new LinkedHashMap());
                     Vector respuesta = cobroDigital.obtener_datos();
                     serviceTransacciones.total = 0;

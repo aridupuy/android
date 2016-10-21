@@ -13,18 +13,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_credenciales;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
+import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_personalizacion;
 import com.cobrodigital.com.cobrodigital2.Services.serviceBoot;
+import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 import com.cobrodigital.com.cobrodigital2.core.Configuracion;
-
-import org.json.JSONException;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     @Override
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     public void OnClickListarTransacciones(View View) {
         Intent transacciones = new Intent(getApplicationContext(), Transacciones.class);
-        startActivity(transacciones);
+        //startActivity(transacciones);
         //screen.execute(transacciones);
     }
     private void escanear() {
@@ -120,12 +120,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(pagador);
     }
     private void ejecutar(){
-        Gestor_de_credenciales.re_asociar(getApplicationContext());
         setContentView(R.layout.activity_main);
-        if(Gestor_de_credenciales.esta_asociado()){
-            View cuenta=findViewById(R.id.textView7);
+        if(Gestor_de_credenciales.esta_asociado()!=false || (Gestor_de_credenciales.re_asociar(getApplicationContext()))!=false) {
+            View cuenta = findViewById(R.id.textView7);
             ((ViewGroup) cuenta.getParent()).removeView(cuenta);
-            startActivity(new Intent(this,Transacciones.class));
+            startActivity(new Intent(this, Transacciones.class));
         }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -147,6 +146,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
                 Gestor_de_credenciales.asociar(getApplicationContext(),intent);
+                if(!Gestor_de_personalizacion.set_estructura_clientes(this.getApplicationContext()))
+                    Gestor_de_mensajes_usuario.mensaje("Error al obtener opciones personales.",getApplicationContext());
                 Gestor_de_mensajes_usuario.mensaje("Usuario loggeado correctamente.",getApplicationContext());
             } else if (resultCode == RESULT_CANCELED) {
                 Gestor_de_mensajes_usuario mensajes_usuario=new Gestor_de_mensajes_usuario(getApplicationContext());

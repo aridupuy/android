@@ -14,8 +14,10 @@ public class Credencial extends Model{
     private int Id;
     private String sid;
     private String IdComercio;
+    final private String unique="IdComercio";
     public Credencial(Context contexto) {
         super(contexto);
+
     }
     public int getId(){
         return Id;
@@ -38,19 +40,14 @@ public class Credencial extends Model{
     public String get_sid(){
         return sid;
     }
-    public static Credencial newInstance(Context context) {
-        Bundle args = new Bundle();
-        Credencial fragment = new Credencial(context);
-        return fragment;
-    }
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         super.onCreate(sqLiteDatabase);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        super.onUpgrade(sqLiteDatabase, i, i1);
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
     }
     public Credencial obtenerCredencial(){
         Cursor recordset=this.select(new HashMap<String, String>());
@@ -61,11 +58,17 @@ public class Credencial extends Model{
             this.sid=recordset.getString(recordset.getColumnIndex("sid"));
             recordset.moveToNext();
         }
-        if(IdComercio==null || sid==null)
+        if(this.IdComercio==null || this.sid==null)
             return null;
         return this;
     }
-    public void BorrarCredencial(){
-        this.delete();
+    public boolean BorrarCredencial(){
+        if(this.delete())
+            return true;
+        return false;
+    }
+    @Override
+    public String getunique(){
+        return unique;
     }
 }

@@ -13,16 +13,17 @@ import org.json.JSONObject;
 public class Boleta extends Model {
     private String id_tabla="Nro_boleta";
     private String nro_boleta;
-    String identificador;
-    String campo_a_buscar;
-    String concepto;
-    String fecha_1;
-    String importe_1;
-    String modelo;
-    String fecha_2;
-    String importe_2;
-    String fecha_3;
-    String importe_3;
+    private String identificador;
+    private String campo_a_buscar;
+    private String concepto;
+    private String fecha_1;
+    private String importe_1;
+    private String modelo;
+    private String fecha_2;
+    private String importe_2;
+    private String fecha_3;
+    private String importe_3;
+    private String unique=ID_Tabla;
 
     public String getNro_boleta() {
         return nro_boleta;
@@ -151,5 +152,10 @@ public class Boleta extends Model {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         super.onUpgrade(sqLiteDatabase, i, i1);
+    }
+
+    @Override
+    public String getunique() {
+        return unique;
     }
 }

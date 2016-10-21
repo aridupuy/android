@@ -26,21 +26,29 @@ public abstract class Model extends SQLiteOpenHelper{
     private SQLiteDatabase sqLiteDatabase;
     public Model(Context contexto){
         super(contexto,NOMBRE_BASE_DATOS,null,VERSION_ACTUAL);
+        SQLiteDatabase db =getWritableDatabase();
+        db.execSQL("PRAGMA foreign_keys = ON");
         this.contexto=contexto;
         Vector<String> campos=get_campos();
-        String columnas=""+getid_tabla()+" INTEGER PRIMARY KEY ";
-        if (ACTIVAR_DEBUG)
-            System.out.println(columnas);
+        String columnas=""+getid_tabla()+" STRING PRIMARY KEY ";
         for (String campo: campos) {
-            columnas+=","+campo+" String";
+            if(campo!=getid_tabla()) {
+                System.out.println(campo);
+                System.out.println(getunique());
+                if (campo == getunique())
+                    columnas += "," + campo + " String UNIQUE";
+                else
+                    columnas += "," + campo + " String";
+            }
         }
-        String sql="CREATE TABLE IF NOT EXISTS "+this.getClass().getSimpleName()+"("+columnas+") ";
+
+        String sql="CREATE TABLE IF NOT EXISTS "+this.getClass().getSimpleName()+"("+columnas+")";
         if (ACTIVAR_DEBUG)
             System.out.println(sql);
         int pasa=0;
         while(pasa==0) {
             try {
-                getWritableDatabase().execSQL(sql);
+                db.execSQL(sql);
                 pasa = 1;
             } catch (Exception e) {
                 pasa = 0;
@@ -49,10 +57,27 @@ public abstract class Model extends SQLiteOpenHelper{
     }
     private Vector<String> get_campos(){
         Field [] Campos=this.getClass().getDeclaredFields();
-        Vector<String> columnas=new Vector<String>();
-        for (Field campo: Campos) {
-            if (!campo.getName().equals("Id") && !campo.getName().equals("ID_Tabla") && !campo.getName().equals("contexto"))
+        Vector<String> columnas = new Vector<String>();
+        for (Field campo : Campos) {
+            if (!campo.getName().equals("Id") && !campo.getName().equals("ID_Tabla") && !campo.getName().equals("contexto") && !campo.getName().equals("campos")&& !campo.getName().equals("unique")&& !campo.getName().equals("campos_variables"))
                 columnas.add((String) campo.getName());
+        if(campo.getName()=="campos_variables"){
+            Method[] metodos=this.getClass().getDeclaredMethods();
+            for (Method metodo:metodos)
+                if (metodo.getName() == "get_campos_variables") {
+                    try {
+                        Vector<String> campos = (Vector<String>) metodo.invoke(this, (Object[]) null);
+                        for (String valor : campos) {
+                            columnas.add(valor);
+                        }
+                    }catch (IllegalAccessException i){
+                        System.out.println("Error en el acceso");
+                    }
+                    catch (InvocationTargetException e){
+                        System.out.println("Error no se puede invocar el metodo");
+                    }
+                }
+        }
         }
         return columnas;
     }
@@ -104,6 +129,7 @@ public abstract class Model extends SQLiteOpenHelper{
         return recordSet;
     }
     public Cursor select(HashMap<String,String> Variables){
+        SQLiteDatabase db=getWritableDatabase();
         String Tabla=this.getClass().getSimpleName();
         String sql="SELECT * FROM "+Tabla;
 
@@ -131,7 +157,7 @@ public abstract class Model extends SQLiteOpenHelper{
             sql+=where;
         }
         System.out.println(sql);
-        Cursor RecordSet=getReadableDatabase().rawQuery(sql,array);
+        Cursor RecordSet=db.rawQuery(sql,array);
         return RecordSet;
     }
     private void insert(Vector<String> campos) throws InvocationTargetException, IllegalAccessException {
@@ -168,12 +194,14 @@ public abstract class Model extends SQLiteOpenHelper{
         getWritableDatabase().execSQL(sql);
 
     }
-    public void delete(){
+    public boolean delete(){
         String Tabla = this.getClass().getSimpleName();
-        String sql="DELETE FROM "+Tabla+" ";
-        sql+="WHERE "+getid_tabla()+"="+getId();
-        System.out.println(sql);
-        getWritableDatabase().execSQL(sql);
+        String where=""+getid_tabla()+"=?";
+        String [] args={String.valueOf(getId())};
+        if(getWritableDatabase().delete(Tabla,where,args)>0) {
+            return true;
+        }
+        return false;
     }
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
@@ -194,4 +222,5 @@ public abstract class Model extends SQLiteOpenHelper{
         }
         return this.sqLiteDatabase.rawQuery(sql,args);
     }
-}
+    public abstract String getunique();
+    }

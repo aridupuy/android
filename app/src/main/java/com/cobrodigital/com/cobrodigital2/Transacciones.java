@@ -100,7 +100,7 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
         finish();
     }
     private void listar() throws ParseException {
-        CobroDigital core = null;
+
         String hasta=fecha_hasta;
         String desde=fecha_desde;
         Vector<Transaccion>  transacciones=new Vector<Transaccion>();
@@ -110,7 +110,8 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
         TableLayout tabla = (TableLayout) findViewById(R.id.tabla);
         try {
             System.out.println("Busco en el ws");
-            core= new CobroDigital(Gestor_de_credenciales.re_asociar(getApplicationContext()));
+            if(Gestor_de_credenciales.re_asociar(getApplicationContext()));
+                CobroDigital core = new CobroDigital(CobroDigital.credencial);
             LinkedHashMap filtros=new LinkedHashMap();
             if(variables.size()>0){
                 desde=(String)variables.get("desde");
@@ -154,7 +155,6 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
             e.getCause();
             e.getMessage();
             e.getLocalizedMessage();
-            System.out.println(core.obtener_log());
         }
         Transaccion transaccion=null;
         String saldo="";
@@ -262,10 +262,10 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
         int id = item.getItemId();
         System.out.println("voy por aca");
         if (id == R.id.fecha_desde) {
-            fecha_desde=crear_alert_dialog();
+
 
         } else if (id == R.id.fecha_hasta) {
-            fecha_hasta=crear_alert_dialog();
+
         }  else if (id == R.id.nav_manage) {
 
 
@@ -284,24 +284,6 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
     }
-    protected String crear_alert_dialog(){
-        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("Ingrese filtro");
-        final EditText input = (EditText) findViewById(R.id.dato);
-        alert.setView(R.layout.menu_emergente);
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                dato=input.getText().toString();
-            }
-        });
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                dialog.cancel();
-            }
-        });
-        AlertDialog a = alert.create();
-        a.show();
-        return dato;
-    }
+
 }
 

@@ -144,4 +144,9 @@ public class Transaccion extends Model {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         super.onUpgrade(sqLiteDatabase, i, i1);
     }
+
+    @Override
+    public String getunique() {
+        return null;
+    }
 }

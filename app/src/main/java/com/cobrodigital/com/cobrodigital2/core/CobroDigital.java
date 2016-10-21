@@ -5,6 +5,8 @@ package com.cobrodigital.com.cobrodigital2.core;
 import android.os.StrictMode;
 
 import com.cobrodigital.com.cobrodigital2.Model.Credencial;
+import com.cobrodigital.com.cobrodigital2.Model.Personalizacion;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.BufferedReader;
@@ -26,15 +28,12 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class CobroDigital {
     public static Credencial credencial;
+    public static Personalizacion personalizacion;
     private static final String URL  = "https://www.cobrodigital.com:14365/ws3/";
     public LinkedHashMap resultado = new LinkedHashMap();
     protected String metodo_web_service = "";
     protected String method = "POST";
     protected LinkedHashMap<Object, Object> array_a_enviar = new LinkedHashMap();
-//    protected String idComercio = null;
-//    protected String sid = null;
-
-
     public CobroDigital(Credencial credencial) throws Exception{
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -56,7 +55,12 @@ public class CobroDigital {
         this.credencial.set_IdComercio(idComercio);
         this.credencial.set_sid(sid);
     }
-
+    public String consultar_estructura_pagadores() throws Exception {
+        System.out.println("Pagador2");
+        this.metodo_web_service = "consultar_estructura_pagadores";
+        this.ejecutar();
+        return  this.obtener_resultado();
+    }
     //Funciones que dan una interfaz al usuario///
     public String crear_pagador(LinkedHashMap nuevo_pagador) throws Exception {
         this.metodo_web_service = "crear_pagador";
@@ -190,7 +194,7 @@ public class CobroDigital {
             response += inputLine;
         }
         JSONObject jo = new JSONObject(response);
-        JSONArray logs = jo.getJSONArray("log");
+
         Vector log = new Vector();
         Vector dato = new Vector();
         if (jo.has("datos")) {
@@ -201,6 +205,7 @@ public class CobroDigital {
             }
         }
         if (jo.has("log")) {
+            JSONArray logs=jo.getJSONArray("log");
             for (int j = 0; j < logs.length(); j++) {
                 String logstring = logs.getString(j);
                 log.add(j, (logstring));
@@ -258,7 +263,7 @@ public class CobroDigital {
     }
 
     public String obtener_resultado() {
-        if(this.resultado.size()>0 && ((String)this.resultado.get("ejecucion_correcta")).equals("1"))
+        if(this.resultado.size()>0 && (((String)this.resultado.get("ejecucion_correcta")).equals("1")))
             return "1";
         return "0";
     }
@@ -266,4 +271,5 @@ public class CobroDigital {
     public Vector obtener_log() {
         return (Vector) this.resultado.get("log");
     }
+
 }

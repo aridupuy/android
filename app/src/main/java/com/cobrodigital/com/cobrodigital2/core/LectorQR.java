@@ -9,12 +9,11 @@ public class LectorQR extends Activity {
     public LectorQR(Context context){
         this.context=context;
     }
-    public Credencial leer(String content) throws JSONException {
+    public void leer(String content) throws JSONException {
         JSONObject jsonObject = new JSONObject(content);
-        Credencial credencial = new Credencial(context);
-        credencial.set_IdComercio(jsonObject.getString("IdComercio").toString());
-        credencial.set_sid(jsonObject.getString("sid"));
-        return credencial;
+        CobroDigital.credencial= new Credencial(context);
+        CobroDigital.credencial.set_IdComercio(jsonObject.getString("IdComercio").toString());
+        CobroDigital.credencial.set_sid(jsonObject.getString("sid"));
     }
 
 }

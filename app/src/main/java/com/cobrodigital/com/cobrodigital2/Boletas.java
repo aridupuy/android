@@ -6,8 +6,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
+import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_personalizacion;
 import com.cobrodigital.com.cobrodigital2.Model.Boleta;
 import com.cobrodigital.com.cobrodigital2.Model.Transaccion;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
@@ -21,9 +25,11 @@ public class Boletas extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_boletas);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        this.cargar_spiner();
 
    }
     protected void generar_boleta(String identificador, String campo_a_buscar, String concepto, String fecha_1, String importe_1, String modelo, String fecha_2, String importe_2, String fecha_3, String importe_3){
@@ -60,6 +66,13 @@ public class Boletas extends AppCompatActivity {
             Gestor_de_mensajes_usuario.mensaje(e.getMessage(),getApplicationContext());
         }
 
+    }
+    private void cargar_spiner(){
+        Gestor_de_personalizacion gp=new Gestor_de_personalizacion();
+        Vector<String>estructura_clientes=gp.get_estructura_clientes(getApplicationContext());
+        Spinner spinner= (Spinner) findViewById(R.id.campo_a_buscar);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, estructura_clientes);
+        spinner.setAdapter(arrayAdapter);
     }
 
 }
