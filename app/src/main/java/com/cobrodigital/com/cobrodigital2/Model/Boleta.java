@@ -3,27 +3,58 @@ package com.cobrodigital.com.cobrodigital2.Model;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
  * Created by ariel on 14/10/16.
  */
-
+@DatabaseTable (tableName = "Boleta")
 public class Boleta extends Model {
-    private String id_tabla="Nro_boleta";
+    @DatabaseField(id = true,index = true)
     private String nro_boleta;
+    @DatabaseField
     private String identificador;
+    @DatabaseField
     private String campo_a_buscar;
+    @DatabaseField
     private String concepto;
+    @DatabaseField
     private String fecha_1;
+    @DatabaseField
     private String importe_1;
+    @DatabaseField
     private String modelo;
+    @DatabaseField
     private String fecha_2;
+    @DatabaseField
     private String importe_2;
+    @DatabaseField
     private String fecha_3;
+    @DatabaseField
     private String importe_3;
-    private String unique=ID_Tabla;
+
+    public Boleta(Context contexto, String nro_boleta, String identificador, String campo_a_buscar, String concepto, String fecha_1, String importe_1, String modelo, String fecha_2, String importe_2, String fecha_3, String importe_3) {
+        super(contexto);
+        this.nro_boleta = nro_boleta;
+        this.identificador = identificador;
+        this.campo_a_buscar = campo_a_buscar;
+        this.concepto = concepto;
+        this.fecha_1 = fecha_1;
+        this.importe_1 = importe_1;
+        this.modelo = modelo;
+        this.fecha_2 = fecha_2;
+        this.importe_2 = importe_2;
+        this.fecha_3 = fecha_3;
+        this.importe_3 = importe_3;
+    }
+
+    public Boleta(Context Context) {
+        super(Context);
+    }
 
     public String getNro_boleta() {
         return nro_boleta;
@@ -113,22 +144,9 @@ public class Boleta extends Model {
         this.importe_3 = importe_3;
     }
 
-    public String getid_tabla(){
-        return this.id_tabla;
-    }
-    public int getId() {
-        return Integer.parseInt(nro_boleta);
-    }
-
-    public void setId(String id) {
-        this.nro_boleta= id;
-    }
-    public Boleta(Context contexto) {
-        super(contexto);
-    }
     public Boleta leerBoleta(JSONObject dato ){
         try{
-            this.setId((String) dato.get("Nro_boleta"));
+            this.setNro_boleta((String) dato.get("Nro_boleta"));
             this.setIdentificador((String) dato.get("identificador"));
             this.setCampo_a_buscar((String) dato.get("campo_a_buscar"));
             this.setConcepto((String) dato.get("concepto"));
@@ -144,18 +162,5 @@ public class Boleta extends Model {
             return null;
         }
         return this;
-    }
-    @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        super.onCreate(sqLiteDatabase);
-    }
-    @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        super.onUpgrade(sqLiteDatabase, i, i1);
-    }
-
-    @Override
-    public String getunique() {
-        return unique;
     }
 }

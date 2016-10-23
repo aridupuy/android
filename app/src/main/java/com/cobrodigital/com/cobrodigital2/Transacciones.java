@@ -168,13 +168,13 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
             celda.setTextSize(9);
             celda.setPadding(10, 10, 10, 10);
             celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-            celda.setText(transaccion.get_Fecha());
+            celda.setText(transaccion.getFecha());
             row.addView(celda);
             celda = new TextView(this);
             celda.setTextSize(9);
             celda.setPadding(10, 10, 10, 10);
             celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-            celda.setText(transaccion.get_Nro_boleta());
+            celda.setText(transaccion.getNro_boleta());
             celda.setTextSize(9);
             celda.setPadding(10, 10, 10, 10);
             celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
@@ -183,16 +183,16 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
             celda.setTextSize(9);
             celda.setPadding(10, 10, 10, 10);
             celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-            celda.setText( transaccion.get_Identificacion());
+            celda.setText( transaccion.getIdentificacion());
             row.addView(celda);
             celda = new TextView(this);
             celda.setTextSize(9);
             celda.setPadding(10, 10, 10, 10);
             celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-            celda.setText( transaccion.get_Info());
+            celda.setText( transaccion.getInfo());
             row.addView(celda);
             celda = new TextView(this);
-            Object concepto = transaccion.get_Concepto();
+            Object concepto = transaccion.getConcepto();
             if (concepto.toString() == "null")
                 concepto = "";
             celda.setText((String)concepto);
@@ -204,9 +204,9 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
             celda.setTextSize(9);
             celda.setPadding(10, 10, 10, 10);
             celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-            celda.setText("$"+String.valueOf(transaccion.get_Neto()));
+            celda.setText("$"+String.valueOf(transaccion.getNeto()));
             row.addView(celda);
-            saldo=transaccion.get_Saldo_acumulado();
+            saldo=transaccion.getSaldo_acumulado();
             tabla.addView(row);
         }
         TextView Saldo_vista=(TextView) findViewById(R.id.Saldo);

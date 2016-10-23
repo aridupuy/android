@@ -8,6 +8,8 @@ import com.cobrodigital.com.cobrodigital2.core.LectorQR;
 
 import org.json.JSONException;
 
+import java.sql.SQLException;
+
 /**
  * Created by ariel on 14/10/16.
  */
@@ -30,19 +32,34 @@ public class Gestor_de_credenciales {
         }catch (JSONException e){
             Gestor_de_mensajes_usuario.mensaje(e.getMessage(),context);
         }
-        CobroDigital.credencial.set();
+        try {
+            CobroDigital.credencial.guardar(CobroDigital.credencial);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return;
+        }
     }
     public static Boolean re_asociar(Context context){
-        CobroDigital.credencial = new Credencial(context).obtenerCredencial();
+        try {
+            CobroDigital.credencial = new Credencial(context).obtenerCredencial();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
         if(CobroDigital.credencial!=null)
             return true;
         return false;
 
     }
     public static boolean desasociar(Context context){
+        try {
+            if(CobroDigital.credencial.BorrarCredencial())
+                return true;
 
-        if(CobroDigital.credencial.BorrarCredencial())
-            return true;
+        }catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
         return false;
     }
 }

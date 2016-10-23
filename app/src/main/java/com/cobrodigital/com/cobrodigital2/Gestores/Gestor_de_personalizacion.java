@@ -7,6 +7,8 @@ import com.cobrodigital.com.cobrodigital2.Model.Pagador;
 import com.cobrodigital.com.cobrodigital2.Model.Personalizacion;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -25,7 +27,7 @@ public class Gestor_de_personalizacion {
                 }
                 Pagador pagador=new Pagador(context);
                 pagador.set_campos_variables(Personalizacion.estructura);
-                pagador.set();
+                pagador.guardar(pagador);
                 return true;
             }catch (Exception e){
                 System.out.println("error");
@@ -36,16 +38,13 @@ public class Gestor_de_personalizacion {
                 return false;
             }
         }
-        public Vector<String> get_estructura_clientes(Context context){
+        public Vector<String> get_estructura_clientes(Context context) throws SQLException {
             Pagador pagador=new Pagador(context);
-            Cursor RecordSet=pagador.select(null);
-            if(RecordSet.getCount()<0){
+            List<Object> pagadores=pagador.select();
+            if(pagadores.size()<0){
                 return null;
             }
-            RecordSet.moveToFirst();
-            String [] estructura=RecordSet.getColumnNames();
-            Vector<String>estr=new Vector<String>();
-            estr.copyInto(estructura);
-            return estr;
+            pagador=(Pagador)(pagadores.get(0));
+            return pagador.get_campos_variables();
         }
 }

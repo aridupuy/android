@@ -49,8 +49,8 @@ public class serviceTransacciones extends Service {
                             for (int i = 0; i < datos.length(); i++) {
                                 Transaccion transaccion=new Transaccion(getApplicationContext());
                                 transaccion=transaccion.leerTransaccion(datos.getJSONObject(i));
-                                if(!transaccion.get_Info().contains("Retiro"))
-                                    serviceTransacciones.total +=transaccion.get_Neto();
+                                if(!transaccion.getInfo().contains("Retiro"))
+                                    serviceTransacciones.total +=transaccion.getNeto();
                             }
                         } catch (Exception e) {
                             System.out.println(e.getMessage());

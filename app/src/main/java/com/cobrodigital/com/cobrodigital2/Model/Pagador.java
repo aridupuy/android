@@ -2,23 +2,24 @@ package com.cobrodigital.com.cobrodigital2.Model;
 
 import android.content.Context;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import java.util.Vector;
 
 /**
  * Created by ariel on 20/10/16.
  */
-
+@DatabaseTable(tableName = "Pagador")
 public class Pagador extends Model{
-    int id;
-    final private String ID_Tabla="id_pagador";
+    @DatabaseField(id = true,unique = true)
+    int id_Pagador;
+    @DatabaseField(unique = true)
     Vector<String> campos_variables;
-    private String unique=ID_Tabla;
 
 
     public Pagador(Context context){
         super(context);
-
-
     }
     public Vector<String> get_campos_variables(){
         return campos_variables;
@@ -26,19 +27,4 @@ public class Pagador extends Model{
     public void set_campos_variables(Vector<String> campos){
         this.campos_variables=campos;
     }
-    @Override
-    public int getId() {
-        return 0;
-    }
-
-    @Override
-    public String getid_tabla() {
-        return ID_Tabla;
-    }
-
-    @Override
-    public String getunique() {
-        return unique;
-    }
-
 }
