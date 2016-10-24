@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
+import com.cobrodigital.com.cobrodigital2.Factory.credencialFactory;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.support.ConnectionSource;
@@ -21,34 +22,32 @@ import java.util.Objects;
 @DatabaseTable(tableName = "Credencial")
 public class Credencial extends Model{
 
-
     @DatabaseField(id=true, index = true)
     private int Id_credencial;
     @DatabaseField(unique = true)
     private String sid;
     @DatabaseField(unique = true)
     private String IdComercio;
-
+    protected Context context;
     public Credencial(String IdComercio,String sid,Context context) {
         super(context);
         set_IdComercio(IdComercio);
         set_sid(sid);
-        Dao<Credencial,Integer> dao=null;
-        factory(dao,context,this.getClass());
     }
-
-    public Credencial(Context context) {
+    public Credencial(Context context){
         super(context);
+        this.context=context;
+    }
+    public Credencial(){
+        super(null);
     }
 
     public int getId_credencial() {
         return Id_credencial;
     }
-
     public void setId_credencial(int id_credencial) {
         Id_credencial = id_credencial;
     }
-
     public void set_IdComercio(String IdComercio){
         this.IdComercio=IdComercio;
     }
@@ -62,21 +61,11 @@ public class Credencial extends Model{
         return sid;
     }
 
-    @Override
-    public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
-
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
-
-    }
-
-    public Credencial obtenerCredencial() throws SQLException{
-        List<Object> Credenciales=(List<Object>)this.select();
+    public Credencial obtenerCredencial() throws SQLException, ClassNotFoundException {
+        credencialFactory factory=new credencialFactory(context);
+        List<Credencial> Credenciales=(List<Credencial>)factory.select();
         if(Credenciales.size()>0)
-            for (Object Objeto:Credenciales) {
-                Credencial credencial=(Credencial)Objeto;
+            for (Credencial credencial:Credenciales) {
                 this.Id_credencial=credencial.getId_credencial();
                 this.IdComercio=credencial.get_IdComercio();
                 this.sid=credencial.get_sid();
@@ -86,9 +75,11 @@ public class Credencial extends Model{
             return null;
         return this;
     }
-    public boolean BorrarCredencial() throws SQLException{
-        if(this.delete(this))
+    public boolean BorrarCredencial() throws SQLException, ClassNotFoundException {
+        credencialFactory factory=new credencialFactory(this.context);
+        if(factory.delete(this))
             return true;
         return false;
     }
+
 }

@@ -2,6 +2,7 @@ package com.cobrodigital.com.cobrodigital2.Model;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.AvoidXfermode;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
@@ -24,7 +25,7 @@ public abstract class Model extends OrmLiteSqliteOpenHelper {
     private Dao dao;
     public Model(Context contexto) {
         super(contexto, NOMBRE_BASE_DATOS, null, VERSION_ACTUAL);
-
+        return;
     }
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
@@ -38,28 +39,6 @@ public abstract class Model extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
 
     }
-    void factory(Dao dao, Context context, Class clase) {
-        base= OpenHelperManager.getHelper(context,this.getClass());
-        try{
-            dao=base.getDao(clase);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-    public void guardar(Object objeto) throws SQLException{
-        dao.create(objeto);
-    }
-    public List<Object>select() throws SQLException {
-        return dao.queryForAll();
-    }
-    public List<Object> select(Map<String,Object> objects) throws SQLException{
-        return dao.queryForFieldValues(objects);
-    }
-    public  boolean delete(Object object) throws SQLException {
-        if(dao.delete(object)!=0)
-            return true;
-        return false;
-    }
+
 
 }

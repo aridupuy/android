@@ -3,6 +3,7 @@ package com.cobrodigital.com.cobrodigital2.Gestores;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.cobrodigital.com.cobrodigital2.Factory.pagadorFactory;
 import com.cobrodigital.com.cobrodigital2.Model.Pagador;
 import com.cobrodigital.com.cobrodigital2.Model.Personalizacion;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
@@ -27,7 +28,8 @@ public class Gestor_de_personalizacion {
                 }
                 Pagador pagador=new Pagador(context);
                 pagador.set_campos_variables(Personalizacion.estructura);
-                pagador.guardar(pagador);
+                pagadorFactory factory=new pagadorFactory();
+                factory.guardar(pagador);
                 return true;
             }catch (Exception e){
                 System.out.println("error");
@@ -40,11 +42,12 @@ public class Gestor_de_personalizacion {
         }
         public Vector<String> get_estructura_clientes(Context context) throws SQLException {
             Pagador pagador=new Pagador(context);
-            List<Object> pagadores=pagador.select();
+            pagadorFactory factory=new pagadorFactory();
+            List<Pagador> pagadores=factory.select();
             if(pagadores.size()<0){
                 return null;
             }
-            pagador=(Pagador)(pagadores.get(0));
+            pagador=pagadores.get(0);
             return pagador.get_campos_variables();
         }
 }

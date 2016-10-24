@@ -2,6 +2,8 @@ package com.cobrodigital.com.cobrodigital2.Gestores;
 
 import android.content.Context;
 import android.content.Intent;
+
+import com.cobrodigital.com.cobrodigital2.Factory.credencialFactory;
 import com.cobrodigital.com.cobrodigital2.Model.Credencial;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 import com.cobrodigital.com.cobrodigital2.core.LectorQR;
@@ -31,20 +33,30 @@ public class Gestor_de_credenciales {
             lectorQR.leer(contents);
         }catch (JSONException e){
             Gestor_de_mensajes_usuario.mensaje(e.getMessage(),context);
+            e.printStackTrace();
+
+            return;
         }
         try {
-            CobroDigital.credencial.guardar(CobroDigital.credencial);
+            credencialFactory factory=new credencialFactory(context);
+            factory.guardar(CobroDigital.credencial);
         } catch (SQLException e) {
             e.printStackTrace();
             return;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
     public static Boolean re_asociar(Context context){
         try {
-            CobroDigital.credencial = new Credencial(context).obtenerCredencial();
+            Credencial credencial = new Credencial(context);
+            CobroDigital.credencial=credencial.obtenerCredencial();
+            System.out.println(credencial);
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
         if(CobroDigital.credencial!=null)
             return true;
@@ -59,6 +71,9 @@ public class Gestor_de_credenciales {
         }catch (SQLException e){
             e.printStackTrace();
             return false;
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
         return false;
     }

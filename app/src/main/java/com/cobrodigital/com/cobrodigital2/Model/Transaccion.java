@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
+import com.cobrodigital.com.cobrodigital2.Factory.transaccionFactory;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.types.DoubleObjectType;
@@ -40,7 +41,7 @@ public class Transaccion extends Model {
     private String neto;
     @DatabaseField
     private String saldo_acumulado;
-
+    private static Transaccion instance;
     public Transaccion(Context contexto, String id_transaccion, String fecha, String nro_boleta, String identificacion, String nombre, String info, String concepto, String bruto, String comision, String neto, String saldo_acumulado) {
         super(contexto);
         this.id_transaccion = id_transaccion;
@@ -54,14 +55,16 @@ public class Transaccion extends Model {
         this.comision = comision;
         this.neto = neto;
         this.saldo_acumulado = saldo_acumulado;
-        Dao<Transaccion,Integer>dao=null;
-        factory(dao,contexto,this.getClass());
     }
 
     public Transaccion(Context Context) {
         super(Context);
     }
-
+    public Transaccion getInstance(Context context){
+        if(instance==null)
+            instance= new Transaccion(context);
+        return instance;
+    }
 
     public String getId_transaccion() {
         return id_transaccion;
@@ -178,7 +181,8 @@ public class Transaccion extends Model {
         if(grabar==true){
             //if(select_ultima_transaccion()==obtener_ultima_transaccion_json(dato))//ver mas adenlate
          try {
-             tr.guardar(tr);
+             transaccionFactory factory=new transaccionFactory();
+             factory.guardar(tr);
          }catch (SQLException e){
              e.printStackTrace();
          }

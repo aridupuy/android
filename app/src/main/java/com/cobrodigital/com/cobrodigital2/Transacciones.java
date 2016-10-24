@@ -110,8 +110,11 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
         TableLayout tabla = (TableLayout) findViewById(R.id.tabla);
         try {
             System.out.println("Busco en el ws");
-            if(Gestor_de_credenciales.re_asociar(getApplicationContext()));
-                CobroDigital core = new CobroDigital(CobroDigital.credencial);
+            CobroDigital core;
+            if(Gestor_de_credenciales.esta_asociado())
+                core = new CobroDigital(CobroDigital.credencial);
+            else
+                return;
             LinkedHashMap filtros=new LinkedHashMap();
             if(variables.size()>0){
                 desde=(String)variables.get("desde");
