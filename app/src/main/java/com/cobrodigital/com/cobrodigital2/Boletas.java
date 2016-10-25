@@ -35,12 +35,11 @@ public class Boletas extends AppCompatActivity {
    }
     protected void generar_boleta(String identificador, String campo_a_buscar, String concepto, String fecha_1, String importe_1, String modelo, String fecha_2, String importe_2, String fecha_3, String importe_3){
         try {
-            CobroDigital core=new CobroDigital(CobroDigital.credencial);
             Vector<Boleta> boletas=new Vector<Boleta>();
-            core.generar_boleta(identificador, campo_a_buscar, concepto, fecha_1, importe_1, modelo, fecha_2, importe_2, fecha_3, importe_3);
+            CobroDigital.webservice.webservice_boleta.generar_boleta(identificador, campo_a_buscar, concepto, fecha_1, importe_1, modelo, fecha_2, importe_2, fecha_3, importe_3);
             Boleta boleta=new Boleta(getApplicationContext());
-            if(core.obtener_resultado().equals("1")){
-                Object transicion[]= core.obtener_datos().toArray();
+            if(CobroDigital.webservice.obtener_resultado().equals("1")){
+                Object transicion[]= CobroDigital.webservice.obtener_datos().toArray();
                 if(transicion.length>0) {
                     JSONArray datos = new JSONArray((String) transicion[0]);
                     for (int i = 0; i < datos.length(); i++) {
@@ -74,6 +73,8 @@ public class Boletas extends AppCompatActivity {
         try {
             estructura_clientes = gp.get_estructura_clientes(getApplicationContext());
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         Spinner spinner= (Spinner) findViewById(R.id.campo_a_buscar);

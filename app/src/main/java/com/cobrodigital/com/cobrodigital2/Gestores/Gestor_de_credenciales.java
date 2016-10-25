@@ -57,6 +57,8 @@ public class Gestor_de_credenciales {
             return false;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         if(CobroDigital.credencial!=null)
             return true;

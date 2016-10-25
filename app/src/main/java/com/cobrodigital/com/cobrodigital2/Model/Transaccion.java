@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import com.cobrodigital.com.cobrodigital2.Factory.transaccionFactory;
+import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.types.DoubleObjectType;
@@ -16,10 +17,10 @@ import org.json.JSONObject;
 import java.sql.SQLException;
 
 @DatabaseTable(tableName = "Transaccion")
-public class Transaccion extends Model {
+public class Transaccion{
 
 
-    @DatabaseField(id = true,unique = true)
+    @DatabaseField(id = true,unique = true,index = true)
     private String id_transaccion;
     @DatabaseField
     private String fecha;
@@ -41,9 +42,7 @@ public class Transaccion extends Model {
     private String neto;
     @DatabaseField
     private String saldo_acumulado;
-    private static Transaccion instance;
-    public Transaccion(Context contexto, String id_transaccion, String fecha, String nro_boleta, String identificacion, String nombre, String info, String concepto, String bruto, String comision, String neto, String saldo_acumulado) {
-        super(contexto);
+    public Transaccion(String id_transaccion, String fecha, String nro_boleta, String identificacion, String nombre, String info, String concepto, String bruto, String comision, String neto, String saldo_acumulado) {
         this.id_transaccion = id_transaccion;
         this.fecha = fecha;
         this.nro_boleta = nro_boleta;
@@ -57,13 +56,8 @@ public class Transaccion extends Model {
         this.saldo_acumulado = saldo_acumulado;
     }
 
-    public Transaccion(Context Context) {
-        super(Context);
-    }
-    public Transaccion getInstance(Context context){
-        if(instance==null)
-            instance= new Transaccion(context);
-        return instance;
+    public Transaccion() {
+
     }
 
     public String getId_transaccion() {
@@ -139,7 +133,7 @@ public class Transaccion extends Model {
     }
 
     public Double getNeto() {
-        return Double.parseDouble(neto);
+        return Double.parseDouble(neto.replace(".","").replace(",","."));
     }
 
     public void setNeto(String neto) {
@@ -152,7 +146,7 @@ public class Transaccion extends Model {
     public void setSaldo_acumulado(String saldo_acumulado) {
         this.saldo_acumulado = saldo_acumulado;
     }
-    public Transaccion leerTransaccion(JSONObject dato ){
+    public Transaccion leerTransaccion(Context context,JSONObject dato){
         try{
             this.setId_transaccion((String) dato.get("id_transaccion"));
             this.setFecha((String) dato.get("Fecha"));
@@ -170,24 +164,20 @@ public class Transaccion extends Model {
             this.setComision((String)dato.get("Comisión"));
             this.setNeto((String)dato.get("Neto"));
             this.setSaldo_acumulado((String)dato.get("Saldo acumulado"));
+            transaccionFactory factory = new transaccionFactory(context);
+            factory.guardar(this);
         } catch (JSONException e1) {
             System.out.println(e1.getMessage());
+            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return this;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
             return null;
         }
         return this;
     }
-    public Transaccion leerTransaccion(JSONObject dato ,boolean grabar){
-        Transaccion tr=leerTransaccion(dato);
-        if(grabar==true){
-            //if(select_ultima_transaccion()==obtener_ultima_transaccion_json(dato))//ver mas adenlate
-         try {
-             transaccionFactory factory=new transaccionFactory();
-             factory.guardar(tr);
-         }catch (SQLException e){
-             e.printStackTrace();
-         }
-        }
-        return tr;
-    }
+
 
 }

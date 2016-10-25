@@ -1,6 +1,7 @@
 package com.cobrodigital.com.cobrodigital2.Model;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.AvoidXfermode;
 
@@ -17,28 +18,36 @@ import java.util.Map;
 /**
  * Created by Ariel on 6/09/16.
  */
-public abstract class Model extends OrmLiteSqliteOpenHelper {
+public class Model extends OrmLiteSqliteOpenHelper {
     protected final Boolean ACTIVAR_DEBUG = true;
     private static final String NOMBRE_BASE_DATOS = "CobroDigital.db";
+    private static final String PASSWORD="estoescobrodigitalbitch";
     private static final int VERSION_ACTUAL = 1;
-    OrmLiteSqliteOpenHelper base;
+    public static OrmLiteSqliteOpenHelper base;
+    private Model instance;
     private Dao dao;
     public Model(Context contexto) {
         super(contexto, NOMBRE_BASE_DATOS, null, VERSION_ACTUAL);
-        return;
     }
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
-        try {
-            TableUtils.createTable(connectionSource,this.getClass());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
+
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
 
     }
-
-
+    public Dao<Credencial,Integer> getCredencialDao() throws SQLException {
+        return getDao(Credencial.class);
+    }
+    public Dao<Transaccion,Integer> getTransaccionDao() throws SQLException {
+        return getDao(Transaccion.class);
+    }
+    public Dao<Pagador,Integer> getPagadorDao() throws SQLException {
+        return getDao(Pagador.class);
+    }
+    @Override
+    public void close() {
+        super.close();
+    }
 }

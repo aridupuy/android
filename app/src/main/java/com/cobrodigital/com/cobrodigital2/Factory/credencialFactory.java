@@ -3,9 +3,12 @@ package com.cobrodigital.com.cobrodigital2.Factory;
 import android.content.Context;
 
 import com.cobrodigital.com.cobrodigital2.Model.Credencial;
+import com.cobrodigital.com.cobrodigital2.Model.Model;
+import com.cobrodigital.com.cobrodigital2.Model.Transaccion;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -24,9 +27,9 @@ public class credencialFactory {
         return instance;
     }
     public credencialFactory(Context context) throws ClassNotFoundException, SQLException {
-        OrmLiteSqliteOpenHelper base= OpenHelperManager.getHelper(context,Credencial.class);
-        this.dao=base.getDao(Credencial.class);
-
+        OrmLiteSqliteOpenHelper helper= OpenHelperManager.getHelper(context,Model.class);
+        TableUtils.createTableIfNotExists(helper.getConnectionSource(),Credencial.class);
+        this.dao=helper.getDao(Credencial.class);
     }
     public void guardar(Credencial objeto) throws SQLException {
         dao.create(objeto);

@@ -97,23 +97,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    private void Configurar() {
-        Intent configuracion = new Intent(this, Configuracion.class);
-        startActivity(configuracion);
-
-    }
     public void onClickEscanear(View view){
         this.escanear();
     }
     public void OnClickListarTransacciones(View View) {
         Intent transacciones = new Intent(getApplicationContext(), Transacciones.class);
-        //startActivity(transacciones);
-        //screen.execute(transacciones);
+        startActivity(transacciones);
     }
     private void escanear() {
         Intent intent = new Intent("com.google.zxing.client.android.SCAN");
         intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
         startActivityForResult(intent, 0);
+    }
+    private void Configurar() {
+        Intent configuracion = new Intent(this, Configuracion.class);
+        startActivity(configuracion);
+
     }
     public void OnClickPagadorNew(View view) {
         Intent pagador = new Intent(getApplicationContext(), Pagador.class);
@@ -122,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void ejecutar(){
         setContentView(R.layout.activity_main);
         if(Gestor_de_credenciales.esta_asociado()!=false || (Gestor_de_credenciales.re_asociar(getApplicationContext()))!=false) {
+            Gestor_de_personalizacion.obtener_estructura_clientes(getApplicationContext());
             View cuenta = findViewById(R.id.textView7);
             ((ViewGroup) cuenta.getParent()).removeView(cuenta);
             startActivity(new Intent(this, Transacciones.class));
@@ -134,6 +134,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
         serviceBoot sb=new serviceBoot(this.getApplicationContext());
         sb.startTimer();
     }

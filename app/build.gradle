@@ -65,4 +65,6 @@ dependencies {
     compile 'com.j256.ormlite:ormlite-core:4.48'
     compile 'com.j256.ormlite:ormlite-android:4.48'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta1'
+    compile 'com.android.support:support-v4:13.0.+'
+    compile 'com.android.support:recyclerview-v7:24.2.0'
 }

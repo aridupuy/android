@@ -39,16 +39,16 @@ public class serviceTransacciones extends Service {
                 try {
                     Gestor_de_credenciales.re_asociar(getApplicationContext());
                     CobroDigital cobroDigital = new CobroDigital(CobroDigital.credencial);
-                    cobroDigital.consultar_transacciones(format.format(Fecha), format.format(Fecha), new LinkedHashMap());
-                    Vector respuesta = cobroDigital.obtener_datos();
+                    cobroDigital.webservice.webservice_transacciones.consultar_transacciones(format.format(Fecha), format.format(Fecha), new LinkedHashMap());
+                    Vector respuesta = cobroDigital.webservice.obtener_datos();
                     serviceTransacciones.total = 0;
                     if (respuesta != null) {
                         Object transicion[] = respuesta.toArray();
                         try {
                             JSONArray datos = new JSONArray((String) transicion[0]);
                             for (int i = 0; i < datos.length(); i++) {
-                                Transaccion transaccion=new Transaccion(getApplicationContext());
-                                transaccion=transaccion.leerTransaccion(datos.getJSONObject(i));
+                                Transaccion transaccion=new Transaccion();
+                                transaccion=transaccion.leerTransaccion(getApplicationContext(),datos.getJSONObject(i));
                                 if(!transaccion.getInfo().contains("Retiro"))
                                     serviceTransacciones.total +=transaccion.getNeto();
                             }

@@ -1,0 +1,39 @@
+package com.cobrodigital.com.cobrodigital2.Webservice;
+
+import java.util.LinkedHashMap;
+
+/**
+ * Created by ariel on 25/10/16.
+ */
+
+public class Webservice_pagador extends Webservice{
+    public static String consultar_estructura_pagadores() throws Exception {
+        metodo_web_service = "consultar_estructura_pagadores";
+        ejecutar();
+        return  obtener_resultado();
+    }
+    public static String existe_pagador(String identificador, String dato_a_buscar) throws Exception {
+        metodo_web_service = "existe_pagador";
+        array_a_enviar.put("identificador", identificador);
+        array_a_enviar.put("buscar", dato_a_buscar);
+        ejecutar();
+        return obtener_resultado();
+    }
+    public static String crear_pagador(LinkedHashMap nuevo_pagador) throws Exception {
+        metodo_web_service = "crear_pagador";
+        array_a_enviar.put("pagador", nuevo_pagador);
+        ejecutar();
+        return obtener_resultado();
+    }
+
+    public static String editar_pagador(String identificador, String campo_a_buscar, LinkedHashMap nuevo_pagador) throws Exception {
+        metodo_web_service = "editar_pagador";
+        array_a_enviar.put("identificador", identificador);
+        array_a_enviar.put("buscar", campo_a_buscar);
+        array_a_enviar.put("pagador", nuevo_pagador);
+        ejecutar();
+        return obtener_resultado();
+    }
+
+
+}

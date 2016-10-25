@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout_transacciones"
@@ -10,18 +11,16 @@
     app:layout_collapseMode="pin"
     app:layout_collapseParallaxMultiplier="0.8">
 
-    <include
-        layout="@layout/app_bar_transacciones"
+    <RelativeLayout
+        android:id="@+id/includeTransacciones"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_main"
+        app:headerLayout="@layout/nav_header_transacciones"
         app:menu="@menu/activity_transacciones_drawer" />
-
 </android.support.v4.widget.DrawerLayout>

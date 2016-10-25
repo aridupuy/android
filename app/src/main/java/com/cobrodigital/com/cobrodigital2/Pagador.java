@@ -29,36 +29,13 @@ public class Pagador extends Activity {
         StrictMode.setThreadPolicy(policy);
         Typeface fontAwesomeFont = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
-//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-//        navigationView.setNavigationItemSelectedListener();
-//
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-
     }
-
     public void OnClickPagadorNew(View view) {
-        //setContentView(R.layout.main);
-        //String id_comercio="KA289659";
-        String id_comercio = "CI366779";
-        //String sid="V2nJUHv7110BI4v1FLxdeQrFlWUw08j5L3VAxZB3P9Dm0EJbsDW5vJsi960";
-        String sid = "MeAOO0d8tpk87Ud3AG0mZO7WCIP76GuKfU48UMVCuLO66aQGa0Iw3R6cDVs";
-        CobroDigital cd = null;
-        try {
-            cd = new CobroDigital(id_comercio, sid);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
         EditText nombre = (EditText) findViewById(R.id.nombre);
         EditText identificador = (EditText) findViewById(R.id.identificador);
         EditText apellido = (EditText) findViewById(R.id.apellido);
@@ -68,18 +45,18 @@ public class Pagador extends Activity {
         pagador.put("apellido", apellido.getText().toString());
 
         try {
-            cd.crear_pagador(pagador);
+            CobroDigital.webservice.webservice_pagador.crear_pagador(pagador);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        Vector vector = cd.obtener_log();
+        Vector vector = CobroDigital.webservice.obtener_log();
         Object[] log = vector.toArray();
         String respuesta = "";
         if (log != null)
             for (int i = 0; i < log.length; i++) {
                 respuesta += (String) log[i] + " \n";
             }
-        Vector vectordatos = cd.obtener_datos();
+        Vector vectordatos = CobroDigital.webservice.obtener_datos();
         Object[] datos = vectordatos.toArray();
         if (datos != null)
             for (int i = 0; i < datos.length; i++) {

@@ -12,17 +12,10 @@ public class LectorQR extends Activity {
         this.context=context;
     }
     public void leer(String content) throws JSONException {
-        //JSONObject jsonObject = new JSONObject(content);
-        //System.out.println(jsonObject.toString());
-        //CobroDigital.credencial.set_IdComercio(jsonObject.getString("IdComercio").toString());
-        //CobroDigital.credencial.set_sid(jsonObject.getString("sid"));
-        JSONArray jsonArray = new JSONArray(content);
-//        System.out.println(jsonObject.toString());
-        JSONObject jsonObject=jsonArray.getJSONObject(0);
+        JSONObject jsonObject = new JSONObject(content);
         System.out.println(jsonObject.toString());
-        CobroDigital.credencial=new Credencial();
-        CobroDigital.credencial.set_IdComercio(jsonObject.getString("idComercio"));
-        jsonObject=jsonArray.getJSONObject(1);
+        CobroDigital.credencial=new Credencial(context);
+        CobroDigital.credencial.set_IdComercio(jsonObject.getString("IdComercio").toString());
         CobroDigital.credencial.set_sid(jsonObject.getString("sid"));
     }
 
