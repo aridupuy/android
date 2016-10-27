@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.StrictMode;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.Loader;
@@ -25,7 +27,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.cobrodigital.com.cobrodigital2.AsyncTask.Tabla_transaccion;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_credenciales;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
 import com.cobrodigital.com.cobrodigital2.Model.Transaccion;
@@ -58,6 +59,7 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
     public static String fecha_desde;
     public static String fecha_hasta;
     public static Context context;
+    public static Vector<Transaccion> transacciones;
     public Transacciones() {
     }
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,29 +131,19 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
     @SuppressLint("WrongViewCast")
     private  void listar(int vista) throws ParseException {
 
-        String hasta = fecha_hasta;
-        String desde = fecha_desde;
-        Vector<Transaccion> transacciones = new Vector<Transaccion>();
-        HashMap<String, String> variables = obtener_filtros();
-        //View layout=View.inflate(getApplicationContext(),R.layout.activity_transacciones,null);
         setContentView(R.layout.activity_transacciones);
         LayoutInflater loiViewInflater = LayoutInflater.from(getBaseContext());
         View mview = loiViewInflater.inflate(vista, null);
-        HorizontalScrollView.LayoutParams params = new HorizontalScrollView.LayoutParams(DrawerLayout.LayoutParams.MATCH_PARENT,
-                HorizontalScrollView.LayoutParams.MATCH_PARENT);
+        HorizontalScrollView.LayoutParams params = new HorizontalScrollView.LayoutParams(DrawerLayout.LayoutParams.MATCH_PARENT,HorizontalScrollView.LayoutParams.MATCH_PARENT);
         params.gravity = Gravity.CENTER;
         addContentView(mview, params);
-        Tabla_transaccion tabla=new Tabla_transaccion(getApplicationContext(),transacciones);
-        transacciones=(Vector<Transaccion>)tabla.loadInBackground();
-        final ProgressBar estado=(ProgressBar)findViewById(R.id.progressbar);
-        estado.setVisibility(View.VISIBLE);
-        final android.content.Loader.OnLoadCompleteListener<Vector<Transaccion>> listener = new android.content.Loader.OnLoadCompleteListener <Vector<Transaccion>>() {
+        final Handler handler = new Handler(new Handler.Callback() {
             @Override
-            public void onLoadComplete(android.content.Loader<Vector<Transaccion>> loader, Vector<Transaccion> transacciones) {
+            public boolean handleMessage(Message message) {
                 Transaccion transaccion = null;
                 String saldo = "";
                 TableLayout tabla_layout = (TableLayout) findViewById(R.id.tabla_layout);
-                for (int i = 0; (i < cantidad_transacciones_a_mostrar || cantidad_transacciones_a_mostrar == 0) && i < transacciones.size(); i++) {
+                for (int i = 0;(i < cantidad_transacciones_a_mostrar || cantidad_transacciones_a_mostrar == 0) && i < transacciones.size(); i++) {
                     transaccion = (Transaccion) transacciones.get(i);
                     TableRow row;
                     row = new TableRow(tabla_layout.getContext());
@@ -204,12 +196,77 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
                     TextView Saldo_vista = (TextView) findViewById(R.id.Saldo);
                     Saldo_vista.setText("$" + saldo);
                 }
-                    estado.setVisibility(View.INVISIBLE);
+                return true;
             }
+        });
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            HashMap<String, String> variables = obtener_filtros();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        String hasta = Transacciones.fecha_hasta;
+                        String desde = Transacciones.fecha_desde;
+                        HashMap<String, String> variables = null;
+                        try {
+                            variables = Transacciones.obtener_filtros();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            System.out.println("Busco en el ws");
+                            if (!Gestor_de_credenciales.esta_asociado())
+                                return;
+                            LinkedHashMap filtros = new LinkedHashMap();
+                            if (variables.size() > 0) {
+                                desde = (String) variables.get("desde");
+                                hasta = (String) variables.get("hasta");
+                                variables.remove("desde");
+                                variables.remove("hasta");
+                            } else {
+                                Date Fecha = new Date();
+                                SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+                                desde = format.format(Fecha);
+                                hasta = format.format(Fecha);
+                            }
+                            CobroDigital.webservice.webservice_transacciones.consultar_transacciones(desde, hasta, filtros);
+                            if (CobroDigital.webservice.obtener_resultado().equals("1")) {
+                                Object transicion[] = CobroDigital.webservice.obtener_datos().toArray();
+                                if (transicion.length > 0) {
+                                    JSONArray datos = new JSONArray((String) transicion[0]);
+                                    for (int i = 0; i < datos.length(); i++) {
+                                        Transaccion transaccion = new Transaccion();
+                                        transaccion = transaccion.leerTransaccion(Transacciones.context, datos.getJSONObject(i));
+                                        if (transaccion != null)
+                                            transacciones.add(transaccion);
+                                    }
+                                } else {
+                                    System.out.println("No hay datos disponibles");
+                                    Gestor_de_mensajes_usuario.mensaje("No hay datos disponibles.", Transacciones.context);
+                                }
+                            } else {
+                                System.out.println("Comunicacion fallida!");
+                                Gestor_de_mensajes_usuario.mensaje("Comunicacion fallida!", Transacciones.context);
+                                return;
+                            }
 
-        };
-        tabla.registerListener(R.id.tabla_layout, (Loader.OnLoadCompleteListener) listener);
-        findViewById(R.id.progressbar).setVisibility(View.INVISIBLE);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            e.getCause();
+                            e.getMessage();
+                            e.getLocalizedMessage();
+                        }
+                        handler.dispatchMessage(new Message());
+                    }
+                });
+            }
+        });
+
     }
     public static HashMap<String,String> obtener_filtros () throws ParseException{
         HashMap<String , String > filtros=new HashMap<String, String>();
