@@ -14,10 +14,17 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 /**
  * Created by Ariel on 6/09/16.
@@ -54,7 +61,7 @@ public class Credencial {
             e.printStackTrace();
         }
     }
-    public String get_IdComercio() throws Exception {
+    public String get_IdComercio() throws NoSuchPaddingException, BadPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, UnsupportedEncodingException, InvalidKeyException {
         Gestor_de_cifrado cifrado=new Gestor_de_cifrado();
         return cifrado.descifra(this.IdComercio);
     }
@@ -67,12 +74,12 @@ public class Credencial {
         }
 
     }
-    public String get_sid() throws Exception{
+    public String get_sid() throws NoSuchPaddingException, BadPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, UnsupportedEncodingException, InvalidKeyException {
         Gestor_de_cifrado cifrado=new Gestor_de_cifrado();
         return cifrado.descifra(sid);
     }
 
-    public Credencial obtenerCredencial() throws Exception {
+    public Credencial obtenerCredencial() throws SQLException, ClassNotFoundException, NoSuchPaddingException, InvalidKeyException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
         credencialFactory factory=new credencialFactory(context);
         List<Credencial> Credenciales=(List<Credencial>)factory.select();
         if(Credenciales.size()>0)

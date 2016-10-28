@@ -3,6 +3,7 @@ package com.cobrodigital.com.cobrodigital2.Webservice;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -14,6 +15,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.security.InvalidKeyException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
@@ -21,6 +23,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Vector;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.net.ssl.HttpsURLConnection;
 
 /**
@@ -38,7 +43,7 @@ public abstract class Webservice {
     protected static LinkedHashMap<Object, Object> array_a_enviar = new LinkedHashMap();
     protected static LinkedHashMap resultado = new LinkedHashMap();
 
-    private static void ejecutar(String metodo_webservice, LinkedHashMap array) throws UnsupportedEncodingException, MalformedURLException, IOException, KeyManagementException, NoSuchAlgorithmException, Exception {
+    private static void ejecutar(String metodo_webservice, LinkedHashMap array) throws IOException, KeyManagementException, NoSuchAlgorithmException, JSONException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException {
         array_a_enviar.put("idComercio", CobroDigital.credencial.get_IdComercio());
         array_a_enviar.put("sid", CobroDigital.credencial.get_sid());
         if (metodo_webservice == null) {
@@ -54,7 +59,7 @@ public abstract class Webservice {
         enviar_https(URL, array_a_procesar);
     }
 
-    private static void enviar_https(String httpsurl, Map<?, ?> array_a_enviar) throws IOException, Exception {
+    private static void enviar_https(String httpsurl, Map<?, ?> array_a_enviar) throws IOException, JSONException {
         URL myurl = new URL(httpsurl);
         HttpsURLConnection con = (HttpsURLConnection) myurl.openConnection();
         con.setRequestMethod(method);
@@ -100,11 +105,11 @@ public abstract class Webservice {
         in.close();
     }
 
-    public static void ejecutar() throws Exception {
+    public static void ejecutar() throws NoSuchAlgorithmException, IOException, KeyManagementException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException, JSONException {
         ejecutar(metodo_web_service, (LinkedHashMap) array_a_enviar);
     }
 
-    private static String http_build_query(Map<?, ?> data) throws Exception {
+    private static String http_build_query(Map<?, ?> data) {
         StringBuilder queryString = new StringBuilder();
         for (Map.Entry<?, ?> entry : data.entrySet()) {
             if (queryString.length() > 0) {
