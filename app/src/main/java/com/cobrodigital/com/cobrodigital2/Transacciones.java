@@ -167,7 +167,7 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
                                     TableRow row;
                                     row = new TableRow(tabla_layout.getContext());
                                     row.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
-//                                    row.setBackgroundResource(R.drawable.celda);
+                                    row.setBackgroundResource(R.drawable.celda);
                                     row.setBackgroundColor(Color.RED);
                                     ///primera parte
                                     LinearLayout linea = new LinearLayout(tabla_layout.getContext());
