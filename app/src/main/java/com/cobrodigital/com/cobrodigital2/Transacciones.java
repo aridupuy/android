@@ -38,6 +38,7 @@ import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -164,64 +165,61 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
                                 String saldo = "";
                                 for (int i = 0; (i < cantidad_transacciones_a_mostrar || cantidad_transacciones_a_mostrar == 0) && i < transacciones.size(); i++) {
                                     transaccion = (Transaccion) transacciones.get(i);
-                                    TableRow row;
-                                    row = new TableRow(tabla_layout.getContext());
-                                    row.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
+                                    TableRow row = new TableRow(Transacciones.this);
                                     row.setBackgroundResource(R.drawable.celda);
-                                    row.setBackgroundColor(Color.RED);
                                     ///primera parte
-                                    LinearLayout linea = new LinearLayout(tabla_layout.getContext());
-                                    linea.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
+                                    LinearLayout linea = new LinearLayout(Transacciones.this);
+//                                    linea.setLayoutParams(tabla_layout.getLayoutParams());
                                     linea.setOrientation(LinearLayout.VERTICAL);
-                                    RelativeLayout celda = new RelativeLayout(tabla_layout.getContext());
+                                    RelativeLayout celda = new RelativeLayout(Transacciones.this);
                                     celda.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
-                                    celda.setPadding(10, 10, 10, 10);
-                                    TextView fecha= new TextView(tabla_layout.getContext());
-                                    fecha.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
-                                    fecha.setTextSize(9);
-                                    fecha.setTextColor(Color.BLACK);
-                                    fecha.setText(transaccion.getFecha());
-                                    celda.addView(fecha);
-                                    TextView neto= new TextView(tabla_layout.getContext());
-                                    RelativeLayout.LayoutParams params=new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-                                    params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                                    neto.setLayoutParams(params);
-                                    neto.setTextSize(9);
-                                    neto.setPadding(10, 10, 10, 10);
-                                    neto.setText("$" + String.valueOf(transaccion.getNeto()));
-                                    neto.setTextColor(Color.BLACK);
+                                    LayoutParams param= celda.getLayoutParams();
+                                    celda.setBackgroundColor(Color.RED);
+                                    celda.setPadding(10,10,10,10);
+                                    TextView fecha= new TextView(Transacciones.this);
 
+                                    fecha.setLayoutParams(param);
+                                    fecha.setText(transaccion.getFecha());
+
+                                    celda.addView(fecha);
+
+                                    TextView neto= new TextView(Transacciones.this);
+                                    neto.setText("$" + String.valueOf(transaccion.getNeto()));
+
+//                                    neto.setGravity(Gravity.RIGHT);
                                     celda.addView(neto);
                                     linea.addView(celda);
-//                                    row.addView(linea);
-                                    ////segunda parte
-                                    linea = new LinearLayout(tabla_layout.getContext());
-                                    linea.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
-                                    linea.setOrientation(LinearLayout.VERTICAL);
-                                    celda = new RelativeLayout(tabla_layout.getContext());
-                                    celda.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
-                                    celda.setPadding(10, 10, 10, 10);
-                                    TextView bol= new TextView(tabla_layout.getContext());
-                                    bol.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
+
+                                    RelativeLayout celda2 = new RelativeLayout(Transacciones.this);
+                                    celda2.setPadding(10,10,10,10);
+                                    celda2.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
+//                                    ////segunda parte
+                                    TextView bol= new TextView(Transacciones.this);
                                     bol.setTextSize(9);
-                                    bol.setTextColor(Color.BLACK);
-                                    bol.setTextAlignment(celda.TEXT_ALIGNMENT_TEXT_START);
+//                                    bol.setTextColor(Color.BLACK);
+//                                    bol.setTextAlignment(celda.TEXT_ALIGNMENT_TEXT_START);
+                                    bol.setLayoutParams(param);
                                     bol.setText(transaccion.getNro_boleta());
-                                    celda.addView(bol);
-
-
-                                    TextView info= new TextView(tabla_layout.getContext());
-                                    params=new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-                                    params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                                    info.setLayoutParams(params);
-                                    info.setTextSize(9);
-                                    info.setTextColor(Color.BLACK);
-                                    info.setTextAlignment(celda.TEXT_ALIGNMENT_TEXT_START);
-                                    info.setText(transaccion.getInfo());
-                                    celda.addView(info);
-                                    linea.addView(celda);
-                                    row.addView(linea);
+                                    celda2.addView(bol);
 //
+                                    TextView info= new TextView(Transacciones.this);
+                                    info.setLayoutParams(param);
+                                    info.setText(transaccion.getInfo());
+                                    celda2.addView(info);
+                                    linea.addView(celda2);
+                                    row.addView(linea);
+
+
+
+
+
+
+
+
+
+
+
+
 
 //                                    celda = new TextView(tabla_layout.getContext());
 //                                    celda.setTextSize(9);
