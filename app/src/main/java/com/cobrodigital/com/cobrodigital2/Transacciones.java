@@ -74,8 +74,10 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         setDateTimeField();
+
         try {
-            this.listar(R.layout.app_bar_transacciones);
+            this.listar(R.layout.app_bar_transacciones,cantidad_transacciones_a_mostrar
+            );
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -88,7 +90,7 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
                     try {
                         int anterior=cantidad_transacciones_a_mostrar;
                         cantidad_transacciones_a_mostrar=0;
-                        listar(R.layout.app_bar_transacciones_completas);
+                        listar(R.layout.app_bar_transacciones_completas,cantidad_transacciones_a_mostrar);
                         cantidad_transacciones_a_mostrar=anterior;
                     } catch (ParseException e) {
                         e.printStackTrace();
@@ -134,7 +136,7 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
         finish();
     }
     @SuppressLint("WrongViewCast")
-    private  void listar(int vista) throws ParseException {
+    private  void listar(final int vista,final int  cantidad_transacciones_a_mostrar) throws ParseException {
 
         setContentView(R.layout.activity_transacciones);
         LayoutInflater loiViewInflater = LayoutInflater.from(getBaseContext());
@@ -145,7 +147,8 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
         findViewById(R.id.progressbar).setVisibility(View.VISIBLE);
         findViewById(R.id.textView5).setVisibility(View.INVISIBLE);
         findViewById(R.id.Saldo).setVisibility(View.INVISIBLE);
-        findViewById(R.id.transascompletas).setVisibility(View.INVISIBLE);
+        if(vista==R.layout.app_bar_transacciones)
+            findViewById(R.id.transascompletas).setVisibility(View.INVISIBLE);
         final Vector<Transaccion> transacciones=new Vector<Transaccion>();
         final TableLayout tabla_layout = (TableLayout) findViewById(R.id.tabla_layout);
         final Handler handler = new Handler(new Handler.Callback() {
@@ -161,95 +164,37 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
                                 Transaccion transaccion = null;
                                 findViewById(R.id.textView5).setVisibility(View.VISIBLE);
                                 findViewById(R.id.Saldo).setVisibility(View.VISIBLE);
+                                if(vista==R.layout.app_bar_transacciones)
                                 findViewById(R.id.transascompletas).setVisibility(View.VISIBLE);
                                 String saldo = "";
+                                System.out.println(transacciones.size());
                                 for (int i = 0; (i < cantidad_transacciones_a_mostrar || cantidad_transacciones_a_mostrar == 0) && i < transacciones.size(); i++) {
                                     transaccion = (Transaccion) transacciones.get(i);
+//                                    System.out.println(transaccion.toString());
                                     TableRow row = new TableRow(Transacciones.this);
-                                    row.setBackgroundResource(R.drawable.celda);
+//                                    row.setBackgroundColor(Color.BLUE);
+//                                    row.setBackgroundResource(R.drawable.celda);
+                                    LayoutInflater inflador=getLayoutInflater();
+                                    View ejemplo_fila=inflador.inflate(R.layout.test,row);
                                     ///primera parte
-                                    LinearLayout linea = new LinearLayout(Transacciones.this);
-//                                    linea.setLayoutParams(tabla_layout.getLayoutParams());
-                                    linea.setOrientation(LinearLayout.VERTICAL);
-                                    RelativeLayout celda = new RelativeLayout(Transacciones.this);
-                                    celda.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
-                                    LayoutParams param= celda.getLayoutParams();
-                                    celda.setBackgroundColor(Color.RED);
-                                    celda.setPadding(10,10,10,10);
-                                    TextView fecha= new TextView(Transacciones.this);
-
-                                    fecha.setLayoutParams(param);
+                                    TextView fecha=(TextView)ejemplo_fila.findViewById(R.id.fecha);
                                     fecha.setText(transaccion.getFecha());
-
-                                    celda.addView(fecha);
-
-                                    TextView neto= new TextView(Transacciones.this);
+                                    TextView neto= (TextView) ejemplo_fila.findViewById(R.id.neto);
                                     neto.setText("$" + String.valueOf(transaccion.getNeto()));
-
-//                                    neto.setGravity(Gravity.RIGHT);
-                                    celda.addView(neto);
-                                    linea.addView(celda);
-
-                                    RelativeLayout celda2 = new RelativeLayout(Transacciones.this);
-                                    celda2.setPadding(10,10,10,10);
-                                    celda2.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
-//                                    ////segunda parte
-                                    TextView bol= new TextView(Transacciones.this);
+                                    ///segunda parte
+                                    TextView bol= (TextView)ejemplo_fila.findViewById(R.id.bol);;
                                     bol.setTextSize(9);
-//                                    bol.setTextColor(Color.BLACK);
-//                                    bol.setTextAlignment(celda.TEXT_ALIGNMENT_TEXT_START);
-                                    bol.setLayoutParams(param);
                                     bol.setText(transaccion.getNro_boleta());
-                                    celda2.addView(bol);
-//
-                                    TextView info= new TextView(Transacciones.this);
-                                    info.setLayoutParams(param);
+
+                                    TextView nombre= (TextView)ejemplo_fila.findViewById(R.id.nombre);
+                                    nombre.setText(transaccion.getNombre());
+                                    TextView concepto= (TextView)ejemplo_fila.findViewById(R.id.concepto);
+                                    concepto.setText(transaccion.getNombre());
+
+                                    TextView info= (TextView)ejemplo_fila.findViewById(R.id.info);
                                     info.setText(transaccion.getInfo());
-                                    celda2.addView(info);
-                                    linea.addView(celda2);
-                                    row.addView(linea);
 
 
-
-
-
-
-
-
-
-
-
-
-
-//                                    celda = new TextView(tabla_layout.getContext());
-//                                    celda.setTextSize(9);
-//                                    celda.setPadding(10, 10, 10, 10);
-//                                    celda.setTextColor(Color.BLACK);
-//                                    celda.setTextAlignment(celda.TEXT_ALIGNMENT_TEXT_START);
-//                                    celda.setText(transaccion.getIdentificacion());
-//                                    row.addView(celda);
-//
-//                                    celda = new TextView(tabla_layout.getContext());
-//                                    celda.setTextSize(9);
-//                                    celda.setPadding(10, 10, 10, 10);
-//                                    celda.setTextColor(Color.BLACK);
-//                                    celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-//                                    celda.setText(transaccion.getInfo());
-//                                    row.addView(celda);
-//
-//                                    celda = new TextView(tabla_layout.getContext());
-//                                    Object concepto = transaccion.getConcepto();
-//                                    if (concepto.toString() == "null")
-//                                        concepto = "";
-//                                    celda.setText((String) concepto);
-//                                    celda.setTextSize(9);
-//                                    celda.setTextAlignment(celda.TEXT_ALIGNMENT_CENTER);
-//                                    celda.setPadding(10, 10, 10, 10);
-//                                    celda.setTextColor(Color.BLACK);
-//                                    row.addView(celda);
-//
-//
-//
                                     saldo = transaccion.getSaldo_acumulado();
                                     tabla_layout.addView(row);
                                     TextView Saldo_vista = (TextView) findViewById(R.id.Saldo);
@@ -379,7 +324,7 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
 
         }
         try {
-            listar(R.layout.app_bar_transacciones);
+            listar(R.layout.app_bar_transacciones,cantidad_transacciones_a_mostrar);
         } catch (ParseException e) {
             e.printStackTrace();
         }

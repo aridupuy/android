@@ -69,17 +69,19 @@ public class Boletas extends AppCompatActivity {
     }
     private void cargar_spiner(){
         Gestor_de_personalizacion gp=new Gestor_de_personalizacion();
-        Vector<String>estructura_clientes= null;
+        String [] estructura_clientes= null;
         try {
             estructura_clientes = gp.get_estructura_clientes(getApplicationContext());
+            System.out.println(estructura_clientes);
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        Spinner spinner= (Spinner) findViewById(R.id.campo_a_buscar);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, estructura_clientes);
-        spinner.setAdapter(arrayAdapter);
+//        Spinner spinner= (Spinner) findViewById(R.id.campo_a_buscar);
+//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, estructura_clientes);
+//        spinner.setAdapter(arrayAdapter);
     }
+
 
 }

@@ -7,13 +7,13 @@ import java.util.Vector;
  */
 
 public class Personalizacion {
-    public static Vector<String>estructura;
+    public static String[] estructura;
 
-    public static Vector<String> getEstructura() {
+    public static String[] getEstructura() {
         return estructura;
     }
 
-    public static void setEstructura(Vector<String> estructura) {
+    public static void setEstructura(String[] estructura) {
         Personalizacion.estructura = estructura;
     }
 }

@@ -1,58 +1,83 @@
-<?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+
     >
-    <TableRow
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
+        android:id="@+id/linea1"
+        android:padding="10dp"
         >
-        <GridView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="9dp"
+            android:id="@+id/fecha"
+            android:layout_weight="20"
+            android:text="11/11/2016"
+            />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-                <TextView
-                    android:textColor="@color/zxinglegacy_viewfinder_mask"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="9dp"
-
-                    android:text="11/11/11"
-                    />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="9dp"
-                    android:text="$$$$$" />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp"
-            >
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="9dp"
-                    android:layout_weight="20"
-                    android:text="578asda"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:textSize="9dp"
-                    android:text="rapipago"/>
-            </LinearLayout>
-        </GridView>
-    </TableRow>
-        </GridView>
-</TableLayout>
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textSize="9dp"
+            android:text="$$$$$$"
+            android:id="@+id/neto"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/linea2"
+        android:padding="10dp"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="9dp"
+            android:id="@+id/bol"
+            android:layout_weight="20"
+            android:text="578asda"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:weightSum="2"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="5dp"
+            android:id="@+id/nombre"
+            android:layout_weight="1"
+            android:text="asd"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="5dp"
+            android:id="@+id/concepto"
+            android:paddingLeft="10dp"
+            android:layout_weight="1"
+            android:text="COncepto"
+            />
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textSize="9dp"
+            android:text="rapipago"
+            android:id="@+id/info"
+            />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/celda"
+        />
+</LinearLayout>

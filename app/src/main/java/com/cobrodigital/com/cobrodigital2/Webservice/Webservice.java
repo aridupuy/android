@@ -147,13 +147,20 @@ public abstract class Webservice {
         if (Integer.parseInt(ejecucion_correcta) == 1) {
             return (Vector) resultado.get("datos");
         }
-        return null;
+        //para pruebas cambiar falla el webservice estructura de pagadores.
+        return (Vector) resultado.get("datos");
     }
 
     public static String obtener_resultado() {
-        if(resultado.size()>0 && (((String)resultado.get("ejecucion_correcta")).equals("1")))
-            return "1";
-        return "0";
+        try {
+            if (resultado.size() > 0 && (((String) resultado.get("ejecucion_correcta")).equals("1")))
+                return "1";
+            return "0";
+        }catch (ClassCastException e){
+            if (resultado.size() > 0 && ((Boolean) (resultado.get("ejecucion_correcta"))))
+                return "1";
+            return "0";
+        }
     }
 
     public static Vector obtener_log() {

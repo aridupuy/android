@@ -2,6 +2,7 @@ package com.cobrodigital.com.cobrodigital2.Gestores;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.StrictMode;
 
 import com.cobrodigital.com.cobrodigital2.Factory.pagadorFactory;
 import com.cobrodigital.com.cobrodigital2.Model.Pagador;
@@ -19,25 +20,35 @@ import java.util.Vector;
 public class Gestor_de_personalizacion {
         public static boolean set_estructura_clientes(Context context){
             try{
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+                String[]campos=null;
                 if(CobroDigital.webservice.webservice_pagador.consultar_estructura_pagadores()=="1"){
-                    Personalizacion personalizacion=new Personalizacion();
-                    CobroDigital.personalizacion.estructura=CobroDigital.webservice.obtener_datos();
+                    campos=new String[CobroDigital.webservice.obtener_datos().size()];
+                    Vector<String> estructura=CobroDigital.webservice.obtener_datos();
+                    int i=0;
+                    for (String campo:estructura) {
+                        campos[i]=campo;
+                        i++;
+                    }
                 }
                 Pagador pagador=new Pagador();
-                pagador.set_campos_variables(CobroDigital.personalizacion.estructura);
+                pagador.set_campos_variables(campos);
                 pagadorFactory factory=new pagadorFactory(context);
                 factory.guardar(pagador);
                 return true;
+
             }catch (Exception e){
                 System.out.println("error");
                 System.out.println(e.getStackTrace());
                 System.out.println(e.getLocalizedMessage());
                 System.out.println(e.getMessage());
+                e.printStackTrace();
                 System.out.println(e);
                 return false;
             }
         }
-        public static Vector<String> get_estructura_clientes(Context context) throws SQLException, ClassNotFoundException {
+        public static String[] get_estructura_clientes(Context context) throws SQLException, ClassNotFoundException {
             Pagador pagador;
             pagadorFactory factory=new pagadorFactory(context);
             List<Pagador> pagadores=factory.select();

@@ -87,20 +87,6 @@
                             android:layout_above="@+id/tabla_layout"
                             android:layout_alignRight="@+id/tabla_layout"
                             tools:ignore="RtlHardcoded" />
-                        <TextView
-                            android:text="Ver Mas movimientos"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/transascompletas"
-                            android:contextClickable="true"
-                            android:clickable="true"
-                            android:textColor="@color/colorPrimary"
-                            android:paddingBottom="10dp"
-                            android:paddingLeft="10dp"
-                            android:onClick="OnClickVermas"
-                            android:layout_below="@+id/tabla_layout"
-                            tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry"
-                            tools:targetApi="m" />
                         <TableLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

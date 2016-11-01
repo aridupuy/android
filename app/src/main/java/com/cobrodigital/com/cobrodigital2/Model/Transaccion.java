@@ -179,5 +179,8 @@ public class Transaccion{
         return this;
     }
 
-
+    @Override
+    public String toString() {
+        return ""+"Identificacion: "+getIdentificacion()+"Nro boleta: "+getNro_boleta()+"Bruto: "+getBruto()+"Comision: "+getComision()+"Neto: "+getNeto()+"Concepto: "+getConcepto()+"Fecha: "+getFecha()+"Info: "+getInfo()+"Nombre: "+getNombre()+"ID_transaccion: "+getId_transaccion()+"Saldo: "+getSaldo_acumulado();
+    }
 }

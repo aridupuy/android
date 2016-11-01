@@ -67,8 +67,10 @@ public class Gestor_de_credenciales {
     }
     public static boolean desasociar(Context context){
         try {
-            if(CobroDigital.credencial.BorrarCredencial())
+            if(CobroDigital.credencial.BorrarCredencial()){
+                CobroDigital.credencial=null;
                 return true;
+            }
 
         }catch (SQLException e){
             e.printStackTrace();
