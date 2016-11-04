@@ -41,7 +41,6 @@ public class Gestor_de_personalizacion {
             }catch (Exception e){
                 System.out.println("error");
                 System.out.println(e.getStackTrace());
-                System.out.println(e.getLocalizedMessage());
                 System.out.println(e.getMessage());
                 e.printStackTrace();
                 System.out.println(e);

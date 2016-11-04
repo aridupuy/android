@@ -37,13 +37,16 @@
         <activity
             android:name=".Transacciones"
             android:label="@string/Transacciones"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Pagador"
+            android:parentActivityName=".MainActivity"
             android:label="@string/Crear_Pagador"
             android:screenOrientation="portrait" />
         <activity
             android:name=".core.Configuracion"
+            android:parentActivityName=".MainActivity"
             android:label="@string/Configuracion"
             android:screenOrientation="portrait" />
         <!--

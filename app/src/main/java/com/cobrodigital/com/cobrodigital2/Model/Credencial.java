@@ -31,7 +31,7 @@ import javax.crypto.NoSuchPaddingException;
  */
 @DatabaseTable(tableName = "Credencial")
 public class Credencial {
-
+    private static boolean PRUEBA=false;
     @DatabaseField(id=true,index = true)
     private int Id_credencial;
     @DatabaseField(unique = true,dataType = DataType.BYTE_ARRAY)
@@ -87,7 +87,13 @@ public class Credencial {
                 this.setId_credencial(credencial.getId_credencial());
                 this.set_IdComercio(credencial.get_IdComercio());
                 this.set_sid((credencial.get_sid()));
+
             }
+        if(PRUEBA){
+            this.setId_credencial(1);
+            this.set_IdComercio("FL662997");
+            this.set_sid("ABZ0ya68K791phuu76gQ5L662J6F2Y4j7zqE2Jxa3Mvd22TWNn4iip6L9yq");
+        }
         if(this.IdComercio==null || this.sid==null)
             return null;
         return this;

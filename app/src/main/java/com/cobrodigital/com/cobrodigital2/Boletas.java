@@ -19,6 +19,8 @@ import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 import org.json.JSONArray;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 public class Boletas extends AppCompatActivity {
@@ -68,19 +70,15 @@ public class Boletas extends AppCompatActivity {
 
     }
     private void cargar_spiner(){
-        Gestor_de_personalizacion gp=new Gestor_de_personalizacion();
-        String [] estructura_clientes= null;
-        try {
-            estructura_clientes = gp.get_estructura_clientes(getApplicationContext());
-            System.out.println(estructura_clientes);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        List<String> estructura_clientes=new ArrayList<String>();
+        estructura_clientes.add("campo para buscar");
+//        estructura_clientes
+        for (String campo:CobroDigital.personalizacion.estructura) {
+            estructura_clientes.add(campo);
         }
-//        Spinner spinner= (Spinner) findViewById(R.id.campo_a_buscar);
-//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, estructura_clientes);
-//        spinner.setAdapter(arrayAdapter);
+        Spinner spinner= (Spinner) findViewById(R.id.campo_a_buscar);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, estructura_clientes);
+        spinner.setAdapter(arrayAdapter);
     }
 
 

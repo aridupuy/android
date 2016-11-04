@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.cobrodigital.com.cobrodigital2.Factory.credencialFactory;
 import com.cobrodigital.com.cobrodigital2.Model.Credencial;
+import com.cobrodigital.com.cobrodigital2.Model.Pagador;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 import com.cobrodigital.com.cobrodigital2.core.LectorQR;
 
@@ -17,8 +18,10 @@ import java.sql.SQLException;
  */
 
 public class Gestor_de_credenciales {
-
+    private  static boolean PRUEBA=false;
     public static boolean esta_asociado(){
+
+
         if(CobroDigital.credencial!=null){
             System.out.println("esta asociado");
             return true;
@@ -40,6 +43,7 @@ public class Gestor_de_credenciales {
         try {
             credencialFactory factory=new credencialFactory(context);
             factory.guardar(CobroDigital.credencial);
+            Gestor_de_personalizacion.set_estructura_clientes(context);
         } catch (SQLException e) {
             e.printStackTrace();
             return;
@@ -51,7 +55,10 @@ public class Gestor_de_credenciales {
         try {
             Credencial credencial = new Credencial(context);
             CobroDigital.credencial=credencial.obtenerCredencial();
+            Gestor_de_personalizacion.set_estructura_clientes(context);
+            CobroDigital.personalizacion.estructura=Gestor_de_personalizacion.get_estructura_clientes(context);
             System.out.println(credencial);
+            System.out.println(CobroDigital.personalizacion.estructura);
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

@@ -22,11 +22,14 @@ import android.widget.Toast;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_credenciales;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_personalizacion;
+import com.cobrodigital.com.cobrodigital2.Model.Credencial;
 import com.cobrodigital.com.cobrodigital2.Services.serviceBoot;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 import com.cobrodigital.com.cobrodigital2.core.Configuracion;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    final boolean PRUEBA=true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (ContextCompat.checkSelfPermission(this,
@@ -120,8 +123,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     private void ejecutar(){
         setContentView(R.layout.activity_main);
+
         if(Gestor_de_credenciales.esta_asociado()!=false || (Gestor_de_credenciales.re_asociar(getApplicationContext()))!=false) {
-            Gestor_de_personalizacion.obtener_estructura_clientes(getApplicationContext());
+
             View cuenta = findViewById(R.id.textView7);
             ((ViewGroup) cuenta.getParent()).removeView(cuenta);
             startActivity(new Intent(this, Transacciones.class));

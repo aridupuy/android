@@ -19,6 +19,7 @@ public class Pagador implements Serializable{
     public Pagador(){
     }
     public String[] get_campos_variables(){
+
         return campos_variables;
     }
     public void set_campos_variables(String [] campos){

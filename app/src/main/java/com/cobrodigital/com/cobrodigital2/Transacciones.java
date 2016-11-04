@@ -2,17 +2,20 @@ package com.cobrodigital.com.cobrodigital2;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.database.SQLException;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.os.StrictMode;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -69,8 +72,8 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
     public Transacciones() {
     }
     protected void onCreate(Bundle savedInstanceState) {
-        context=this.getApplicationContext();
         super.onCreate(savedInstanceState);
+        context=this.getApplicationContext();
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -98,6 +101,7 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
                     }
                 }
             });
+
     }
     private void setDateTimeField() {
         MenuItem fechaDesde=(MenuItem) findViewById(R.id.fecha_desde);
@@ -155,6 +159,7 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                Looper.prepare();
                                 Transaccion transaccion = null;
                                 findViewById(R.id.textView5).setVisibility(View.VISIBLE);
                                 findViewById(R.id.Saldo).setVisibility(View.VISIBLE);
@@ -205,6 +210,7 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
         new Thread(new Runnable() {
             @Override
             public void run() {
+                Looper.prepare();
                 System.out.println("sigo tread uiThread");
 //                try {
 //                    HashMap<String, String> variables = obtener_filtros();
@@ -213,7 +219,7 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
 //                }
                 String hasta = fecha_hasta;
                 String desde = fecha_desde;
-                HashMap<String, String> variables = null;
+                HashMap<String, String> variables =new HashMap<String, String>();;
 //                try {
 //                    variables = obtener_filtros();
 //                } catch (ParseException e) {
@@ -248,7 +254,8 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
                             }
                         } else {
                             System.out.println("No hay datos disponibles");
-                            Gestor_de_mensajes_usuario.mensaje("No hay datos disponibles.", Transacciones.context);
+                            Gestor_de_mensajes_usuario.mensaje("No hay datos disponibles.",Transacciones.context);
+                            finish();
                             return;
                         }
                     } else {

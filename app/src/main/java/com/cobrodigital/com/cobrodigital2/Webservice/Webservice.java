@@ -147,8 +147,8 @@ public abstract class Webservice {
         if (Integer.parseInt(ejecucion_correcta) == 1) {
             return (Vector) resultado.get("datos");
         }
-        //para pruebas cambiar falla el webservice estructura de pagadores.
         return (Vector) resultado.get("datos");
+        //para pruebas cambiar falla el webservice estructura de pagadores.
     }
 
     public static String obtener_resultado() {
