@@ -1,6 +1,7 @@
 package com.cobrodigital.com.cobrodigital2;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.database.SQLException;
@@ -97,13 +98,6 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
                     }
                 }
             });
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarTransaccion);
-        DrawerLayout drawerlayout = (DrawerLayout) findViewById(R.id.drawer_layout_transacciones);
-        ActionBarDrawerToggle menu = new ActionBarDrawerToggle(
-                this, drawerlayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerlayout.setDrawerListener(menu);
-        menu.syncState();
-
     }
     private void setDateTimeField() {
         MenuItem fechaDesde=(MenuItem) findViewById(R.id.fecha_desde);
@@ -212,19 +206,19 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
             @Override
             public void run() {
                 System.out.println("sigo tread uiThread");
-                try {
-                    HashMap<String, String> variables = obtener_filtros();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    HashMap<String, String> variables = obtener_filtros();
+//                } catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
                 String hasta = fecha_hasta;
                 String desde = fecha_desde;
                 HashMap<String, String> variables = null;
-                try {
-                    variables = obtener_filtros();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    variables = obtener_filtros();
+//                } catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
                 try {
                     System.out.println("Busco en el ws");
                     if (!Gestor_de_credenciales.esta_asociado())
@@ -285,20 +279,20 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
             }
         }).start();
     }
-    public static HashMap<String,String> obtener_filtros () throws ParseException{
-        HashMap<String , String > filtros=new HashMap<String, String>();
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyyMMdd", Locale.US);
-        String fecha;
-        if(fecha_desde!=null){
-            fecha=dateFormatter.format(fecha_desde);
-            filtros.put("desde",fecha);
-        }
-        if(fecha_hasta!=null){
-            fecha=dateFormatter.format(fecha_hasta);
-            filtros.put("hasta",fecha);
-        }
-        return filtros;
-    }
+//    public static HashMap<String,String> obtener_filtros () throws ParseException{
+//        HashMap<String , String > filtros=new HashMap<String, String>();
+//        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyyMMdd", Locale.US);
+//        String fecha;
+//        if(fecha_desde!=null){
+//            fecha=dateFormatter.format(fecha_desde);
+//            filtros.put("desde",fecha);
+//        }
+//        if(fecha_hasta!=null){
+//            fecha=dateFormatter.format(fecha_hasta);
+//            filtros.put("hasta",fecha);
+//        }
+//        return filtros;
+//    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -332,13 +326,18 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    public void OnClickVermas(View v){
-
-    }
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
     }
+    public void onBackPressed(){
+        super.onBackPressed();
+        finish();
+    }
 
-
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        onCreate(null);
+    }
 }
 
