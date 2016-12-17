@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
@@ -33,6 +35,24 @@ public class Boletas extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         this.cargar_spiner();
+        Button button = (Button) findViewById(R.id.button4);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String campo_a_buscar=((Spinner)findViewById(R.id.campo_a_buscar)).getSelectedItem().toString();
+                String identificador=((EditText)findViewById(R.id.identificador)).getText().toString();
+                String concepto=((EditText)findViewById(R.id.concepto)).getText().toString();
+                String fecha_1=((EditText)findViewById(R.id.fecha_1)).getText().toString();
+                String importe_1=((EditText)findViewById(R.id.importe_1)).getText().toString();
+                String modelo="init";
+                String fecha_2=((EditText)findViewById(R.id.fecha_2)).getText().toString();
+                String importe_2=((EditText)findViewById(R.id.importe_2)).getText().toString();
+                String fecha_3=((EditText)findViewById(R.id.fecha_3)).getText().toString();
+                String importe_3=((EditText)findViewById(R.id.importe_3)).getText().toString();
+                generar_boleta(identificador,campo_a_buscar,concepto,fecha_1,importe_1,modelo,fecha_2,importe_2,fecha_3,importe_3);
+                System.out.println(campo_a_buscar);
+            }
+        });
 
    }
     protected void generar_boleta(String identificador, String campo_a_buscar, String concepto, String fecha_1, String importe_1, String modelo, String fecha_2, String importe_2, String fecha_3, String importe_3){
@@ -65,6 +85,7 @@ public class Boletas extends AppCompatActivity {
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             Gestor_de_mensajes_usuario.mensaje(e.getMessage(),getApplicationContext());
         }
 

@@ -89,11 +89,11 @@ public class Credencial {
                 this.set_sid((credencial.get_sid()));
 
             }
-        if(PRUEBA){
-            this.setId_credencial(1);
-            this.set_IdComercio("FL662997");
-            this.set_sid("ABZ0ya68K791phuu76gQ5L662J6F2Y4j7zqE2Jxa3Mvd22TWNn4iip6L9yq");
-        }
+//        if(PRUEBA){
+//            this.setId_credencial(1);
+//            this.set_IdComercio("FL662997");
+//            this.set_sid("ABZ0ya68K791phuu76gQ5L662J6F2Y4j7zqE2Jxa3Mvd22TWNn4iip6L9yq");
+//        }
         if(this.IdComercio==null || this.sid==null)
             return null;
         return this;

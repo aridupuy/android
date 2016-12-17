@@ -14,7 +14,7 @@ import java.util.Vector;
  */
 @DatabaseTable(tableName = "Pagador")
 public class Pagador implements Serializable{
-    @DatabaseField(dataType= DataType.SERIALIZABLE,unique = true)
+    @DatabaseField(dataType= DataType.SERIALIZABLE)
     String []campos_variables;
     public Pagador(){
     }

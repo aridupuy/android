@@ -84,11 +84,12 @@ public class serviceTransacciones extends Service {
                     }
                 }
         }).start();
-        //this.stopSelf();
+        this.stopSelf(startId);
         return super.onStartCommand(intent, flags, startId);
     }
     @Override
     public void onDestroy() {
+
         System.out.println("destruido");
     }
 }

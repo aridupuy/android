@@ -164,18 +164,19 @@ public class Transaccion{
             this.setComision((String)dato.get("Comisión"));
             this.setNeto((String)dato.get("Neto"));
             this.setSaldo_acumulado((String)dato.get("Saldo acumulado"));
-            transaccionFactory factory = new transaccionFactory(context);
-            factory.guardar(this);
+//            transaccionFactory factory = new transaccionFactory(context);
+//            factory.guardar(this);
         } catch (JSONException e1) {
             System.out.println(e1.getMessage());
             return null;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return this;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return null;
         }
+//        catch (SQLException e) {
+//            e.printStackTrace();
+//            return this;
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
         return this;
     }
 

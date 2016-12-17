@@ -12,8 +12,8 @@ public class Webservice_boleta extends Webservice {
         metodo_web_service = "generar_boleta";
         array_a_enviar.put("identificador", identificador);
         array_a_enviar.put("buscar", campo_a_buscar);
-        String fechas[] = null;
-        String importes[] = null;
+        String fechas[] = new String [3];
+        String importes[] = new String[3];
         fechas[0] = fecha_1;
         importes[0] = importe_1;
         if (modelo != "") {

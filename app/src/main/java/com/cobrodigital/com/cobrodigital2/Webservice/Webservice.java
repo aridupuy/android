@@ -67,6 +67,7 @@ public abstract class Webservice {
         con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
         con.setRequestProperty("Content-type", "application/x-www-form-urlencoded");
         String url_parameters = http_build_query(array_a_enviar);
+        System.out.println(url_parameters);
         con.setDoOutput(true);
         DataOutputStream wr = new DataOutputStream(con.getOutputStream());
         wr.writeBytes(url_parameters);
@@ -115,14 +116,19 @@ public abstract class Webservice {
             if (queryString.length() > 0) {
                 queryString.append("&");
             }
-            if (entry.getValue().getClass().getName() == "java.util.LinkedHashMap") {
+            if(entry.getValue() instanceof String []) {
+                for (String valor : (String[]) entry.getValue()) {
+                    queryString.append(String.format("%s=%s", entry.getKey() + "%5B" + valor + "%5D", urlEncodeUTF8(valor) + "&"));
+                }
+            }
+            else if (entry.getValue().getClass().getName() == "java.util.LinkedHashMap") {
                 LinkedHashMap array = (LinkedHashMap) entry.getValue();
                 for (Iterator it = array.entrySet().iterator(); it.hasNext(); ) {
                     Map.Entry<?, ?> row = (Map.Entry<?, ?>) it.next();
-
                     queryString.append(String.format("%s=%s", entry.getKey() + "%5B" + row.getKey() + "%5D", urlEncodeUTF8(row.getValue().toString()) + "&"));
                 }
-            } else {
+            }
+            else {
                 queryString.append(String.format("%s=%s",
                         urlEncodeUTF8(entry.getKey().toString()),
                         urlEncodeUTF8(entry.getValue().toString())
@@ -141,14 +147,14 @@ public abstract class Webservice {
     }
 
     public static Vector obtener_datos() {
-        String ejecucion_correcta = (String) resultado.get("ejecucion_correcta");
-        if (ejecucion_correcta == null)
-            ejecucion_correcta = "0";
-        if (Integer.parseInt(ejecucion_correcta) == 1) {
-            return (Vector) resultado.get("datos");
-        }
-        return (Vector) resultado.get("datos");
         //para pruebas cambiar falla el webservice estructura de pagadores.
+//        String ejecucion_correcta = (String) resultado.get("ejecucion_correcta");
+//        if (ejecucion_correcta == null)
+//            ejecucion_correcta = "0";
+//        if (Integer.parseInt(ejecucion_correcta) == 1) {
+//            return (Vector) resultado.get("datos");
+//        }
+        return (Vector) resultado.get("datos");
     }
 
     public static String obtener_resultado() {
