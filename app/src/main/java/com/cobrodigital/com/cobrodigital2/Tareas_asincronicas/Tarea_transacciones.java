@@ -1,13 +1,17 @@
 package com.cobrodigital.com.cobrodigital2.Tareas_asincronicas;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.database.SQLException;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.Message;
+
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListAdapter;
@@ -50,7 +54,7 @@ public class Tarea_transacciones extends AsyncTask<String, Integer, Vector<Trans
     static View view;
     static Bundle bundle;
     static ListView lista;
-    String cantidad_transacciones_a_mostrar="5";
+    String cantidad_transacciones_a_mostrar;
 
     public Tarea_transacciones(View view,Bundle Bundle,Fragment context){
         this.view=view;
@@ -60,42 +64,41 @@ public class Tarea_transacciones extends AsyncTask<String, Integer, Vector<Trans
     private HashMap<String, String> variables = new HashMap<String, String>();
     @Override
     protected void onPreExecute() {
-        context.getFragmentManager().executePendingTransactions();
-
+//        context.getFragmentManager().executePendingTransactions();
         lista= (ListView) view.findViewById(R.id.lista);
-//        lista.removeAllViewsInLayout();
         view.findViewById(R.id.progressbar).setVisibility(View.VISIBLE);
         view.findViewById(R.id.textView5).setVisibility(View.GONE);
-        view.findViewById(R.id.transascompletas).setVisibility(View.GONE);
         view.findViewById(R.id.Saldo).setVisibility(View.GONE);
+        view.findViewById(R.id.tr_toolbar).setVisibility(View.GONE);
     }
 
     @Override
     protected Vector<Transaccion> doInBackground(String... input) {
-        String hasta,desde;
+        String hasta="";
+        String desde="";
+        String tipo="";
         Vector<Transaccion> transacciones=new Vector<Transaccion>();
         if(input.length>0){
             desde = input[0];
             hasta = input[1];
-            cantidad_transacciones_a_mostrar =input[2];
-        }
+            tipo= input[2];
+            cantidad_transacciones_a_mostrar =input[3];
 
+        }
         try {
             System.out.println("Busco en el ws");
             if (!Gestor_de_credenciales.esta_asociado())
                 return null;
-            LinkedHashMap filtros = new LinkedHashMap();
-            if (variables.size() > 0) {
-                desde = (String) variables.get("desde");
-                hasta = (String) variables.get("hasta");
-                variables.remove("desde");
-                variables.remove("hasta");
-            } else {
+                LinkedHashMap filtros = new LinkedHashMap();
+                if(tipo!="")
+                    filtros.put("tipo",tipo);
                 Date Fecha = new Date();
                 SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+            if (desde=="")
                 desde = format.format(Fecha);
+            if (hasta=="")
                 hasta = format.format(Fecha);
-            }
+            //ver que hacer con filtros
             CobroDigital.webservice.webservice_transacciones.consultar_transacciones(desde, hasta, filtros);
             if (CobroDigital.webservice.obtener_resultado().equals("1")) {
                 Object transicion[] = CobroDigital.webservice.obtener_datos().toArray();
@@ -141,44 +144,16 @@ public class Tarea_transacciones extends AsyncTask<String, Integer, Vector<Trans
         }
         return transacciones;
     }
+    @TargetApi(Build.VERSION_CODES.M)
     protected void onPostExecute(Vector<Transaccion> VectorTransaccion) {
         super.onPostExecute(VectorTransaccion);
         view.findViewById(R.id.textView5).setVisibility(View.VISIBLE);
         TextView saldo= (TextView) view.findViewById(R.id.Saldo);
         saldo.setVisibility(View.VISIBLE);
         Transaccion transaccion;
-        System.out.println(VectorTransaccion.size());
         lista.setAdapter(new Lista_transaccion_adapter(context.getContext(),R.layout.item_transacciones,VectorTransaccion));
         saldo.setText("$"+saldo_total);
-//        for (int i = 0; (i < Integer.parseInt(cantidad_transacciones_a_mostrar) || Integer.parseInt(cantidad_transacciones_a_mostrar) == 0) && i < VectorTransaccion.size(); i++) {
-
-//            transaccion = (Transaccion) VectorTransaccion.get(i);
-//            TableRow row = new TableRow(context.getContext());
-//            LayoutInflater inflador = context.getLayoutInflater(bundle);
-//            View ejemplo_fila = inflador.inflate(R.layout.test, row);
-//            ///primera parte
-//            TextView fecha = (TextView) ejemplo_fila.findViewById(R.id.fecha);
-//            fecha.setText(transaccion.getFecha());
-//            TextView neto = (TextView) ejemplo_fila.findViewById(R.id.neto);
-//            neto.setText("$" + String.valueOf(transaccion.getNeto()));
-//            ///segunda parte
-//            TextView bol = (TextView) ejemplo_fila.findViewById(R.id.bol);
-//            bol.setTextSize(9);
-//            bol.setText(transaccion.getNro_boleta());
-//            TextView nombre = (TextView) ejemplo_fila.findViewById(R.id.nombre);
-//            nombre.setText(transaccion.getNombre());
-//            TextView concepto = (TextView) ejemplo_fila.findViewById(R.id.concepto);
-//            concepto.setText(transaccion.getNombre());
-//            TextView info = (TextView) ejemplo_fila.findViewById(R.id.info);
-//            info.setText(transaccion.getInfo());
-//            saldo = transaccion.getSaldo_acumulado();
-//            tabla_layout.addView(row);
-//            TextView Saldo_vista = (TextView) view.findViewById(R.id.Saldo);
-//            Saldo_vista.setText("$" + saldo);
-//        }
         view.findViewById(R.id.progressbar).setVisibility(View.GONE);
-        if (Integer.parseInt(cantidad_transacciones_a_mostrar) > 0);
-//            view.findViewById(R.id.transascompletas).setVisibility(View.VISIBLE);
-
+        view.findViewById(R.id.tr_toolbar).setVisibility(View.VISIBLE);
     }
 }

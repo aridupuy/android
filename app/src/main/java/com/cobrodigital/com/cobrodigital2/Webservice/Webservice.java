@@ -1,6 +1,9 @@
 package com.cobrodigital.com.cobrodigital2.Webservice;
 
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.j256.ormlite.field.types.StringType;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -65,8 +68,9 @@ public abstract class Webservice {
         con.setRequestMethod(method);
         con.setRequestProperty("User-Agent", "Mozilla/5.0");
         con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-        con.setRequestProperty("Content-type", "application/x-www-form-urlencoded");
-        String url_parameters = http_build_query(array_a_enviar);
+        con.setRequestProperty("Content-type", "application/json");
+        JSONObject json=new JSONObject(array_a_enviar);
+        String url_parameters=json.toString();
         System.out.println(url_parameters);
         con.setDoOutput(true);
         DataOutputStream wr = new DataOutputStream(con.getOutputStream());

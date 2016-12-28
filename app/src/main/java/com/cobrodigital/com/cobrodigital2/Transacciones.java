@@ -1,50 +1,60 @@
 package com.cobrodigital.com.cobrodigital2;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+
 import com.cobrodigital.com.cobrodigital2.fragment.Transacciones_fragment;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-
 /**
  * Created by Ariel on 28/08/16.
  */
 public class Transacciones extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    public static final String FILTROS = "filtros";
+    public static final String TIPO = "tipo";
     private int cantidad_transacciones_a_mostrar=5;
+    private String desde="";
+    private String hasta="";
+    private String tipo="";
     private DatePickerDialog fromDatePickerDialog;
     private DatePickerDialog toDatePickerDialog;
-    private SimpleDateFormat dateFormatter;
+
     public static final String CAMPO_RECIBIDO="cantidad_transacciones_a_mostrar";
     public Transacciones() {
     }
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState!=null && !savedInstanceState.isEmpty())
-            cantidad_transacciones_a_mostrar=savedInstanceState.getInt(CAMPO_RECIBIDO,cantidad_transacciones_a_mostrar);
-        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        Intent intent =getIntent();
+        if(intent.hasExtra(CAMPO_RECIBIDO))
+            cantidad_transacciones_a_mostrar=intent.getIntExtra(CAMPO_RECIBIDO,cantidad_transacciones_a_mostrar);
+        if(intent.hasExtra(FILTROS)){
+            Bundle bundle=intent.getBundleExtra(FILTROS);
+            desde=bundle.getString("desde");
+            hasta=bundle.getString("hasta");
+            tipo=bundle.getString(TIPO);
+        }
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         setContentView(R.layout.activity_transacciones);
-        ViewGroup view = (ViewGroup) findViewById(R.id.include_transacciones);
         try {
-           Fragment fragment= Transacciones_fragment.newInstance("","",view,cantidad_transacciones_a_mostrar);
+            Transacciones_fragment fragment=Transacciones_fragment.newInstance(desde,hasta,tipo,cantidad_transacciones_a_mostrar);
+            FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
+            ft=ft.add(R.id.include_transacciones, fragment);
+            int res=ft.commit();
+            Log.d("res",res+"");
 
         } catch (IOException e) {
             e.printStackTrace();
             Tools.developerLog("Error");
         }
-
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -54,6 +64,7 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
         }
         return super.onOptionsItemSelected(item);
     }
+
     @SuppressWarnings("StatementWithEmptyBody")
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.

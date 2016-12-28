@@ -9,8 +9,8 @@
     tools:context="com.cobrodigital.com.cobrodigital2.Transacciones"
     >
     <RelativeLayout
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
     >
 
         <android.support.design.widget.AppBarLayout
@@ -27,14 +27,6 @@
                 android:background="#D1030F"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 >
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textSize="0.2in"
-                    android:layout_marginLeft="3dp"
-                    android:text="@string/Transacciones"
-                    android:gravity="fill_horizontal|center_vertical"
-                    tools:ignore="RtlHardcoded" />
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
         <android.support.v7.widget.CardView
@@ -48,6 +40,7 @@
             android:layout_below="@+id/titulo"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_centerHorizontal="true"
             app:contentPaddingLeft="20dp"
             app:contentPaddingRight="20dp"
             android:clipChildren="true"
@@ -55,41 +48,54 @@
             android:clickable="true"
             >
             <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="4"
+                    android:id="@+id/tr_toolbar">
                 <TextView
                     android:text="Saldo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView5"
                     android:textColor="@color/colorPrimary"
-                    android:padding="10dp"
+                    android:paddingTop="20dp"
+                    android:paddingLeft="10dp"
                     android:layout_alignParentTop="true"
-                    android:layout_alignParentStart="true" />
+                    android:layout_alignParentStart="true"
+                    android:layout_weight="2"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/Saldo"
+                    android:paddingTop="20dp"
+                    android:paddingLeft="10dp"
+
                     android:text="aaaaaaaaaaaaaaaa"
                     android:textColor="@color/colorPrimary"
-                    android:padding="10dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
+                    android:layout_weight="1"
                     />
+                <Toolbar  android:id="@+id/card_toolbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/Saldo"
+                    android:layout_weight="1"
+                    />
+                </LinearLayout>
+
                 <ListView
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:id="@+id/lista"
                     android:layout_centerHorizontal="true"
                     android:elevation="1dp"
-                    android:layout_marginBottom="30dp"
                     android:textAlignment="center"
-                    android:layout_below="@+id/textView5"
+                    android:layout_below="@+id/tr_toolbar"
                     android:orientation="horizontal"
                     android:divider="@null"
-
                     >
                 </ListView>
 
@@ -101,21 +107,6 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:id="@+id/progressbar"
-                    />
-                <TextView
-                    android:text="Ver Mas movimientos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/transascompletas"
-                    android:contextClickable="true"
-                    android:clickable="true"
-                    android:textColor="@color/colorPrimary"
-                    android:paddingBottom="0dp"
-                    android:paddingLeft="10dp"
-                    android:layout_below="@id/lista"
-                    android:onClick="OnClickVermas"
-                    tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry"
-
                     />
             </RelativeLayout>
         </android.support.v7.widget.CardView>

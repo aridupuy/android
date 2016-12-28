@@ -35,7 +35,7 @@ public class Tools {
     static public byte[] object2Bytes( Object o ) throws IOException, IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream( baos );
-        oos.writeObject( o );
+//        oos.writeObject( o );
         return baos.toByteArray();
     }
 

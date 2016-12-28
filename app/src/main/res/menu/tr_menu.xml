@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/vermas" android:title="Transacciones de hoy"/>
+    <item android:id="@+id/verultimomes" android:title="Último mes"/>
+    <item android:id="@+id/veringresos" android:title="Solo Ingresos"/>
+    <item android:id="@+id/veregresos" android:title="Solo Egresos"/>
+    <item android:id="@+id/verdebitos" android:title="Solo Débitos autom."/>
+    <item android:id="@+id/vercredito" android:title="Solo Tarjeta de cred."/>
+
+</menu>
