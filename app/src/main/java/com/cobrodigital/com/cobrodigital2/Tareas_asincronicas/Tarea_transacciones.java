@@ -1,25 +1,17 @@
 package com.cobrodigital.com.cobrodigital2.Tareas_asincronicas;
 
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.database.SQLException;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Looper;
-import android.os.Message;
 
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.cobrodigital.com.cobrodigital2.Listeners.EndScroll;
 import com.cobrodigital.com.cobrodigital2.Adapters.Lista_transaccion_adapter;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_credenciales;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
@@ -27,11 +19,9 @@ import com.cobrodigital.com.cobrodigital2.Model.Transaccion;
 import com.cobrodigital.com.cobrodigital2.R;
 import com.cobrodigital.com.cobrodigital2.Transacciones;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
-import com.cobrodigital.com.cobrodigital2.fragment.Transacciones_fragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -39,9 +29,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 import java.util.Vector;
 
 /**
@@ -50,6 +37,7 @@ import java.util.Vector;
 public class Tarea_transacciones extends AsyncTask<String, Integer, Vector<Transaccion>> {
     private long tiempo_estimado_de_espera=5000;
     private String saldo_total="";
+    private int pagina=0;
     static Fragment context;
     static View view;
     static Bundle bundle;
@@ -89,11 +77,12 @@ public class Tarea_transacciones extends AsyncTask<String, Integer, Vector<Trans
             System.out.println("Busco en el ws");
             if (!Gestor_de_credenciales.esta_asociado())
                 return null;
-                LinkedHashMap filtros = new LinkedHashMap();
-                if(tipo!="")
-                    filtros.put("tipo",tipo);
-                Date Fecha = new Date();
-                SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+            LinkedHashMap filtros = new LinkedHashMap();
+            if(!tipo.equals(""))
+                filtros.put("tipo",tipo);
+            tipo="";
+            Date Fecha = new Date();
+            SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
             if (desde=="")
                 desde = format.format(Fecha);
             if (hasta=="")
@@ -118,7 +107,6 @@ public class Tarea_transacciones extends AsyncTask<String, Integer, Vector<Trans
 
                 } else {
                     System.out.println("No hay datos disponibles");
-//                            Gestor_de_mensajes_usuario.mensaje("No hay datos disponibles.",Transacciones.context);
                     return null;
                 }
             } else {
@@ -147,13 +135,40 @@ public class Tarea_transacciones extends AsyncTask<String, Integer, Vector<Trans
     @TargetApi(Build.VERSION_CODES.M)
     protected void onPostExecute(Vector<Transaccion> VectorTransaccion) {
         super.onPostExecute(VectorTransaccion);
-        view.findViewById(R.id.textView5).setVisibility(View.VISIBLE);
-        TextView saldo= (TextView) view.findViewById(R.id.Saldo);
-        saldo.setVisibility(View.VISIBLE);
-        Transaccion transaccion;
-        lista.setAdapter(new Lista_transaccion_adapter(context.getContext(),R.layout.item_transacciones,VectorTransaccion));
-        saldo.setText("$"+saldo_total);
-        view.findViewById(R.id.progressbar).setVisibility(View.GONE);
-        view.findViewById(R.id.tr_toolbar).setVisibility(View.VISIBLE);
+        if(VectorTransaccion!=null && VectorTransaccion.size()>0) {
+            view.findViewById(R.id.textView5).setVisibility(View.VISIBLE);
+            TextView saldo = (TextView) view.findViewById(R.id.Saldo);
+            saldo.setVisibility(View.VISIBLE);
+            Transaccion transaccion;
+            lista.setAdapter(new Lista_transaccion_adapter(context.getContext(), R.layout.item_transacciones, VectorTransaccion));
+            lista.setOnScrollListener(new EndScroll(new EndScroll.onScrollEndListener() {
+                @Override
+                public void onEnd(int pagina) {
+                    cantidad_transacciones_a_mostrar=String.valueOf(Integer.parseInt(cantidad_transacciones_a_mostrar)+10);
+                    Bundle variables=bundle.getBundle(Transacciones.FILTROS);
+                    String desde=variables.getString("desde","");
+                    String hasta=variables.getString("hasta","");
+                    String tipo=variables.getString(Transacciones.TIPO);
+                    Tarea_transacciones tr= new Tarea_transacciones(view,bundle,context);
+                    tr.execute(desde,hasta,tipo,cantidad_transacciones_a_mostrar);
+
+                }
+            }));
+            saldo.setText("$" + saldo_total);
+            view.findViewById(R.id.progressbar).setVisibility(View.GONE);
+            view.findViewById(R.id.tr_toolbar).setVisibility(View.VISIBLE);
+
+        }
+        else{
+            //mejorar este caso
+            Gestor_de_mensajes_usuario.mensaje("No Existen transacciones que mostrar",context.getContext());
+            TextView saldo = (TextView) view.findViewById(R.id.Saldo);
+            saldo.setVisibility(View.VISIBLE);
+            saldo.setText("No Existen transacciones que mostrar");
+            view.findViewById(R.id.progressbar).setVisibility(View.GONE);
+            view.findViewById(R.id.tr_toolbar).setVisibility(View.VISIBLE);
+        }
+
     }
+
 }

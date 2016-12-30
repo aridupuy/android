@@ -1,5 +1,7 @@
 package com.cobrodigital.com.cobrodigital2.Webservice;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.LinkedHashMap;
@@ -17,6 +19,9 @@ public class Webservice_transacciones extends Webservice{
             if (!filtros.isEmpty())
                 array_a_enviar.put("filtros", filtros);
             ejecutar();
+            //quito los filtros para que la variable no se quede con basura cada vez
+            if (!filtros.isEmpty())
+                array_a_enviar.remove("filtros");
         } catch (Exception e) {
             System.out.println(e);
         }

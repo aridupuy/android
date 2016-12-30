@@ -12,7 +12,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="9dp"
+            android:textSize="19dp"
             android:id="@+id/fecha"
             android:layout_weight="20"
             android:text="11/11/2016"
@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:textSize="9dp"
+            android:textSize="19dp"
             android:text="$$$$$$"
             android:id="@+id/neto"
             />
@@ -36,7 +36,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="9dp"
+            android:textSize="12dp"
             android:id="@+id/nombre"
             android:layout_weight="20"
             android:text="578asda"
@@ -47,22 +47,15 @@
             android:layout_centerHorizontal="true"
             android:weightSum="2"
             >
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="5dp"
-                android:id="@+id/identificacion"
-                android:layout_weight="1"
-                android:text="asd"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="5dp"
+                android:textSize="12dp"
                 android:id="@+id/concepto"
                 android:paddingLeft="10dp"
                 android:layout_weight="1"
-                android:text="COncepto"
+                android:text="Concepto"
                 />
         </LinearLayout>
         <TextView

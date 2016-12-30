@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.widget.AdapterView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -70,32 +72,37 @@ public class Transacciones_fragment extends Fragment {
             vista=inflater.inflate(R.layout.fragment_transacciones, container, false);
             Toolbar toolbar= (Toolbar) vista.findViewById(R.id.card_toolbar);
             toolbar.inflateMenu(R.menu.tr_menu);
-            int anterior=cantidad_transacciones_a_mostrar;;
+            int anterior=cantidad_transacciones_a_mostrar;
             toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener(){
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 Intent intent = getActivity().getIntent();
-                Bundle bundle=new Bundle();
-                cantidad_transacciones_a_mostrar=0;
+//                cantidad_transacciones_a_mostrar=0;
                 dateFormatter = new SimpleDateFormat("yyyyMMdd", Locale.US);
                 Calendar fecha_actual=Calendar.getInstance();
                 fecha_actual.setTime(new Date());
                 switch (menuItem.getItemId()){
                     case R.id.vermas:
+                        Bundle bundle=new Bundle();
                         intent.putExtra(Transacciones.CAMPO_RECIBIDO,cantidad_transacciones_a_mostrar);
+                        bundle.putString("tipo","");
+                        intent.putExtra("filtros",bundle);
                         break;
                     case R.id.verultimomes:
                         intent.putExtra(Transacciones.CAMPO_RECIBIDO,cantidad_transacciones_a_mostrar);
+                        bundle=new Bundle();
                         f_hasta=dateFormatter.format(fecha_actual.getTime());
                         fecha_actual.add(Calendar.MONTH,-1);
                         f_desde=dateFormatter.format(fecha_actual.getTime());
+                        bundle.putString("tipo","");
                         bundle.putString("desde",f_desde);
                         bundle.putString("hasta",f_hasta);
                         intent.putExtra("filtros",bundle);
                         break;
                     case  R.id.veringresos:
+                        bundle=new Bundle();
                         f_hasta=dateFormatter.format(fecha_actual.getTime());
-                        fecha_actual.add(Calendar.MONTH,-6);
+                        fecha_actual.add(Calendar.MONTH,-3);
                         f_desde=dateFormatter.format(fecha_actual.getTime());
                         intent.putExtra(Transacciones.CAMPO_RECIBIDO,cantidad_transacciones_a_mostrar);
                         Gestor_de_mensajes_usuario.mensaje("Esta operacion puede demorar",getContext());
@@ -105,8 +112,9 @@ public class Transacciones_fragment extends Fragment {
                         intent.putExtra("filtros",bundle);
                         break;
                     case  R.id.vercredito:
+                        bundle=new Bundle();
                         f_hasta=dateFormatter.format(fecha_actual.getTime());
-                        fecha_actual.add(Calendar.MONTH,-6);
+                        fecha_actual.add(Calendar.MONTH,-3);
                         f_desde=dateFormatter.format(fecha_actual.getTime());
                         intent.putExtra(Transacciones.CAMPO_RECIBIDO,cantidad_transacciones_a_mostrar);
                         Gestor_de_mensajes_usuario.mensaje("Esta operacion puede demorar",getContext());
@@ -116,8 +124,9 @@ public class Transacciones_fragment extends Fragment {
                         intent.putExtra("filtros",bundle);
                         break;
                     case  R.id.veregresos:
+                        bundle=new Bundle();
                         f_hasta=dateFormatter.format(fecha_actual.getTime());
-                        fecha_actual.add(Calendar.MONTH,-6);
+                        fecha_actual.add(Calendar.MONTH,-3);
                         f_desde=dateFormatter.format(fecha_actual.getTime());
                         Gestor_de_mensajes_usuario.mensaje("Esta operacion puede demorar",getContext());
                         intent.putExtra(Transacciones.CAMPO_RECIBIDO,cantidad_transacciones_a_mostrar);
@@ -127,8 +136,9 @@ public class Transacciones_fragment extends Fragment {
                         intent.putExtra("filtros",bundle);
                         break;
                     case  R.id.verdebitos:
+                        bundle=new Bundle();
                         f_hasta=dateFormatter.format(fecha_actual.getTime());
-                        fecha_actual.add(Calendar.MONTH,-6);
+                        fecha_actual.add(Calendar.MONTH,-3);
                         f_desde=dateFormatter.format(fecha_actual.getTime());
                         intent.putExtra(Transacciones.CAMPO_RECIBIDO,cantidad_transacciones_a_mostrar);
                         Gestor_de_mensajes_usuario.mensaje("Esta operacion puede demorar",getContext());
@@ -143,9 +153,9 @@ public class Transacciones_fragment extends Fragment {
                 return true;
             }
         });
-        Tarea_transacciones tarea = new Tarea_transacciones(vista,savedInstanceState,this);
+        Tarea_transacciones tarea = new Tarea_transacciones(vista,getActivity().getIntent().getExtras(),this);
         tarea.execute(f_desde,f_hasta,tipo,String.valueOf(cantidad_transacciones_a_mostrar));
-        cantidad_transacciones_a_mostrar=anterior;
+//        cantidad_transacciones_a_mostrar=anterior;
         return vista;
     }
 
@@ -153,6 +163,7 @@ public class Transacciones_fragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
     }
+
 
 
 }

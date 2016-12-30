@@ -17,14 +17,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_credenciales;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_personalizacion;
-import com.cobrodigital.com.cobrodigital2.Model.Credencial;
 import com.cobrodigital.com.cobrodigital2.Services.serviceBoot;
-import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 import com.cobrodigital.com.cobrodigital2.core.Configuracion;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -83,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Gestor_de_mensajes_usuario.mensaje("Usted ya esta asociado a una cuenta CobroDigital.",getApplicationContext());
             }
         } else if (id == R.id.nav_gallery) {
-            this.OnClickListarTransacciones(findViewById(R.layout.activity_transacciones));
+            this.OnClickListarTransacciones(findViewById(R.layout.app_bar_transacciones));
             return true;
 
         }  else if (id == R.id.nav_manage) {

@@ -1,5 +1,4 @@
 package com.cobrodigital.com.cobrodigital2;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,10 +7,11 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-
 import com.cobrodigital.com.cobrodigital2.fragment.Transacciones_fragment;
 import java.io.IOException;
 /**
@@ -23,7 +23,7 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
     private int cantidad_transacciones_a_mostrar=5;
     private String desde="";
     private String hasta="";
-    private String tipo="";
+//    private String tipo="";
     private DatePickerDialog fromDatePickerDialog;
     private DatePickerDialog toDatePickerDialog;
 
@@ -32,18 +32,30 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
     }
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        setContentView(R.layout.activity_transacciones);
+        /////////////////////////////
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_transaccion);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_transaccion);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+            this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_transacciones);
+        navigationView.setNavigationItemSelectedListener(this);
+        ///////////////////////////////
         Intent intent =getIntent();
+        String tipo="";
         if(intent.hasExtra(CAMPO_RECIBIDO))
             cantidad_transacciones_a_mostrar=intent.getIntExtra(CAMPO_RECIBIDO,cantidad_transacciones_a_mostrar);
         if(intent.hasExtra(FILTROS)){
             Bundle bundle=intent.getBundleExtra(FILTROS);
             desde=bundle.getString("desde");
             hasta=bundle.getString("hasta");
-            tipo=bundle.getString(TIPO);
+            tipo=bundle.getString(TIPO,"");
         }
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-        setContentView(R.layout.activity_transacciones);
+
         try {
             Transacciones_fragment fragment=Transacciones_fragment.newInstance(desde,hasta,tipo,cantidad_transacciones_a_mostrar);
             FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
@@ -55,6 +67,7 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
             e.printStackTrace();
             Tools.developerLog("Error");
         }
+
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -81,8 +94,8 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
         } else if (id == R.id.nav_share) {
 
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_transacciones);
-        drawer.closeDrawer(GravityCompat.START);
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_transacciones);
+//        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
     protected void onRestoreInstanceState(Bundle savedInstanceState) {

@@ -7,12 +7,11 @@
     android:layout_width="match_parent"
     android:fillViewport="true"
     tools:context="com.cobrodigital.com.cobrodigital2.Transacciones"
-    >
+    android:layout_marginTop="@dimen/activity_vertical_margin">
     <RelativeLayout
             android:layout_height="match_parent"
             android:layout_width="match_parent"
     >
-
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -20,29 +19,22 @@
             android:theme="@style/AppTheme.AppBarOverlay"
             android:background="?attr/colorBackgroundFloating">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbarTransaccion"
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:background="#D1030F"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
-                >
-            </android.support.v7.widget.Toolbar>
+
         </android.support.design.widget.AppBarLayout>
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="50dp"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="10dp"
             app:layout_scrollFlags="scroll"
             android:layout_gravity="center"
             app:cardElevation="6dp"
             android:layout_below="@+id/titulo"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_centerHorizontal="true"
-            app:contentPaddingLeft="20dp"
-            app:contentPaddingRight="20dp"
+            app:contentPaddingLeft="5dp"
+            app:contentPaddingRight="5dp"
             android:clipChildren="true"
             android:clipToPadding="true"
             android:clickable="true"
@@ -73,8 +65,7 @@
                     android:id="@+id/Saldo"
                     android:paddingTop="20dp"
                     android:paddingLeft="10dp"
-
-                    android:text="aaaaaaaaaaaaaaaa"
+                    android:text=""
                     android:textColor="@color/colorPrimary"
                     android:layout_weight="1"
                     />
