@@ -33,9 +33,11 @@ public class Transacciones_fragment extends Fragment {
 
     private static int cantidad_transacciones_a_mostrar=5;
     private View vista= null;
+    private View footerView;
     private String f_desde;
     private String f_hasta;
     private String tipo;
+
     private ViewGroup Container;
     private SimpleDateFormat dateFormatter;
     public Transacciones_fragment() {
@@ -69,7 +71,8 @@ public class Transacciones_fragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         onCreate(savedInstanceState);
-            vista=inflater.inflate(R.layout.fragment_transacciones, container, false);
+        footerView= ((LayoutInflater) this.getActivity().getSystemService(getContext().LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footer_loader, null, false);
+        vista=inflater.inflate(R.layout.fragment_transacciones, container, false);
             Toolbar toolbar= (Toolbar) vista.findViewById(R.id.card_toolbar);
             toolbar.inflateMenu(R.menu.tr_menu);
             int anterior=cantidad_transacciones_a_mostrar;
@@ -153,8 +156,9 @@ public class Transacciones_fragment extends Fragment {
                 return true;
             }
         });
-        Tarea_transacciones tarea = new Tarea_transacciones(vista,getActivity().getIntent().getExtras(),this);
+        Tarea_transacciones tarea = new Tarea_transacciones(vista,footerView,getActivity().getIntent().getExtras(),this);
         tarea.execute(f_desde,f_hasta,tipo,String.valueOf(cantidad_transacciones_a_mostrar));
+
 //        cantidad_transacciones_a_mostrar=anterior;
         return vista;
     }

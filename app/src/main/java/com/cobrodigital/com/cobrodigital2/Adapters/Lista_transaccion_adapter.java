@@ -70,6 +70,11 @@ public class Lista_transaccion_adapter extends ArrayAdapter {
         });
         return view_item;
     }
+    public void addItems(Vector<Transaccion> datos){
+        for (Transaccion dato:datos) {
+            items.set((items.size()+1),dato);
+        }
+    }
 
 
 }

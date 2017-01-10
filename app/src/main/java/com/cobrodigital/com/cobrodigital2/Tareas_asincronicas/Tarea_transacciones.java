@@ -7,11 +7,15 @@ import android.os.Build;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.cobrodigital.com.cobrodigital2.Listeners.EndScroll;
 import com.cobrodigital.com.cobrodigital2.Adapters.Lista_transaccion_adapter;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_credenciales;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
@@ -42,18 +46,26 @@ public class Tarea_transacciones extends AsyncTask<String, Integer, Vector<Trans
     static View view;
     static Bundle bundle;
     static ListView lista;
+    static View footer;
+    private static boolean cargando=false;
     String cantidad_transacciones_a_mostrar;
 
-    public Tarea_transacciones(View view,Bundle Bundle,Fragment context){
+    public Tarea_transacciones(View view,View footerView,Bundle Bundle,Fragment context){
         this.view=view;
+        this.footer=footerView;
         this.bundle=Bundle;
         this.context=context;
     }
     private HashMap<String, String> variables = new HashMap<String, String>();
+
+
+
     @Override
     protected void onPreExecute() {
 //        context.getFragmentManager().executePendingTransactions();
         lista= (ListView) view.findViewById(R.id.lista);
+        view.findViewById(R.id.loading_principal_transacciones).setVisibility(View.GONE);
+        lista.addFooterView(footer);
         view.findViewById(R.id.progressbar).setVisibility(View.VISIBLE);
         view.findViewById(R.id.textView5).setVisibility(View.GONE);
         view.findViewById(R.id.Saldo).setVisibility(View.GONE);
@@ -71,7 +83,6 @@ public class Tarea_transacciones extends AsyncTask<String, Integer, Vector<Trans
             hasta = input[1];
             tipo= input[2];
             cantidad_transacciones_a_mostrar =input[3];
-
         }
         try {
             System.out.println("Busco en el ws");
@@ -132,30 +143,50 @@ public class Tarea_transacciones extends AsyncTask<String, Integer, Vector<Trans
         }
         return transacciones;
     }
+
     @TargetApi(Build.VERSION_CODES.M)
-    protected void onPostExecute(Vector<Transaccion> VectorTransaccion) {
+    protected void onPostExecute(final Vector<Transaccion> VectorTransaccion) {
         super.onPostExecute(VectorTransaccion);
+        lista.removeFooterView(footer);
+        view.findViewById(R.id.loading_principal_transacciones).setVisibility(View.GONE);
         if(VectorTransaccion!=null && VectorTransaccion.size()>0) {
             view.findViewById(R.id.textView5).setVisibility(View.VISIBLE);
             TextView saldo = (TextView) view.findViewById(R.id.Saldo);
             saldo.setVisibility(View.VISIBLE);
             Transaccion transaccion;
-            lista.setAdapter(new Lista_transaccion_adapter(context.getContext(), R.layout.item_transacciones, VectorTransaccion));
-            lista.setOnScrollListener(new EndScroll(new EndScroll.onScrollEndListener() {
+            Lista_transaccion_adapter adapter=(Lista_transaccion_adapter)lista.getAdapter();
+            if(adapter==null || adapter.getCount()==0)
+                lista.setAdapter(new Lista_transaccion_adapter(context.getContext(), R.layout.item_transacciones, VectorTransaccion));
+            else
+                adapter.addItems(VectorTransaccion);
+            lista.setOnScrollListener(new AbsListView.OnScrollListener() {
                 @Override
-                public void onEnd(int pagina) {
-                    cantidad_transacciones_a_mostrar=String.valueOf(Integer.parseInt(cantidad_transacciones_a_mostrar)+10);
-                    Bundle variables=bundle.getBundle(Transacciones.FILTROS);
-                    String desde=variables.getString("desde","");
-                    String hasta=variables.getString("hasta","");
-                    String tipo=variables.getString(Transacciones.TIPO);
-                    Tarea_transacciones tr= new Tarea_transacciones(view,bundle,context);
-                    tr.execute(desde,hasta,tipo,cantidad_transacciones_a_mostrar);
+                public void onScrollStateChanged(AbsListView absListView, int i) {
 
                 }
-            }));
+                @Override
+                public void onScroll(AbsListView absListView, int primer_item_visible, int total_items_visibles, int total_items) {
+                    boolean lastItem = primer_item_visible + total_items_visibles == total_items && lista.getChildAt(total_items_visibles -1) != null && lista.getChildAt(total_items_visibles-1).getBottom() <= lista.getHeight();
+                    if(lastItem && !Tarea_transacciones.cargando){
+                        Tarea_transacciones.cargando=true;
+                        cantidad_transacciones_a_mostrar=String.valueOf(Integer.parseInt(cantidad_transacciones_a_mostrar)+10);
+                        String desde="";
+                        String hasta="";
+                        String tipo="";
+                        if(bundle!=null){
+                            Bundle variables=bundle.getBundle(Transacciones.FILTROS);
+                            tipo=variables.getString(Transacciones.TIPO);
+                            desde=variables.getString("desde","");
+                            hasta=variables.getString("hasta","");
+                        }
+
+                        Tarea_transacciones tr= new Tarea_transacciones(view,footer,bundle,context);
+                        tr.execute(desde,hasta,tipo,cantidad_transacciones_a_mostrar);
+                        Tarea_transacciones.cargando=false;
+                    }
+                }
+            });
             saldo.setText("$" + saldo_total);
-            view.findViewById(R.id.progressbar).setVisibility(View.GONE);
             view.findViewById(R.id.tr_toolbar).setVisibility(View.VISIBLE);
 
         }
@@ -168,7 +199,6 @@ public class Tarea_transacciones extends AsyncTask<String, Integer, Vector<Trans
             view.findViewById(R.id.progressbar).setVisibility(View.GONE);
             view.findViewById(R.id.tr_toolbar).setVisibility(View.VISIBLE);
         }
-
     }
 
 }
