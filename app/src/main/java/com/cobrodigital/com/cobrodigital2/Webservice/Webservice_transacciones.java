@@ -11,11 +11,15 @@ import java.util.LinkedHashMap;
  */
 
 public class Webservice_transacciones extends Webservice{
-    public static boolean consultar_transacciones(String fecha_desde, String fecha_hasta, LinkedHashMap filtros) throws MalformedURLException, IOException {
+    public static boolean consultar_transacciones(String fecha_desde, String fecha_hasta, LinkedHashMap filtros,int offset,int limit) throws MalformedURLException, IOException {
         try {
             metodo_web_service = "consultar_transacciones";
             array_a_enviar.put("desde", fecha_desde);
             array_a_enviar.put("hasta", fecha_hasta);
+            if(offset!=0 && limit!=0){
+                array_a_enviar.put("offset", offset);
+                array_a_enviar.put("limit", limit);
+            }
             if (!filtros.isEmpty())
                 array_a_enviar.put("filtros", filtros);
             ejecutar();

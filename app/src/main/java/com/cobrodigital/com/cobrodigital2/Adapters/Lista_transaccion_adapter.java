@@ -72,7 +72,7 @@ public class Lista_transaccion_adapter extends ArrayAdapter {
     }
     public void addItems(Vector<Transaccion> datos){
         for (Transaccion dato:datos) {
-            items.set((items.size()+1),dato);
+            items.add(dato);
         }
     }
 

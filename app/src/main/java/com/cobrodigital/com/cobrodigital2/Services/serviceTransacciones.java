@@ -39,7 +39,7 @@ public class serviceTransacciones extends Service {
                 try {
                     Gestor_de_credenciales.re_asociar(getApplicationContext());
                     CobroDigital cobroDigital = new CobroDigital(CobroDigital.credencial,getBaseContext());
-                    cobroDigital.webservice.webservice_transacciones.consultar_transacciones(format.format(Fecha), format.format(Fecha), new LinkedHashMap());
+                    cobroDigital.webservice.webservice_transacciones.consultar_transacciones(format.format(Fecha), format.format(Fecha), new LinkedHashMap(),0,0);
                     Vector respuesta = cobroDigital.webservice.obtener_datos();
                     serviceTransacciones.total = 0;
                     if (respuesta != null) {

@@ -20,7 +20,6 @@ import java.io.IOException;
 public class Transacciones extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String FILTROS = "filtros";
     public static final String TIPO = "tipo";
-    private int cantidad_transacciones_a_mostrar=5;
     private String desde="";
     private String hasta="";
 //    private String tipo="";
@@ -47,8 +46,6 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
         ///////////////////////////////
         Intent intent =getIntent();
         String tipo="";
-        if(intent.hasExtra(CAMPO_RECIBIDO))
-            cantidad_transacciones_a_mostrar=intent.getIntExtra(CAMPO_RECIBIDO,cantidad_transacciones_a_mostrar);
         if(intent.hasExtra(FILTROS)){
             Bundle bundle=intent.getBundleExtra(FILTROS);
             desde=bundle.getString("desde");
@@ -57,7 +54,7 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
         }
 
         try {
-            Transacciones_fragment fragment=Transacciones_fragment.newInstance(desde,hasta,tipo,cantidad_transacciones_a_mostrar);
+            Transacciones_fragment fragment=Transacciones_fragment.newInstance(desde,hasta,tipo);
             FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
             ft=ft.add(R.id.include_transacciones, fragment);
             int res=ft.commit();

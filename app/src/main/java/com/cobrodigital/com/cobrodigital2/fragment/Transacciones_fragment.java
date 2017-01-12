@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -40,18 +41,19 @@ public class Transacciones_fragment extends Fragment {
 
     private ViewGroup Container;
     private SimpleDateFormat dateFormatter;
+    private int offset=-cantidad_transacciones_a_mostrar;
+    private int limit=0;
+
     public Transacciones_fragment() {
         //constructor vacio obligatorio en fragments usar new instance
     }
 
-    public static Transacciones_fragment newInstance(String desde, String hasta,String tipo,int cantidad_transacciones_a_mostrar) throws IOException {
+    public static Transacciones_fragment newInstance(String desde, String hasta,String tipo) throws IOException {
         Transacciones_fragment fragment = new Transacciones_fragment();
         Bundle args = new Bundle();
         args.putString(FECHA_DESDE, desde);
         args.putString(FECHA_HASTA, hasta);
         args.putString(TIPO, tipo);
-        args.putInt(Transacciones.CAMPO_RECIBIDO, cantidad_transacciones_a_mostrar);
-
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,7 +64,6 @@ public class Transacciones_fragment extends Fragment {
             f_desde= getArguments().getString(FECHA_DESDE,"");
             f_hasta = getArguments().getString(FECHA_HASTA,"");
             tipo= getArguments().getString(TIPO,"");
-            cantidad_transacciones_a_mostrar=getArguments().getInt(Transacciones.CAMPO_RECIBIDO,cantidad_transacciones_a_mostrar);
         }
         
     }
@@ -75,7 +76,6 @@ public class Transacciones_fragment extends Fragment {
         vista=inflater.inflate(R.layout.fragment_transacciones, container, false);
             Toolbar toolbar= (Toolbar) vista.findViewById(R.id.card_toolbar);
             toolbar.inflateMenu(R.menu.tr_menu);
-            int anterior=cantidad_transacciones_a_mostrar;
             toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener(){
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -84,9 +84,13 @@ public class Transacciones_fragment extends Fragment {
                 dateFormatter = new SimpleDateFormat("yyyyMMdd", Locale.US);
                 Calendar fecha_actual=Calendar.getInstance();
                 fecha_actual.setTime(new Date());
+                Bundle bundle=new Bundle();
+
                 switch (menuItem.getItemId()){
                     case R.id.vermas:
-                        Bundle bundle=new Bundle();
+                        bundle=new Bundle();
+                        bundle.putInt("Offset",offset+cantidad_transacciones_a_mostrar);
+                        bundle.putInt("Limit",limit+cantidad_transacciones_a_mostrar);
                         intent.putExtra(Transacciones.CAMPO_RECIBIDO,cantidad_transacciones_a_mostrar);
                         bundle.putString("tipo","");
                         intent.putExtra("filtros",bundle);
@@ -94,6 +98,8 @@ public class Transacciones_fragment extends Fragment {
                     case R.id.verultimomes:
                         intent.putExtra(Transacciones.CAMPO_RECIBIDO,cantidad_transacciones_a_mostrar);
                         bundle=new Bundle();
+                        bundle.putInt("Offset",offset+cantidad_transacciones_a_mostrar);
+                        bundle.putInt("Limit",limit+cantidad_transacciones_a_mostrar);
                         f_hasta=dateFormatter.format(fecha_actual.getTime());
                         fecha_actual.add(Calendar.MONTH,-1);
                         f_desde=dateFormatter.format(fecha_actual.getTime());
@@ -104,6 +110,8 @@ public class Transacciones_fragment extends Fragment {
                         break;
                     case  R.id.veringresos:
                         bundle=new Bundle();
+                        bundle.putInt("Offset",offset+cantidad_transacciones_a_mostrar);
+                        bundle.putInt("Limit",limit+cantidad_transacciones_a_mostrar);
                         f_hasta=dateFormatter.format(fecha_actual.getTime());
                         fecha_actual.add(Calendar.MONTH,-3);
                         f_desde=dateFormatter.format(fecha_actual.getTime());
@@ -116,6 +124,8 @@ public class Transacciones_fragment extends Fragment {
                         break;
                     case  R.id.vercredito:
                         bundle=new Bundle();
+                        bundle.putInt("Offset",offset+cantidad_transacciones_a_mostrar);
+                        bundle.putInt("Limit",limit+cantidad_transacciones_a_mostrar);
                         f_hasta=dateFormatter.format(fecha_actual.getTime());
                         fecha_actual.add(Calendar.MONTH,-3);
                         f_desde=dateFormatter.format(fecha_actual.getTime());
@@ -128,6 +138,8 @@ public class Transacciones_fragment extends Fragment {
                         break;
                     case  R.id.veregresos:
                         bundle=new Bundle();
+                        bundle.putInt("Offset",offset+cantidad_transacciones_a_mostrar);
+                        bundle.putInt("Limit",limit+cantidad_transacciones_a_mostrar);
                         f_hasta=dateFormatter.format(fecha_actual.getTime());
                         fecha_actual.add(Calendar.MONTH,-3);
                         f_desde=dateFormatter.format(fecha_actual.getTime());
@@ -140,6 +152,8 @@ public class Transacciones_fragment extends Fragment {
                         break;
                     case  R.id.verdebitos:
                         bundle=new Bundle();
+                        bundle.putInt("Offset",offset+cantidad_transacciones_a_mostrar);
+                        bundle.putInt("Limit",limit+cantidad_transacciones_a_mostrar);
                         f_hasta=dateFormatter.format(fecha_actual.getTime());
                         fecha_actual.add(Calendar.MONTH,-3);
                         f_desde=dateFormatter.format(fecha_actual.getTime());
@@ -156,6 +170,9 @@ public class Transacciones_fragment extends Fragment {
                 return true;
             }
         });
+        ((View)vista.findViewById(R.id.loading_principal_transacciones)).setVisibility(View.VISIBLE);
+        getActivity().getIntent().putExtra("Offset",offset+cantidad_transacciones_a_mostrar);
+        getActivity().getIntent().putExtra("Limit",limit+cantidad_transacciones_a_mostrar);
         Tarea_transacciones tarea = new Tarea_transacciones(vista,footerView,getActivity().getIntent().getExtras(),this);
         tarea.execute(f_desde,f_hasta,tipo,String.valueOf(cantidad_transacciones_a_mostrar));
 
