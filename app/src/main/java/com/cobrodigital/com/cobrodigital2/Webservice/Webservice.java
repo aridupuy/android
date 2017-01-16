@@ -39,6 +39,7 @@ public abstract class Webservice {
     public static Webservice_boleta webservice_boleta;
     public static Webservice_pagador webservice_pagador;
     public static Webservice_transacciones webservice_transacciones;
+    public static Webservice_saldo webservice_saldo;
 
     private static final String URL  = "https://www.cobrodigital.com:14365/ws3/";
     protected static final String method = "POST";
@@ -104,6 +105,7 @@ public abstract class Webservice {
                 log.add(j, (logstring));
             }
         }
+        resultado.clear();
         resultado.put("ejecucion_correcta", jo.get("ejecucion_correcta"));
         resultado.put("log", log);
         resultado.put("datos", dato);

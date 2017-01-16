@@ -46,9 +46,7 @@ public class Lista_transaccion_adapter extends ArrayAdapter {
         this.context=context;
         inflater=LayoutInflater.from(context);
         this.resource=resource;
-
     }
-
     public View getView(int i,View view_item, ViewGroup parent) {
         view_item = (LinearLayout) inflater.inflate( resource, null );
         Transaccion transaccion=(Transaccion) getItem(i);

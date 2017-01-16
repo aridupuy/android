@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,6 +31,7 @@ import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -44,8 +46,6 @@ import java.util.Vector;
  */
 public class Tarea_transacciones extends AsyncTask<String, Integer, Vector<Transaccion>> {
     private long tiempo_estimado_de_espera=5000;
-    private String saldo_total="";
-    private int pagina=0;
     static Fragment context;
     static View view;
     static Bundle bundle;
@@ -129,7 +129,6 @@ public class Tarea_transacciones extends AsyncTask<String, Integer, Vector<Trans
                             transaccion = transaccion.leerTransaccion(context.getContext(), datos.getJSONObject(i));
                             if (transaccion != null) {
                                 transacciones.add(transaccion);
-                                saldo_total = transaccion.getSaldo_acumulado();
                             }
                         }
 
@@ -216,6 +215,25 @@ public class Tarea_transacciones extends AsyncTask<String, Integer, Vector<Trans
                     }
                 }
             });
+            String saldo_total=null;
+            try {
+                CobroDigital.webservice.webservice_saldo.consultar_saldo();
+                if (CobroDigital.webservice.obtener_resultado().equals("1")) {
+                    Object transicion_saldo[] = CobroDigital.webservice.webservice_saldo.obtener_datos().toArray();
+                    if (transicion_saldo.length > 0) {
+                        JSONObject saldoJson= new JSONObject((String) transicion_saldo[0]);
+                        saldo_total= saldoJson.getString("saldo");
+                        Log.wtf("saldo",saldoJson.toString());
+                    }
+                }
+                else
+                    saldo_total="0.00";
+            } catch (IOException e) {
+                e.printStackTrace();
+                saldo_total="Error";
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             saldo.setText("$" + saldo_total);
             view.findViewById(R.id.tr_toolbar).setVisibility(View.VISIBLE);
         }
