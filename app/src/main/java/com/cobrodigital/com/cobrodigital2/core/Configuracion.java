@@ -9,11 +9,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_credenciales;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
-import com.cobrodigital.com.cobrodigital2.MainActivity;
+import com.cobrodigital.com.cobrodigital2.Modulos.Main.Main;
 import com.cobrodigital.com.cobrodigital2.R;
 
 public class Configuracion extends AppCompatActivity {
@@ -50,7 +49,7 @@ public class Configuracion extends AppCompatActivity {
     public void onClickDesvincular(View view){
         Gestor_de_credenciales.desasociar(getApplicationContext());
         Gestor_de_mensajes_usuario.mensaje("se ha desvinculado correctamente.",getApplicationContext());
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, Main.class);
         startActivity(intent);
     }
     public void onClickFrecuencia(View view){

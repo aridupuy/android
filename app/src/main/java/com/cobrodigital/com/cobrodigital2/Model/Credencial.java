@@ -1,26 +1,18 @@
 package com.cobrodigital.com.cobrodigital2.Model;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
 
 import com.cobrodigital.com.cobrodigital2.Factory.credencialFactory;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_cifrado;
-import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_personalizacion;
-import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;

@@ -20,7 +20,7 @@ import java.sql.SQLException;
 public class Gestor_de_credenciales {
     private  static boolean PRUEBA=false;
     public static boolean esta_asociado(){
-
+    //Probar guardar la info como sharedPreferences
 
         if(CobroDigital.credencial!=null){
             System.out.println("esta asociado");
@@ -43,7 +43,7 @@ public class Gestor_de_credenciales {
         try {
             credencialFactory factory=new credencialFactory(context);
             factory.guardar(CobroDigital.credencial);
-            Gestor_de_personalizacion.set_estructura_clientes(context);
+
         } catch (SQLException e) {
             e.printStackTrace();
             return;
@@ -55,10 +55,6 @@ public class Gestor_de_credenciales {
         try {
             Credencial credencial = new Credencial(context);
             CobroDigital.credencial=credencial.obtenerCredencial();
-            Gestor_de_personalizacion.set_estructura_clientes(context);
-            CobroDigital.personalizacion.estructura=Gestor_de_personalizacion.get_estructura_clientes(context);
-            System.out.println(credencial);
-            System.out.println(CobroDigital.personalizacion.estructura);
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

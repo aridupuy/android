@@ -1,5 +1,7 @@
 package com.cobrodigital.com.cobrodigital2.Webservice;
 
+import android.util.Log;
+
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -87,8 +89,8 @@ public abstract class Webservice {
         while ((inputLine = in.readLine()) != null) {
             response += inputLine;
         }
+        Log.d("datos recibidos",response);
         JSONObject jo = new JSONObject(response);
-
         Vector log = new Vector();
         Vector dato = new Vector();
         if (jo.has("datos")) {

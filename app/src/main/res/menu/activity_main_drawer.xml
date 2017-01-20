@@ -3,19 +3,19 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_loggin"
             android:icon="@drawable/ic_connectdevelop"
             android:title="Conectar con cuenta" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_transacciones"
             android:icon="@drawable/ic_exchange"
             android:title="Listar Transacciones" />
         <item
-            android:id="@+id/nav_view"
+            android:id="@+id/nav_boleta"
             android:icon="@drawable/ic_envelope"
             android:title="Generar Boleta" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_tools"
             android:icon="@drawable/ic_cogs"
             android:title="Tools" />
     </group>
@@ -23,7 +23,7 @@
     <item android:title="Contacto">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_compartir"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Contacto" />
         </menu>

@@ -1,0 +1,46 @@
+
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="2">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <FrameLayout
+            android:id="@+id/include_transacciones"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+        <!--<include-->
+            <!--layout="@layout/fragment_transacciones"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--&gt;-->
+        <!--</include>-->
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <FrameLayout
+            android:id="@+id/include_detalle_transacciones"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            />
+        <!--<include-->
+            <!--layout="@layout/fragment_detalle_transacciones_fragment"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--&gt;-->
+        <!--</include>-->
+    </LinearLayout>
+</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

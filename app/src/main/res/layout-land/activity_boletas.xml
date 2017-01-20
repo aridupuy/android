@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.cobrodigital.com.cobrodigital2.Modulos.Main.Main">
+    tools:context="com.cobrodigital.com.cobrodigital2.Modulos.Boletas.Boletas">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -16,20 +16,18 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#D1030F"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" >
             <TextView
+                android:text="Generar Boleta"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="0.2in"
-                android:layout_marginLeft="3dp"
-                android:text="@string/app_name"
-                android:gravity="fill_horizontal|center_vertical" />
-
-            </android.support.v7.widget.Toolbar>
+                android:layout_height="wrap_content"
+                android:id="@+id/textView2"
+                android:textSize="36sp"
+                tools:ignore="HardcodedText" />
+        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main" />
-
-</android.support.design.widget.CoordinatorLayout>
+    <include layout="@layout/content_boletas" />
+    </android.support.design.widget.CoordinatorLayout>

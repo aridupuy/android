@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Pagador">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="49dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Crear Pagador"
+        android:id="@+id/textView8" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="64dp">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="521dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="81dp"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre"
+                    android:id="@+id/textView9"
+                    android:layout_weight="0.00"
+                    android:layout_gravity="center_vertical" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/nombre"
+                    android:layout_weight="0.15"
+                    android:layout_gravity="center_vertical"
+                    android:autoText="false"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="81dp"
+                    android:layout_height="wrap_content"
+                    android:text="Identificador"
+                    android:id="@+id/textView10"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:layout_weight="0" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/identificador"
+                    android:layout_weight="0.15"
+                    android:layout_gravity="center_vertical"
+                    android:autoText="false"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="81dp"
+                    android:layout_height="wrap_content"
+                    android:text="Apellido        "
+                    android:id="@+id/textView11"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center|center_horizontal"
+                    android:layout_weight="0" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/apellido"
+                    android:layout_weight="0.15"
+                    android:layout_gravity="center_vertical"
+                    android:autoText="false"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Aceptar"
+                    android:id="@+id/button2"
+                    android:layout_gravity="left" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Volver"
+                    android:id="@+id/button3"
+                    android:onClick="OnclickVolver"
+                    android:layout_gravity="center_horizontal|right" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="311dp"
+                android:id="@+id/respuesta"
+                android:enabled="false" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
