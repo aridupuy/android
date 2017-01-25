@@ -42,6 +42,7 @@ public abstract class Webservice {
     public static Webservice_pagador webservice_pagador;
     public static Webservice_transacciones webservice_transacciones;
     public static Webservice_saldo webservice_saldo;
+    public static Webservice_enviar_correo webservice_enviar_correo;
 
     private static final String URL  = "https://www.cobrodigital.com:14365/ws3/";
     protected static final String method = "POST";
@@ -153,30 +154,26 @@ public abstract class Webservice {
             throw new UnsupportedOperationException(e);
         }
     }
-
     public static Vector obtener_datos() {
-        //para pruebas cambiar falla el webservice estructura de pagadores.
-//        String ejecucion_correcta = (String) resultado.get("ejecucion_correcta");
-//        if (ejecucion_correcta == null)
-//            ejecucion_correcta = "0";
-//        if (Integer.parseInt(ejecucion_correcta) == 1) {
-//            return (Vector) resultado.get("datos");
-//        }
         return (Vector) resultado.get("datos");
     }
-
     public static String obtener_resultado() {
         try {
             if (resultado.size() > 0 && (((String) resultado.get("ejecucion_correcta")).equals("1")))
                 return "1";
             return "0";
         }catch (ClassCastException e){
-            if (resultado.size() > 0 && ((Boolean) (resultado.get("ejecucion_correcta"))))
-                return "1";
-            return "0";
+             try {
+             if (resultado.size() > 0 && ((Boolean) (resultado.get("ejecucion_correcta"))))
+                 return "1";
+             return "0";
+         }catch (ClassCastException ex){
+             if (resultado.size() > 0)
+                 return "1";
+             return "0";
+         }
         }
     }
-
     public static Vector obtener_log() {
         return (Vector) resultado.get("log");
     }

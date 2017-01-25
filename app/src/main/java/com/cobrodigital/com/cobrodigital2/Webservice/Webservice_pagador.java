@@ -10,7 +10,7 @@ public class Webservice_pagador extends Webservice{
     public static String consultar_estructura_pagadores() throws Exception {
         metodo_web_service = "consultar_estructura_pagadores";
         ejecutar();
-        if (obtener_resultado()=="0")
+        if (obtener_resultado().equals("0"))
             return  "1";
         return "0";
     }

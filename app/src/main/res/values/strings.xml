@@ -55,4 +55,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_detalle_transacciones">detalle_transacciones</string>
     <string name="title_activity_detalle__transacciones">Detalle_Transacciones</string>
+    <string name="title_activity_enviar_correo">Enviar_correo</string>
 </resources>

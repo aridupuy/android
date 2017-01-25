@@ -37,18 +37,15 @@
         <activity
             android:name=".Modulos.Transacciones.Transacciones"
             android:label="@string/Transacciones"
-            android:parentActivityName=".Modulos.Main.Main"
-             />
+            android:parentActivityName=".Modulos.Main.Main" />
         <activity
             android:name=".Pagador"
             android:label="@string/Crear_Pagador"
-            android:parentActivityName=".Modulos.Main.Main"
-            />
+            android:parentActivityName=".Modulos.Main.Main" />
         <activity
             android:name=".core.Configuracion"
             android:label="@string/Configuracion"
-            android:parentActivityName=".Modulos.Main.Main"
-            />
+            android:parentActivityName=".Modulos.Main.Main" />
 
         <intent-filter>
             <action android:name="android.intent.action.VIEW" />
@@ -106,6 +103,10 @@
         <activity
             android:name=".Modulos.Transacciones.Detalle_transacciones"
             android:label="@string/title_activity_detalle_transacciones"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Modulos.Correo.Enviar_correo"
+            android:label="@string/title_activity_enviar_correo"
             android:theme="@style/AppTheme"></activity>
     </application>
 
