@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.cobrodigital.com.cobrodigital2.Modulos.Boletas.Tareas_asincronicas.Tarea_generar_boleta;
 import com.cobrodigital.com.cobrodigital2.Modulos.Correo.Enviar_correo;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_navegacion;
@@ -36,7 +37,7 @@ import java.util.List;
 import java.util.Vector;
 
 public class Boletas extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
-    public static final String NRO_BOLETA = "nro_boleta";
+
     final Calendar calendario = Calendar.getInstance();
     String date_1;
     String date_2;
@@ -94,29 +95,14 @@ public class Boletas extends AppCompatActivity implements NavigationView.OnNavig
         this.efectos_de_formulario();
 
    }
-    protected void generar_boleta(String identificador, String campo_a_buscar, String concepto, String fecha_1, String importe_1, String modelo, String fecha_2, String importe_2, String fecha_3, String importe_3){
+    private void generar_boleta(String identificador, String campo_a_buscar, String concepto, String fecha_1, String importe_1, String modelo, String fecha_2, String importe_2, String fecha_3, String importe_3){
         if(!validar_formulario())
             return;
-        try {
-            Vector<Boleta> boletas=new Vector<Boleta>();
-            if((nro_boleta=CobroDigital.webservice.webservice_boleta.generar_boleta(identificador, campo_a_buscar, concepto, fecha_1, importe_1, modelo, fecha_2, importe_2, fecha_3, importe_3))!=-1) {
-                Intent intent= new Intent(Boletas.this,Enviar_correo.class);
-                intent.putExtra(NRO_BOLETA,nro_boleta);
-                startActivity(intent);
-                Gestor_de_mensajes_usuario.mensaje("Boleta generada correctamente.",getApplicationContext());
-            }
-            else{
-                Gestor_de_mensajes_usuario.mensaje(CobroDigital.webservice.obtener_log().toString());
-                ///continuar desde aca para hacer que mande mail tambien;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            Gestor_de_mensajes_usuario.mensaje(e.getMessage(),getApplicationContext());
-        }
+        Tarea_generar_boleta tarea=new Tarea_generar_boleta(this);
+        tarea.execute(identificador,campo_a_buscar,concepto,fecha_1,importe_1,modelo,fecha_2,importe_2,fecha_3,importe_3);
 
     }
     private void cargar_spiner(){
-
         List<String> estructura_clientes=new ArrayList<String>();
         estructura_clientes.add("campo para buscar");
         try {
@@ -304,7 +290,6 @@ public class Boletas extends AppCompatActivity implements NavigationView.OnNavig
                 ((EditText)findViewById(R.id.importe_3)).setBackgroundResource(R.drawable.borde_error);
                 return false;
             }
-
         }
         return true;
     }
