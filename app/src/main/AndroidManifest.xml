@@ -43,7 +43,7 @@
             android:label="@string/Crear_Pagador"
             android:parentActivityName=".Modulos.Main.Main" />
         <activity
-            android:name=".core.Configuracion"
+            android:name=".Modulos.Tools.Configuracion"
             android:label="@string/Configuracion"
             android:parentActivityName=".Modulos.Main.Main" />
 
@@ -107,6 +107,10 @@
         <activity
             android:name=".Modulos.Correo.Enviar_correo"
             android:label="@string/title_activity_enviar_correo"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Modulos.Estado_cuenta.Estado_cuenta"
+            android:label="@string/title_activity_estado_cuenta"
             android:theme="@style/AppTheme"></activity>
     </application>
 

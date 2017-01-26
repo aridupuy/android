@@ -43,6 +43,7 @@ public abstract class Webservice {
     public static Webservice_transacciones webservice_transacciones;
     public static Webservice_saldo webservice_saldo;
     public static Webservice_enviar_correo webservice_enviar_correo;
+    public static Webservice_estadisticas webservice_estadisticas;
 
     private static final String URL  = "https://www.cobrodigital.com:14365/ws3/";
     protected static final String method = "POST";

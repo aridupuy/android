@@ -6,10 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.cobrodigital.com.cobrodigital2.Modulos.Boletas.Boletas;
+import com.cobrodigital.com.cobrodigital2.Modulos.Estado_cuenta.Estado_cuenta;
 import com.cobrodigital.com.cobrodigital2.Pagador;
 import com.cobrodigital.com.cobrodigital2.R;
 import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.Transacciones;
-import com.cobrodigital.com.cobrodigital2.core.Configuracion;
+import com.cobrodigital.com.cobrodigital2.Modulos.Tools.Configuracion;
 
 /**
  * Created by ariel on 16/01/17.
@@ -31,6 +32,8 @@ public class Gestor_de_navegacion {
             }
         } else if (id == R.id.nav_transacciones) {
             this.OnClickListarTransacciones(context);
+        } else if (id == R.id.nav_estado) {
+            this.estado_cuenta(context);
         }  else if (id == R.id.nav_tools) {
             this.Configurar(context);
 
@@ -47,6 +50,7 @@ public class Gestor_de_navegacion {
 
     public static void OnClickListarTransacciones(Context context) {
         Intent transacciones = new Intent(context, Transacciones.class);
+        transacciones.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(transacciones);
     }
     public static void escanear(Context context) {
@@ -65,5 +69,7 @@ public class Gestor_de_navegacion {
     public static void generar_boleta(Context context){
         ((AppCompatActivity)context).startActivity(new Intent(context,Boletas.class));
     }
-
+    public static void estado_cuenta(Context context){
+        ((AppCompatActivity)context).startActivity(new Intent(context,Estado_cuenta.class));
+    }
 }

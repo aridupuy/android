@@ -1,7 +1,9 @@
-package com.cobrodigital.com.cobrodigital2.core;
+package com.cobrodigital.com.cobrodigital2.Modulos.Tools;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,19 +14,22 @@ import android.view.View;
 
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_credenciales;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
+import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_navegacion;
 import com.cobrodigital.com.cobrodigital2.Modulos.Main.Main;
 import com.cobrodigital.com.cobrodigital2.R;
 
-public class Configuracion extends AppCompatActivity {
+public class Configuracion extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuracion);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarConfiguracion);
-        DrawerLayout drawerlayout = (DrawerLayout) findViewById(R.id.drawer_layout_configuracion);
-        ActionBarDrawerToggle menu = new ActionBarDrawerToggle(
-                this, drawerlayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerlayout.setDrawerListener(menu);
-        menu.syncState();
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_configuracion);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -55,5 +60,11 @@ public class Configuracion extends AppCompatActivity {
     public void onClickFrecuencia(View view){
 
     }
+    public boolean onNavigationItemSelected(MenuItem item) {
+        Gestor_de_navegacion navegacion=new Gestor_de_navegacion(this);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_configuracion);
+        drawer.closeDrawer(GravityCompat.START);
+        return navegacion.navegar(item.getItemId());
 
+    }
 }
