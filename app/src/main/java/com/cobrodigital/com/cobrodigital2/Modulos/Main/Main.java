@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_credenciales;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_navegacion;
+import com.cobrodigital.com.cobrodigital2.Modulos.Estado_cuenta.Estado_cuenta;
 import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.Transacciones;
 import com.cobrodigital.com.cobrodigital2.R;
 import com.cobrodigital.com.cobrodigital2.Services.serviceBoot;
@@ -90,7 +91,7 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
 
             View cuenta = findViewById(R.id.textView7);
             ((ViewGroup) cuenta.getParent()).removeView(cuenta);
-            startActivity(new Intent(this, Transacciones.class));
+            startActivity(new Intent(this, Estado_cuenta.class));
         }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

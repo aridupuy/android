@@ -44,7 +44,8 @@ public class Webservice_estadisticas extends Webservice {
         metodo_web_service="estadisticas_tenencias";
         Date fecha_hasta=new Date();
         Calendar fecha_desde= Calendar.getInstance();
-        fecha_desde.add(Calendar.MONTH,-1);
+//        fecha_desde.add(Calendar.MONTH,-1);
+        fecha_desde.set(fecha_desde.get(Calendar.YEAR),fecha_desde.get(Calendar.MONTH),fecha_desde.getActualMinimum(Calendar.DAY_OF_MONTH));
         SimpleDateFormat format=new SimpleDateFormat("dd-MM-yyyy");
         array_a_enviar.clear();
         array_a_enviar.put("sentido_transaccion","ingreso");
@@ -78,13 +79,14 @@ public class Webservice_estadisticas extends Webservice {
     public static void obtener_estadisticas_mes_egresos() throws IllegalBlockSizeException, NoSuchAlgorithmException, IOException, KeyManagementException, BadPaddingException, NoSuchPaddingException, InvalidKeyException, JSONException {
         metodo_web_service="estadisticas_tenencias";
         Date fecha_hasta=new Date();
-        Calendar fecha_desde= GregorianCalendar.getInstance();
-        fecha_desde.add(Calendar.DAY_OF_MONTH,-30);
+        Calendar fecha_desde= Calendar.getInstance();
+//        fecha_desde.add(Calendar.MONTH,-1);
+        fecha_desde.set(fecha_desde.get(Calendar.YEAR),fecha_desde.get(Calendar.MONTH),fecha_desde.getActualMinimum(Calendar.DAY_OF_MONTH));
         SimpleDateFormat format=new SimpleDateFormat("dd-MM-yyyy");
         array_a_enviar.clear();
         array_a_enviar.put("sentido_transaccion","egreso");
         array_a_enviar.put("fecha_hasta",format.format(fecha_hasta.getTime()));
-        array_a_enviar.put("fecha_desde",format.format(fecha_desde));
+        array_a_enviar.put("fecha_desde",format.format(fecha_desde.getTime()));
         ejecutar();
     }
 }

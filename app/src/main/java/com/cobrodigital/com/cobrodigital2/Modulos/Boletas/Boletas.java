@@ -113,7 +113,7 @@ public class Boletas extends AppCompatActivity implements NavigationView.OnNavig
                 }
             }
         } catch (Exception e) {
-            Log.d("Error",e.getMessage());
+            Log.d("Error",e.getMessage()+"/");
         }
         Spinner spinner= (Spinner) findViewById(R.id.campo_a_buscar);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, estructura_clientes);

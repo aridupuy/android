@@ -1,5 +1,6 @@
 package com.cobrodigital.com.cobrodigital2.Gestores;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -49,27 +50,26 @@ public class Gestor_de_navegacion {
     }
 
     public static void OnClickListarTransacciones(Context context) {
-        Intent transacciones = new Intent(context, Transacciones.class);
-        transacciones.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(transacciones);
+        context.startActivity(new Intent(context, Transacciones.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
     }
     public static void escanear(Context context) {
         Intent intent = new Intent("com.google.zxing.client.android.SCAN");
         intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-        ((AppCompatActivity)context).startActivityForResult(intent, 0);
+        ((Activity)context).startActivityForResult(intent, 0);
     }
     public static void Configurar(Context context) {
-        Intent configuracion = new Intent(context, Configuracion.class);
+        Intent configuracion = new Intent(context, Configuracion.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(configuracion);
     }
     public void OnClickPagadorNew(View view) {
-        Intent pagador = new Intent(context, Pagador.class);
+        Intent pagador = new Intent(context, Pagador.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(pagador);
     }
     public static void generar_boleta(Context context){
-        ((AppCompatActivity)context).startActivity(new Intent(context,Boletas.class));
+
+        (context).startActivity(new Intent(context,Boletas.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
     }
     public static void estado_cuenta(Context context){
-        ((AppCompatActivity)context).startActivity(new Intent(context,Estado_cuenta.class));
+        (context).startActivity(new Intent(context,Estado_cuenta.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
     }
 }

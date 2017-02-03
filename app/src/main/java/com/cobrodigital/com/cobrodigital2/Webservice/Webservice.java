@@ -1,11 +1,14 @@
 package com.cobrodigital.com.cobrodigital2.Webservice;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
+import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.j256.ormlite.field.types.StringType;
+import com.j256.ormlite.logger.LoggerFactory;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -44,6 +48,7 @@ public abstract class Webservice {
     public static Webservice_saldo webservice_saldo;
     public static Webservice_enviar_correo webservice_enviar_correo;
     public static Webservice_estadisticas webservice_estadisticas;
+    public static Webservice_detalle_saldo webservice_detalle_saldo;
 
     private static final String URL  = "https://www.cobrodigital.com:14365/ws3/";
     protected static final String method = "POST";
@@ -51,7 +56,7 @@ public abstract class Webservice {
     protected static LinkedHashMap<Object, Object> array_a_enviar = new LinkedHashMap();
     protected static LinkedHashMap resultado = new LinkedHashMap();
 
-    private static void ejecutar(String metodo_webservice, LinkedHashMap array) throws IOException, KeyManagementException, NoSuchAlgorithmException, JSONException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException {
+    private static void ejecutar(String metodo_webservice, LinkedHashMap array) throws IOException,java.net.ConnectException, KeyManagementException, NoSuchAlgorithmException, JSONException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException {
         array_a_enviar.put("idComercio", CobroDigital.credencial.get_IdComercio());
         array_a_enviar.put("sid", CobroDigital.credencial.get_sid());
         if (metodo_webservice == null) {
@@ -67,7 +72,9 @@ public abstract class Webservice {
         enviar_https(URL, array_a_procesar);
     }
 
-    private static void enviar_https(String httpsurl, Map<?, ?> array_a_enviar) throws IOException, JSONException {
+    @SuppressLint("LongLogTag")
+    private static void enviar_https(String httpsurl, Map<?, ?> array_a_enviar) throws IOException,JSONException {
+        Log.d("Enviando","Enviando datos a Cobrodigital");
         URL myurl = new URL(httpsurl);
         HttpsURLConnection con = (HttpsURLConnection) myurl.openConnection();
         con.setRequestMethod(method);
@@ -83,6 +90,10 @@ public abstract class Webservice {
         wr.flush();
         wr.close();
         int responseCode = con.getResponseCode();
+        if(responseCode!=200){
+            Log.d("Error","Error en la comunicacion");
+            return ;
+        }
         InputStream ins = con.getInputStream();
         InputStreamReader isr = new InputStreamReader(ins);
         BufferedReader in = new BufferedReader(isr);
@@ -91,8 +102,8 @@ public abstract class Webservice {
         while ((inputLine = in.readLine()) != null) {
             response += inputLine;
         }
-        Log.d("datos recibidos",response);
         JSONObject jo = new JSONObject(response);
+        System.out.println(jo.toString());
         Vector log = new Vector();
         Vector dato = new Vector();
         if (jo.has("datos")) {
@@ -116,37 +127,37 @@ public abstract class Webservice {
         in.close();
     }
 
-    public static void ejecutar() throws NoSuchAlgorithmException, IOException, KeyManagementException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException, JSONException {
+    public static void ejecutar() throws NoSuchAlgorithmException,java.net.ConnectException, IOException, KeyManagementException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException, JSONException {
         ejecutar(metodo_web_service, (LinkedHashMap) array_a_enviar);
     }
 
-    private static String http_build_query(Map<?, ?> data) {
-        StringBuilder queryString = new StringBuilder();
-        for (Map.Entry<?, ?> entry : data.entrySet()) {
-            if (queryString.length() > 0) {
-                queryString.append("&");
-            }
-            if(entry.getValue() instanceof String []) {
-                for (String valor : (String[]) entry.getValue()) {
-                    queryString.append(String.format("%s=%s", entry.getKey() + "%5B" + valor + "%5D", urlEncodeUTF8(valor) + "&"));
-                }
-            }
-            else if (entry.getValue().getClass().getName() == "java.util.LinkedHashMap") {
-                LinkedHashMap array = (LinkedHashMap) entry.getValue();
-                for (Iterator it = array.entrySet().iterator(); it.hasNext(); ) {
-                    Map.Entry<?, ?> row = (Map.Entry<?, ?>) it.next();
-                    queryString.append(String.format("%s=%s", entry.getKey() + "%5B" + row.getKey() + "%5D", urlEncodeUTF8(row.getValue().toString()) + "&"));
-                }
-            }
-            else {
-                queryString.append(String.format("%s=%s",
-                        urlEncodeUTF8(entry.getKey().toString()),
-                        urlEncodeUTF8(entry.getValue().toString())
-                ));
-            }
-        }
-        return queryString.toString();
-    }
+//    private static String http_build_query(Map<?, ?> data) {
+//        StringBuilder queryString = new StringBuilder();
+//        for (Map.Entry<?, ?> entry : data.entrySet()) {
+//            if (queryString.length() > 0) {
+//                queryString.append("&");
+//            }
+//            if(entry.getValue() instanceof String []) {
+//                for (String valor : (String[]) entry.getValue()) {
+//                    queryString.append(String.format("%s=%s", entry.getKey() + "%5B" + valor + "%5D", urlEncodeUTF8(valor) + "&"));
+//                }
+//            }
+//            else if (entry.getValue().getClass().getName() == "java.util.LinkedHashMap") {
+//                LinkedHashMap array = (LinkedHashMap) entry.getValue();
+//                for (Iterator it = array.entrySet().iterator(); it.hasNext(); ) {
+//                    Map.Entry<?, ?> row = (Map.Entry<?, ?>) it.next();
+//                    queryString.append(String.format("%s=%s", entry.getKey() + "%5B" + row.getKey() + "%5D", urlEncodeUTF8(row.getValue().toString()) + "&"));
+//                }
+//            }
+//            else {
+//                queryString.append(String.format("%s=%s",
+//                        urlEncodeUTF8(entry.getKey().toString()),
+//                        urlEncodeUTF8(entry.getValue().toString())
+//                ));
+//            }
+//        }
+//        return queryString.toString();
+//    }
 
     private static String urlEncodeUTF8(String s) {
         try {
