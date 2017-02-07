@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
@@ -70,6 +71,7 @@ public class Tarea_estado_cuenta extends AsyncTask<Void,Void,View> {
     @Override
     protected View doInBackground(Void[] Voids) {
         Looper.prepare();
+
         try {
             CobroDigital.webservice.webservice_saldo.consultar_saldo();
             if (CobroDigital.webservice.obtener_resultado().equals("1")) {
@@ -129,6 +131,7 @@ public class Tarea_estado_cuenta extends AsyncTask<Void,Void,View> {
 
         mRenderer.setMargins(new int[]{0, 50, 0, 0});
         GraphicalView chartView = ChartFactory.getLineChartView(context, dataset, mRenderer);
+//        Looper.loop();
         return chartView;
     }
 
@@ -137,6 +140,7 @@ public class Tarea_estado_cuenta extends AsyncTask<Void,Void,View> {
         if(chartView==null){
             Gestor_de_mensajes_usuario.mensaje("Ah ocurrido un error",context);
             context.finish();
+            return;
         }
         ((ProgressBar)context.findViewById(R.id.progressbar_estado_cuenta)).setVisibility(View.GONE);
         ((LinearLayout)context.findViewById(R.id.layout_saldo)).setVisibility(View.VISIBLE);

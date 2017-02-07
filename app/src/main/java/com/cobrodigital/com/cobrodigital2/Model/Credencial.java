@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.cobrodigital.com.cobrodigital2.Factory.credencialFactory;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_cifrado;
+import com.cobrodigital.com.cobrodigital2.Modulos.Main.Main;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -74,6 +75,9 @@ public class Credencial {
     public Credencial obtenerCredencial() throws SQLException, ClassNotFoundException, NoSuchPaddingException, InvalidKeyException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
         credencialFactory factory=new credencialFactory(context);
         List<Credencial> Credenciales=(List<Credencial>)factory.select();
+        if(Main.emulador){
+            return this;
+        }
         if(Credenciales.size()>0)
             for (Credencial credencial:Credenciales) {
                 this.setId_credencial(credencial.getId_credencial());

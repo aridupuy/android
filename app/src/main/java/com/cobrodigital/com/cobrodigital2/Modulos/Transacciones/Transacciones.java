@@ -116,7 +116,7 @@ public class Transacciones extends AppCompatActivity implements NavigationView.O
     }
     @Override
     protected void onRestart() {
-        finish();
+        super.onRestart();
     }
 
 }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import com.cobrodigital.com.cobrodigital2.Factory.credencialFactory;
 import com.cobrodigital.com.cobrodigital2.Model.Credencial;
 import com.cobrodigital.com.cobrodigital2.Model.Pagador;
+import com.cobrodigital.com.cobrodigital2.Modulos.Main.Main;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 import com.cobrodigital.com.cobrodigital2.core.LectorQR;
 
@@ -52,6 +53,12 @@ public class Gestor_de_credenciales {
         }
     }
     public static Boolean re_asociar(Context context){
+        if(Main.emulador){
+            CobroDigital.credencial=new Credencial();
+            CobroDigital.credencial.set_IdComercio("FL662997");
+            CobroDigital.credencial.set_sid("ABZ0ya68K791phuu76gQ5L662J6F2Y4j7zqE2Jxa3Mvd22TWNn4iip6L9yq");
+            return  true;
+        }
         try {
             Credencial credencial = new Credencial(context);
             CobroDigital.credencial=credencial.obtenerCredencial();

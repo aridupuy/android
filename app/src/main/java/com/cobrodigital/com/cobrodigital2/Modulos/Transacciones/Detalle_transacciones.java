@@ -53,7 +53,6 @@ public class Detalle_transacciones extends AppCompatActivity implements Navigati
     @Override
     protected void onRestart() {
         super.onRestart();
-        this.finish();
     }
     @Override
     protected void onDestroy() {

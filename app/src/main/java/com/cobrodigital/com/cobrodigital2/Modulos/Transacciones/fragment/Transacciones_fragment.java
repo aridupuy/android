@@ -1,15 +1,18 @@
 package com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.fragment;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -70,12 +73,15 @@ public class Transacciones_fragment extends Fragment {
         
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         onCreate(savedInstanceState);
         footerView= ((LayoutInflater) this.getActivity().getSystemService(getContext().LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footer_loader, null, false);
         vista=inflater.inflate(R.layout.fragment_transacciones, container, false);
+        RecyclerView lista= (RecyclerView) vista.findViewById(R.id.lista);
+//        lista.addFooterView(footerView);
             Toolbar toolbar= (Toolbar) vista.findViewById(R.id.card_toolbar);
             toolbar.inflateMenu(R.menu.tr_menu);
             toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener(){
@@ -171,43 +177,13 @@ public class Transacciones_fragment extends Fragment {
                     return true;
                 }
             });
+
         ((View)vista.findViewById(R.id.loading_principal_transacciones)).setVisibility(View.VISIBLE);
         getActivity().getIntent().putExtra("Offset",offset+cantidad_transacciones_a_mostrar);
         getActivity().getIntent().putExtra("Limit",limit+cantidad_transacciones_a_mostrar);
-        ListView lista= (ListView) vista.findViewById(R.id.lista);
         try{
-            final Tarea_transacciones tarea = new Tarea_transacciones(vista,footerView,getActivity().getIntent().getExtras(),this,lista);
-            lista.setOnItemClickListener(null);
+            final Tarea_transacciones tarea = new Tarea_transacciones(vista,footerView,getActivity().getIntent().getExtras(),this,lista,false);
             tarea.execute(f_desde,f_hasta,tipo,String.valueOf(cantidad_transacciones_a_mostrar));
-            lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l){
-                    try{
-                        Intent detalle= new Intent(getActivity().getApplicationContext(), Detalle_transacciones.class);
-                        detalle.putExtra("Fecha",tarea.transacciones.get(i).getFecha());
-                        detalle.putExtra("Nro_Boleta",tarea.transacciones.get(i).getNro_boleta());
-                        detalle.putExtra("Nombre",tarea.transacciones.get(i).getNombre());
-                        detalle.putExtra("Identificacion",tarea.transacciones.get(i).getIdentificacion());
-                        detalle.putExtra("Info",tarea.transacciones.get(i).getInfo());
-                        detalle.putExtra("Concepto",tarea.transacciones.get(i).getConcepto());
-                        detalle.putExtra("Bruto",tarea.transacciones.get(i).getBruto());
-                        detalle.putExtra("Comision",tarea.transacciones.get(i).getComision());
-                        detalle.putExtra("Neto",tarea.transacciones.get(i).getNeto());
-                        detalle.putExtra("Saldo_acumulado",tarea.transacciones.get(i).getSaldo_acumulado());
-                        if(!Transacciones.es_doble_display)
-                            startActivity(detalle);
-                        else{
-                            FragmentManager fm = getFragmentManager();
-                            fm.beginTransaction()
-                                    .replace(R.id.include_detalle_transacciones, Detalle_transacciones_fragment.newInstance(detalle.getExtras(),getActivity().getApplicationContext()))
-                                    .commit();
-                        }
-                    }catch (Exception ex){
-                        Log.wtf("Error",ex.getMessage());
-                        return;
-                    }
-                }
-            });
         }catch (IOException ex){
             Log.e("Error",ex.getMessage());
             return null;
