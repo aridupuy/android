@@ -81,8 +81,8 @@ public abstract class Webservice {
         con.setRequestProperty("User-Agent", "Mozilla/5.0");
         con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
         con.setRequestProperty("Content-type", "application/json");
-        JSONObject json=new JSONObject(array_a_enviar);
-        String url_parameters=json.toString();
+        Gson gs = new Gson();
+        String url_parameters= gs.toJson(array_a_enviar);
         System.out.println(url_parameters);
         con.setDoOutput(true);
         DataOutputStream wr = new DataOutputStream(con.getOutputStream());
