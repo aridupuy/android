@@ -69,7 +69,7 @@ public class Transacciones_fragment extends Fragment {
             f_hasta = getArguments().getString(FECHA_HASTA,"");
             tipo= getArguments().getString(TIPO,"");
         }
-        
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

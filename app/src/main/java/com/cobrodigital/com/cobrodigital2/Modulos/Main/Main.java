@@ -21,13 +21,15 @@ import android.view.ViewGroup;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_credenciales;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_navegacion;
+import com.cobrodigital.com.cobrodigital2.Model.Credencial;
 import com.cobrodigital.com.cobrodigital2.Modulos.Estado_cuenta.Estado_cuenta;
 import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.Transacciones;
 import com.cobrodigital.com.cobrodigital2.R;
 import com.cobrodigital.com.cobrodigital2.Services.serviceBoot;
+import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 
 public class Main extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    final boolean PRUEBA=true;
+    final public static boolean emulador=true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +55,6 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
         navegacion.escanear(this);
         return;
     }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
@@ -85,6 +85,7 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
 
     }
     private void ejecutar(){
+
         setContentView(R.layout.activity_main);
 
         if(Gestor_de_credenciales.esta_asociado()!=false || (Gestor_de_credenciales.re_asociar(getApplicationContext()))!=false) {
