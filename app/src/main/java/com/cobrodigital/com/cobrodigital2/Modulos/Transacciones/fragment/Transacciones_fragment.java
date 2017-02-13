@@ -1,15 +1,17 @@
 package com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.fragment;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toolbar;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -70,6 +72,7 @@ public class Transacciones_fragment extends Fragment {
         
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -176,6 +179,7 @@ public class Transacciones_fragment extends Fragment {
         getActivity().getIntent().putExtra("Limit",limit+cantidad_transacciones_a_mostrar);
         ListView lista= (ListView) vista.findViewById(R.id.lista);
         try{
+            lista.addFooterView(footerView);
             final Tarea_transacciones tarea = new Tarea_transacciones(vista,footerView,getActivity().getIntent().getExtras(),this,lista);
             lista.setOnItemClickListener(null);
             tarea.execute(f_desde,f_hasta,tipo,String.valueOf(cantidad_transacciones_a_mostrar));

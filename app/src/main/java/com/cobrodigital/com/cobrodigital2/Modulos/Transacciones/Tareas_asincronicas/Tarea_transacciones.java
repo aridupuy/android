@@ -75,7 +75,8 @@ public class Tarea_transacciones extends AsyncTask<String, Integer, Vector<Trans
     protected void onPreExecute() {
         cargando=context.getActivity().getSharedPreferences("Ocupado",0).getBoolean("ocupado",false);
         footer.findViewById(R.id.progressbar).setVisibility(View.VISIBLE);
-        lista.addFooterView(footer);
+
+//        lista.addFooterView(footer);
         view.findViewById(R.id.textView5).setVisibility(View.GONE);
         view.findViewById(R.id.Saldo).setVisibility(View.GONE);
         view.findViewById(R.id.tr_toolbar).setVisibility(View.GONE);
@@ -169,11 +170,13 @@ public class Tarea_transacciones extends AsyncTask<String, Integer, Vector<Trans
         return null;
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
+
     protected void onPostExecute(final Vector<Transaccion> VectorTransaccion) {
         super.onPostExecute(VectorTransaccion);
-        lista.removeFooterView(footer);
+//        lista.removeFooterView(footer);
+        footer.findViewById(R.id.progressbar).setVisibility(View.GONE);
         view.findViewById(R.id.loading_principal_transacciones).setVisibility(View.GONE);
+        lista.smoothScrollToPosition(offset-4);
         if(VectorTransaccion!=null && VectorTransaccion.size()>0) {
             view.findViewById(R.id.textView5).setVisibility(View.VISIBLE);
             TextView saldo = (TextView) view.findViewById(R.id.Saldo);
@@ -263,10 +266,10 @@ public class Tarea_transacciones extends AsyncTask<String, Integer, Vector<Trans
             //mejorar este caso
             Gestor_de_mensajes_usuario.mensaje("No Existen transacciones que mostrar",context.getContext());
             TextView saldo = (TextView) view.findViewById(R.id.Saldo);
+            lista.removeFooterView(footer);
             saldo.setVisibility(View.VISIBLE);
             saldo.setText("No Existen transacciones que mostrar");
             view.findViewById(R.id.tr_toolbar).setVisibility(View.VISIBLE);
-            context.getActivity().finish();
         }
     }
 

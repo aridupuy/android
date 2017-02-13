@@ -69,7 +69,7 @@
                     android:textColor="@color/colorPrimary"
                     android:layout_weight="1"
                     />
-                <Toolbar  android:id="@+id/card_toolbar"
+                <android.support.v7.widget.Toolbar  android:id="@+id/card_toolbar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/Saldo"
