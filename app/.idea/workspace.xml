@@ -33,6 +33,8 @@
   <component name="ChangeListManager">
     <list default="true" id="0bb5c090-fdf7-4dc8-80f6-f52c8f86d4c7" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/cobrodigital/com/cobrodigital2/Webservice/Webservice.java" afterPath="$PROJECT_DIR$/src/main/java/com/cobrodigital/com/cobrodigital2/Webservice/Webservice.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/cobrodigital/com/cobrodigital2/Webservice/Webservice_transacciones.java" afterPath="$PROJECT_DIR$/src/main/java/com/cobrodigital/com/cobrodigital2/Webservice/Webservice_transacciones.java" />
     </list>
     <ignored path="app.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -77,12 +79,34 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Tarea_transacciones.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Tarea_transacciones.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/cobrodigital/com/cobrodigital2/Modulos/Transacciones/Tareas_asincronicas/Tarea_transacciones.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="178" column="43" selection-start-line="178" selection-start-column="43" selection-end-line="178" selection-end-column="43" />
+            <state relative-caret-position="330">
+              <caret line="123" column="71" selection-start-line="123" selection-start-column="71" selection-end-line="123" selection-end-column="71" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Webservice_transacciones.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/cobrodigital/com/cobrodigital2/Webservice/Webservice_transacciones.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="315">
+              <caret line="25" column="15" selection-start-line="25" selection-start-column="15" selection-end-line="25" selection-end-column="15" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Webservice.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/cobrodigital/com/cobrodigital2/Webservice/Webservice.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="360">
+              <caret line="95" column="9" selection-start-line="95" selection-start-column="9" selection-end-line="95" selection-end-column="9" />
+              <folding>
+                <element signature="method#obtener_resultado#0;class#Webservice#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -2011,7 +2035,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/cobrodigital/com/cobrodigital2/core/CobroDigital.java" />
         <option value="$PROJECT_DIR$/src/main/res/layout/app_bar_boletas.xml" />
         <option value="$PROJECT_DIR$/src/main/res/layout/activity_boletas.xml" />
         <option value="$PROJECT_DIR$/src/main/res/drawable/borde_error.xml" />
@@ -2051,7 +2074,6 @@
         <option value="$PROJECT_DIR$/src/main/res/layout/app_bar_estado_saldo.xml" />
         <option value="$PROJECT_DIR$/src/main/res/layout/activity_detalle_saldo.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/cobrodigital/com/cobrodigital2/Modulos/Estado_cuenta/Estado_cuenta.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/cobrodigital/com/cobrodigital2/Webservice/Webservice.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/cobrodigital/com/cobrodigital2/Modulos/Estado_cuenta/Detalle_saldo.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/cobrodigital/com/cobrodigital2/Webservice/Webservice_detalle_saldo.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/cobrodigital/com/cobrodigital2/Modulos/Estado_cuenta/Tareas_asincronicas/Tarea_Detalle_saldo.java" />
@@ -2062,6 +2084,8 @@
         <option value="$PROJECT_DIR$/src/main/res/layout-land/fragment_transacciones.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/cobrodigital/com/cobrodigital2/Modulos/Transacciones/fragment/Transacciones_fragment.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/cobrodigital/com/cobrodigital2/Modulos/Transacciones/Tareas_asincronicas/Tarea_transacciones.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/cobrodigital/com/cobrodigital2/Webservice/Webservice_transacciones.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/cobrodigital/com/cobrodigital2/Webservice/Webservice.java" />
       </list>
     </option>
   </component>
@@ -2829,7 +2853,14 @@
       <option name="project" value="LOCAL" />
       <updated>1487015700181</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="vuelta atras con listView">
+      <created>1487015739211</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1487015739211</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TodoView">
@@ -2854,7 +2885,7 @@
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32988048" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3656958" sideWeight="0.689243" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3656958" sideWeight="0.689243" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32847896" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26537216" sideWeight="0.49083665" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -2862,11 +2893,11 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25418326" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32847896" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="1.0" sideWeight="0.7816733" order="8" side_tool="false" content_ui="tabs" x="179" y="97" width="1366" height="716" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="1.0" sideWeight="0.7816733" order="8" side_tool="false" content_ui="tabs" x="145" y="62" width="1123" height="746" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.60841423" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.24940239" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3314741" sideWeight="0.48469388" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3314741" sideWeight="0.48469388" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32988048" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -2904,21 +2935,22 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="ALL" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/cobrodigital/com/cobrodigital2/Webservice/Webservice.java</url>
+          <line>84</line>
+          <properties />
+          <option name="timeStamp" value="584" />
+        </line-breakpoint>
+      </breakpoints>
       <breakpoints-defaults>
         <breakpoint suspend="ALL" type="java-line" />
       </breakpoints-defaults>
-      <option name="time" value="584" />
+      <option name="time" value="585" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/cobrodigital/com/cobrodigital2/Modulos/Tools/Tools.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="39" column="5" selection-start-line="39" selection-start-column="5" selection-end-line="39" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/res/layout/content_configuracion.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
@@ -3036,6 +3068,17 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
           <caret line="93" column="56" selection-start-line="93" selection-start-column="56" selection-end-line="93" selection-end-column="56" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="method#onCreate#0;class#Main#0" expanded="false" />
+            <element signature="method#onClickEscanear#0;class#Main#0" expanded="false" />
+            <element signature="method#onCreateOptionsMenu#0;class#Main#0" expanded="false" />
+            <element signature="method#onOptionsItemSelected#0;class#Main#0" expanded="false" />
+            <element signature="method#onNavigationItemSelected#0;class#Main#0" expanded="false" />
+            <element signature="method#onActivityResult#0;class#Main#0" expanded="false" />
+            <element signature="method#onRestoreInstanceState#0;class#Main#0" expanded="false" />
+            <element signature="method#getContext#0;class#Main#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -3087,6 +3130,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="115" column="43" selection-start-line="115" selection-start-column="43" selection-end-line="115" selection-end-column="43" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -3149,6 +3193,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="24" column="52" selection-start-line="24" selection-start-column="52" selection-end-line="24" selection-end-column="52" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -3156,6 +3201,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="33" column="28" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="28" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -3182,6 +3228,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" column="50" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="50" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -3193,20 +3240,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/cobrodigital/com/cobrodigital2/Webservice/Webservice.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="84" column="0" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
-          <folding>
-            <element signature="method#obtener_resultado#0;class#Webservice#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/cobrodigital/com/cobrodigital2/Webservice/Webservice_estadisticas.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="271">
           <caret line="76" column="19" selection-start-line="76" selection-start-column="19" selection-end-line="76" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -3321,9 +3359,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/cobrodigital/com/cobrodigital2/Modulos/Transacciones/Tareas_asincronicas/Tarea_transacciones.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="178" column="43" selection-start-line="178" selection-start-column="43" selection-end-line="178" selection-end-column="43" />
+        <state relative-caret-position="330">
+          <caret line="123" column="71" selection-start-line="123" selection-start-column="71" selection-end-line="123" selection-end-column="71" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/cobrodigital/com/cobrodigital2/Webservice/Webservice_transacciones.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="25" column="15" selection-start-line="25" selection-start-column="15" selection-end-line="25" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/cobrodigital/com/cobrodigital2/Webservice/Webservice.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="95" column="9" selection-start-line="95" selection-start-column="9" selection-end-line="95" selection-end-column="9" />
+          <folding>
+            <element signature="method#obtener_resultado#0;class#Webservice#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
