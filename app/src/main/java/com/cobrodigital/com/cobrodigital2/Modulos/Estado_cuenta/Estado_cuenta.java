@@ -7,18 +7,21 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_navegacion;
+import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_hardware;
 import com.cobrodigital.com.cobrodigital2.Modulos.Estado_cuenta.Tareas_asincronicas.Tarea_estado_cuenta;
 import com.cobrodigital.com.cobrodigital2.R;
 
 import org.json.JSONException;
 
 import java.text.ParseException;
+import java.util.HashMap;
 
 public class Estado_cuenta extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 

@@ -2,4 +2,3 @@
     android:delay="50%"
     android:animationOrder="normal"
     android:animation="@anim/scale"/>
-

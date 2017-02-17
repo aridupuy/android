@@ -11,7 +11,7 @@
             android:title="Hasta"></item>
         <item
             android:id="@+id/ID"
-            android:title="Id" />
+            android:title="Id"/>
         <item android:title="Nro Boleta"
             android:id="@+id/nro_boleta">
         </item>
@@ -23,60 +23,60 @@
             <menu>
                 <group>
                     <item
+                        android:id="@+id/ingresos"
                         android:title="Ingresos"
-                        android:id="@+id/ingresos"
                         />
                     <item
+                        android:id="@+id/ingresos"
                         android:title="Egresos"
-                        android:id="@+id/ingresos"
                         />
                     <item
-                        android:title="Débito automatico"
                         android:id="@+id/debito_automatico"
+                        android:title="Débito automatico"
                         />
                     <item
-                        android:title="Tarjeta_de_credito"
                         android:id="@+id/tc"
+                        android:title="Tarjeta_de_credito"
                         />
                     <item
-                        android:title="Rapipago"
                         android:id="@+id/rapipago"
+                        android:title="Rapipago"
                         />
                     <item
-                        android:title="Pago Facil"
                         android:id="@+id/pagofacil"
+                        android:title="Pago Facil"
                         />
                     <item
-                        android:title="Provincia Pagos"
                         android:id="@+id/ppagos"
+                        android:title="Provincia Pagos"
                         />
                     <item
-                        android:title="Cobro Express"
                         android:id="@+id/cobroexpress"
+                        android:title="Cobro Express"
                         />
                     <item
-                        android:title="Ripsa"
                         android:id="@+id/ripsa"
+                        android:title="Ripsa"
                         />
                     <item
-                        android:title="Multipago"
                         android:id="@+id/multipago"
+                        android:title="Multipago"
                         />
                     <item
-                        android:title="Pago mis cuentas"
                         android:id="@+id/pmc"
+                        android:title="Pago mis cuentas"
                         />
                     <item
-                        android:title="Bica"
                         android:id="@+id/bica"
+                        android:title="Bica"
                         />
                     <item
-                        android:title="Pronto pago"
                         android:id="@+id/prontopago"
+                        android:title="Pronto pago"
                         />
                     <item
-                        android:title="Link Pagos"
                         android:id="@+id/link"
+                        android:title="Link Pagos"
                         />
                 </group>
             </menu>

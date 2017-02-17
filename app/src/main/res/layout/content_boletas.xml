@@ -5,226 +5,224 @@
     android:id="@+id/content_boletas"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    tools:context="com.cobrodigital.com.cobrodigital2.Modulos.Boletas.Boletas"
-    android:orientation="vertical"
-    tools:ignore="ExtraText"
     android:layout_gravity="center"
-    android:layout_marginBottom="25dp"
     android:layout_marginTop="?attr/actionBarSize"
+    android:layout_marginBottom="25dp"
+    android:orientation="vertical"
+    tools:context="com.cobrodigital.com.cobrodigital2.Modulos.Boletas.Boletas"
+    tools:ignore="ExtraText"
     >
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:visibility="gone"
         android:id="@+id/progressbar_Boleta"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
+        android:orientation="vertical">
     <ProgressBar
         android:layout_width="wrap_content"
-        android:layout_gravity="center"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         />
         <TextView
-            android:layout_gravity="center"
-            android:text="Generando Boleta Espere..."
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Generando Boleta Espere..."/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/vista_boletas"
-        android:layout_gravity="center"
-        android:orientation="vertical"
-        android:layout_marginBottom="25dp"
-        android:layout_marginTop="?attr/actionBarSize"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginBottom="25dp"
+        android:orientation="vertical">
 
 
     <Spinner
         android:id="@+id/campo_a_buscar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_gravity="center"
-        android:hint="@string/campo_a_buscar"
+        android:gravity="center"
+        android:background="@drawable/celda"
         android:maxLines="1"
-        android:background="@drawable/celda" />
+        android:hint="@string/campo_a_buscar"/>
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:inputType="textPersonName"
-        android:ems="10"
         android:id="@+id/identificador"
-        android:hint="@string/valor"
-        tools:ignore="MissingConstraints"
-        android:maxLines="1" />
-    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:inputType="textPersonName"
         android:ems="10"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:id="@+id/concepto"
-        android:hint="@string/concepto"
         tools:ignore="MissingConstraints"
-        android:maxLines="1" />
-    <LinearLayout
+        android:maxLines="1"
+        android:hint="@string/valor"/>
+    <EditText
+        android:id="@+id/concepto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:inputType="textPersonName"
+        android:ems="10"
+        tools:ignore="MissingConstraints"
+        android:maxLines="1"
+        android:hint="@string/concepto"/>
+    <LinearLayout
         android:id="@+id/Primer_vencimiento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         >
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="5dp"
-            android:inputType="textPersonName"
             android:id="@+id/fecha_1"
-            android:hint="@string/fecha_1er_vto"
-            tools:ignore="MissingConstraints"
-            android:maxLines="1" />
-        <DatePicker
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:padding="5dp"
+            android:gravity="center"
+            android:inputType="textPersonName"
+            tools:ignore="MissingConstraints"
+            android:maxLines="1"
+            android:hint="@string/fecha_1er_vto"/>
+        <DatePicker
             android:id="@+id/datePicker_fecha_1"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             >
 
         </DatePicker>
         <EditText
+            android:id="@+id/importe_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:paddingLeft="5dp"
+            android:gravity="center"
             android:inputType="numberDecimal"
             android:ems="10"
-            android:id="@+id/importe_1"
-            android:hint="importe"
             tools:ignore="MissingConstraints"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:hint="importe"/>
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/sup1"
             android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="-"
             />
     </LinearLayout>
         <Button
+            android:id="@+id/add1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:id="@+id/add1"
             android:text="+"/>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/Segundo_vencimiento"
         android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         >
 
     <TextView
+        android:id="@+id/fecha_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:padding="5dp"
+        android:gravity="center"
         android:inputType="textPersonName"
-        android:id="@+id/fecha_2"
-        android:hint="@string/fecha_2do_vto"
         tools:ignore="MissingConstraints"
-        android:maxLines="1" />
+        android:maxLines="1"
+        android:hint="@string/fecha_2do_vto"/>
         <DatePicker
+            android:id="@+id/datePicker_fecha_2"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:id="@+id/datePicker_fecha_2"
             >
 
         </DatePicker>
     <EditText
+        android:id="@+id/importe_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:inputType="numberDecimal"
         android:ems="10"
-        android:id="@+id/importe_2"
-        android:hint="@string/importe_2"
         tools:ignore="MissingConstraints"
-        android:maxLines="1" />
+        android:maxLines="1"
+        android:hint="@string/importe_2"/>
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/sup2"
             android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="-"
             />
         </LinearLayout>
         <Button
+            android:id="@+id/add2"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/add2"
             android:layout_gravity="center"
-            android:visibility="gone"
             android:text="+"/>
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/Tercer_vencimiento"
             android:visibility="gone"
-            >
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
+            >
+        <TextView
+            android:id="@+id/fecha_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:padding="5dp"
             android:gravity="center"
-            android:id="@+id/fecha_3"
-            android:hint="@string/fecha_3er_vto"
+            android:inputType="numberDecimal"
             tools:ignore="MissingConstraints"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:hint="@string/fecha_3er_vto"/>
             <DatePicker
+                android:id="@+id/datePicker_fecha_3"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:id="@+id/datePicker_fecha_3"
                 >
             </DatePicker>
         <EditText
+            android:id="@+id/importe_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:inputType="numberDecimal"
             android:ems="10"
-            android:gravity="center"
             tools:layout_editor_absoluteY="422dp"
-            android:id="@+id/importe_3"
-            android:hint="@string/importe_3"
             tools:ignore="MissingConstraints"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:hint="@string/importe_3"/>
         </LinearLayout>
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal">
         <Button
-            android:text="@string/aceptar"
+            android:id="@+id/button4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button4"
             tools:ignore="ButtonStyle,MissingConstraints"
-/>
+            android:text="@string/aceptar"/>
         <Button
-            android:text="@string/cancelar"
+            android:id="@+id/button5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:layout_editor_absoluteY="514dp"
             tools:layout_editor_absoluteX="78dp"
-            android:id="@+id/button5"
-            tools:ignore="ButtonStyle,MissingConstraints" />
+            tools:ignore="ButtonStyle,MissingConstraints"
+            android:text="@string/cancelar"/>
 
     </LinearLayout>
     </LinearLayout>
 </LinearLayout>
-

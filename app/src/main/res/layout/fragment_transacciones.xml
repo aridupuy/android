@@ -3,103 +3,103 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/activity_vertical_margin"
     android:fillViewport="true"
-    tools:context="com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.Transacciones"
-    android:layout_marginTop="@dimen/activity_vertical_margin">
+    tools:context="com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.Transacciones">
     <RelativeLayout
-            android:layout_height="match_parent"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
     >
         <android.support.design.widget.AppBarLayout
+            android:id="@+id/titulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/titulo"
-            android:theme="@style/AppTheme.AppBarOverlay"
-            android:background="?attr/colorBackgroundFloating">
+            android:background="?attr/colorBackgroundFloating"
+            android:theme="@style/AppTheme.AppBarOverlay">
 
 
         </android.support.design.widget.AppBarLayout>
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="10dp"
-            app:layout_scrollFlags="scroll"
             android:layout_gravity="center"
-            app:cardElevation="6dp"
             android:layout_below="@+id/titulo"
+            android:layout_centerHorizontal="true"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="10dp"
+            android:clickable="true"
+            app:layout_scrollFlags="scroll"
+            app:cardElevation="6dp"
             app:contentPaddingLeft="5dp"
             app:contentPaddingRight="5dp"
             android:clipChildren="true"
             android:clipToPadding="true"
-            android:clickable="true"
             >
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 >
                 <LinearLayout
+                    android:id="@+id/tr_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:weightSum="4"
-                    android:id="@+id/tr_toolbar">
+                    android:weightSum="4">
                 <TextView
-                    android:text="Saldo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/textView5"
-                    android:textColor="@color/colorPrimary"
-                    android:paddingTop="20dp"
-                    android:paddingLeft="10dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_weight="2"/>
-                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/Saldo"
-                    android:paddingTop="20dp"
+                    android:layout_weight="2"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
                     android:paddingLeft="10dp"
-                    android:text=""
+                    android:paddingTop="20dp"
                     android:textColor="@color/colorPrimary"
+                    android:text="Saldo"/>
+                <TextView
+                    android:id="@+id/Saldo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="20dp"
+                    android:textColor="@color/colorPrimary"
+                    android:text=""
                     />
                 <android.support.v7.widget.Toolbar  android:id="@+id/card_toolbar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/Saldo"
                     android:layout_weight="1"
+                    android:layout_toRightOf="@+id/Saldo"
                     />
                 </LinearLayout>
 
-                <android.support.v7.widget.RecyclerView
+                <ListView
+                    android:id="@+id/lista"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/lista"
+                    android:layout_below="@+id/tr_toolbar"
                     android:layout_centerHorizontal="true"
+                    android:layoutAnimation="@anim/list_anim"
+                    android:orientation="horizontal"
                     android:elevation="1dp"
                     android:animationCache="true"
-                    android:layoutAnimation="@anim/list_anim"
                     android:stateListAnimator="@anim/list_anim"
                     android:textAlignment="center"
-                    android:layout_below="@+id/tr_toolbar"
-                    android:orientation="horizontal"
                     android:divider="@null"
 
                     >
-                </android.support.v7.widget.RecyclerView>
+                </ListView>
                 <ProgressBar
                     style="?android:attr/progressBarStyle"
+                    android:id="@+id/loading_principal_transacciones"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:id="@+id/loading_principal_transacciones"
+                    android:layout_centerHorizontal="true"
                     />
             </RelativeLayout>
         </android.support.v7.widget.CardView>

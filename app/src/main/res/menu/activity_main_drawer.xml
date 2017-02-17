@@ -5,23 +5,27 @@
         <item
             android:id="@+id/nav_loggin"
             android:icon="@drawable/ic_connectdevelop"
-            android:title="Conectar con cuenta" />
+            android:title="Conectar con cuenta"/>
         <item
             android:id="@+id/nav_estado"
             android:icon="@drawable/ic_trending_up_black"
-            android:title="Estado de cuenta" />
+            android:title="Estado de cuenta"/>
         <item
             android:id="@+id/nav_transacciones"
             android:icon="@drawable/ic_exchange"
-            android:title="Listar Transacciones" />
+            android:title="Listar Transacciones"/>
         <item
             android:id="@+id/nav_boleta"
             android:icon="@drawable/ic_envelope"
-            android:title="Cobrar por Correo" />
+            android:title="Cobrar por Correo"/>
+        <item
+            android:id="@+id/nav_retiros"
+            android:icon="@drawable/ic_local_atm_black"
+            android:title="Iniciar Retiro"/>
         <item
             android:id="@+id/nav_tools"
             android:icon="@drawable/ic_cogs"
-            android:title="Tools" />
+            android:title="Tools"/>
     </group>
 
     <item android:title="Contacto">
@@ -29,7 +33,7 @@
             <item
                 android:id="@+id/nav_compartir"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Contacto" />
+                android:title="Contacto"/>
         </menu>
     </item>
 

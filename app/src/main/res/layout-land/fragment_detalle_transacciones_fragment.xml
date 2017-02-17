@@ -1,39 +1,39 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
     android:id="@+id/fragment_detalle_transacciones"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context="com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.fragment.Detalle_transacciones_fragment">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/content_detalle_transacciones"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:paddingTop="45dp"
+        android:orientation="horizontal"
         android:gravity="right"
+        android:weightSum="2"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context="com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.Detalle_transacciones"
-        tools:showIn="@layout/activity_detalle_transaccion"
-        android:weightSum="2">
+        tools:showIn="@layout/activity_detalle_transaccion">
         <LinearLayout
+            android:id="@+id/linea1_detalle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="1"
             android:paddingLeft="55dp"
             android:paddingRight="15dp"
-            android:textAlignment="textStart"
+            android:orientation="vertical"
             android:gravity="start"
-            android:id="@+id/linea1_detalle">
+            android:weightSum="1"
+            android:textAlignment="textStart">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -46,9 +46,9 @@
 
             </LinearLayout>
             <LinearLayout
-                android:paddingTop="15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -56,9 +56,9 @@
 
             </LinearLayout>
             <LinearLayout
-                android:paddingTop="15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -66,9 +66,9 @@
 
             </LinearLayout>
             <LinearLayout
-                android:paddingTop="15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -76,9 +76,9 @@
 
             </LinearLayout>
             <LinearLayout
-                android:paddingTop="15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -86,9 +86,9 @@
 
             </LinearLayout>
             <LinearLayout
-                android:paddingTop="15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -96,9 +96,9 @@
 
             </LinearLayout>
             <LinearLayout
-                android:paddingTop="15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -106,9 +106,9 @@
 
             </LinearLayout>
             <LinearLayout
-                android:paddingTop="15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -116,9 +116,9 @@
 
             </LinearLayout>
             <LinearLayout
-                android:paddingTop="15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -126,9 +126,9 @@
 
             </LinearLayout>
             <LinearLayout
-                android:paddingTop="15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -137,113 +137,113 @@
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/linea2_detalle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:paddingLeft="55dp"
             android:paddingRight="10dp"
             android:orientation="vertical"
-            android:weightSum="1"
-            android:textAlignment="textStart"
             android:gravity="start"
-            android:id="@+id/linea2_detalle">
+            android:weightSum="1"
+            android:textAlignment="textStart">
             <LinearLayout
-                android:paddingTop="15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp">
                 <TextView
+                    android:id="@+id/fecha"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/fecha"/>
+                    android:layout_height="wrap_content"/>
 
             </LinearLayout>
             <LinearLayout
-                android:paddingTop="15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp">
                 <TextView
+                    android:id="@+id/nro_boleta"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/nro_boleta"/>
+                    android:layout_height="wrap_content"/>
 
             </LinearLayout>
             <LinearLayout
-                android:paddingTop="15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp">
                 <TextView
+                    android:id="@+id/nombre"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/nombre"/>
+                    android:layout_height="wrap_content"/>
 
             </LinearLayout>
             <LinearLayout
-                android:paddingTop="15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp">
                 <TextView
+                    android:id="@+id/identificacion"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/identificacion"/>
+                    android:layout_height="wrap_content"/>
 
             </LinearLayout>
             <LinearLayout
-                android:paddingTop="15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp">
                 <TextView
+                    android:id="@+id/info"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/info"/>
+                    android:layout_height="wrap_content"/>
 
             </LinearLayout>
             <LinearLayout
-                android:paddingTop="15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp">
                 <TextView
+                    android:id="@+id/concepto"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/concepto"/>
+                    android:layout_height="wrap_content"/>
 
             </LinearLayout>
             <LinearLayout
-                android:paddingTop="15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp">
                 <TextView
+                    android:id="@+id/bruto"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/bruto"/>
+                    android:layout_height="wrap_content"/>
 
             </LinearLayout>
             <LinearLayout
-                android:paddingTop="15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp">
                 <TextView
+                    android:id="@+id/comision"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/comision"/>
+                    android:layout_height="wrap_content"/>
 
             </LinearLayout>
             <LinearLayout
-                android:paddingTop="15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp">
                 <TextView
+                    android:id="@+id/neto"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/neto"/>
+                    android:layout_height="wrap_content"/>
 
             </LinearLayout>
             <LinearLayout
-                android:paddingTop="15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp">
                 <TextView
+                    android:id="@+id/saldo_acumulado"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/saldo_acumulado"/>
+                    android:layout_height="wrap_content"/>
 
             </LinearLayout>
         </LinearLayout>

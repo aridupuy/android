@@ -22,15 +22,15 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="0.2in"
                 android:layout_marginLeft="3dp"
-                android:text="@string/Transacciones"
-                android:gravity="fill_horizontal|center_vertical" />
+                android:gravity="fill_horizontal|center_vertical"
+                android:textSize="0.2in"
+                android:text="@string/Transacciones"/>
 
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_transacciones" />
+    <include layout="@layout/content_transacciones"/>
 
 </android.support.design.widget.CoordinatorLayout>

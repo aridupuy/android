@@ -2,17 +2,25 @@ package com.cobrodigital.com.cobrodigital2.Modulos.Estado_cuenta;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_navegacion;
+import com.cobrodigital.com.cobrodigital2.Modulos.Estado_cuenta.Fragment.Detalle_saldo_fragment;
 import com.cobrodigital.com.cobrodigital2.Modulos.Estado_cuenta.Tareas_asincronicas.Tarea_Detalle_saldo;
+import com.cobrodigital.com.cobrodigital2.Modulos.Tools.Tools;
+import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.fragment.Detalle_transacciones_fragment;
+import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.fragment.Transacciones_fragment;
 import com.cobrodigital.com.cobrodigital2.R;
+
+import java.io.IOException;
 
 public class Detalle_saldo extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     protected String saldo="";
@@ -30,9 +38,11 @@ public class Detalle_saldo extends AppCompatActivity implements NavigationView.O
         navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) this);
         if(getIntent().hasExtra("Saldo"))
             saldo=getIntent().getStringExtra("Saldo");
-        ((TextView)findViewById(R.id.saldo_estado_saldo)).setText(saldo);
-        Tarea_Detalle_saldo tarea=new Tarea_Detalle_saldo(this);
-        tarea.execute();
+        Detalle_saldo_fragment fragment=Detalle_saldo_fragment.newInstance(saldo);
+        FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
+        ft=ft.add(R.id.include_detalle_saldo, fragment);
+        int res=ft.commit();
+        Log.d("res",res+"");
     }
 
     @Override

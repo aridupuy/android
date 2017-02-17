@@ -112,7 +112,8 @@
             android:name=".Modulos.Estado_cuenta.Estado_cuenta"
             android:label="@string/title_activity_estado_cuenta"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Modulos.Estado_cuenta.Detalle_saldo"></activity>
+        <activity android:name=".Modulos.Estado_cuenta.Detalle_saldo" />
+        <activity android:name=".Modulos.Retiros.Retiros"></activity>
     </application>
 
 </manifest>

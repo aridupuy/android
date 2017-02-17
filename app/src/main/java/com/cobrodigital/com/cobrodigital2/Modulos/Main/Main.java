@@ -104,8 +104,8 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        serviceBoot sb=new serviceBoot(this.getApplicationContext());
-        sb.startTimer();
+//        serviceBoot sb=new serviceBoot(this.getApplicationContext());
+//        sb.startTimer();
     }
     @Override
     //capturo el resultado del scanner

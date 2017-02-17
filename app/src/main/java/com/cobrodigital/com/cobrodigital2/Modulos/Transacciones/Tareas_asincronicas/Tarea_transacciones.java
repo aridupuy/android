@@ -199,8 +199,12 @@ public class Tarea_transacciones extends AsyncTask<String, Integer, Vector<Trans
                 transacciones.addAll(VectorTransaccion);//= (Vector<Transaccion>) adapter.getItems();
             }
             else {
-                lista.setAdapter(new Lista_transaccion_adapter(context.getContext(), R.layout.item_transacciones, VectorTransaccion));
-                transacciones=VectorTransaccion;
+                if(null!=new Lista_transaccion_adapter(context.getContext(), R.layout.item_transacciones, VectorTransaccion)) {
+                    lista.setAdapter(new Lista_transaccion_adapter(context.getContext(), R.layout.item_transacciones, VectorTransaccion));
+                    transacciones = VectorTransaccion;
+                }
+                else
+                    return;
             }
             lista.setOnScrollListener(new AbsListView.OnScrollListener() {
                 @Override

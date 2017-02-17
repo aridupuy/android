@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Looper;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -13,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
+import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_hardware;
 import com.cobrodigital.com.cobrodigital2.Modulos.Estado_cuenta.Estado_cuenta;
 import com.cobrodigital.com.cobrodigital2.R;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
@@ -36,6 +38,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -61,10 +65,11 @@ public class Tarea_estado_cuenta extends AsyncTask<Void,Void,View> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        ((CardView)context.findViewById(R.id.chart_cardView)).setVisibility(View.GONE);
         ((LinearLayout)context.findViewById(R.id.chart)).setVisibility(View.GONE);
         ((LinearLayout)context.findViewById(R.id.layout_saldo)).setVisibility(View.GONE);
-        ((LinearLayout)context.findViewById(R.id.datos_estado_cuenta_ingresos)).setVisibility(View.GONE);
-        ((LinearLayout)context.findViewById(R.id.datos_estado_cuenta_egresos)).setVisibility(View.GONE);
+        ((CardView)context.findViewById(R.id.datos_estado_cuenta_ingresos)).setVisibility(View.GONE);
+        ((CardView)context.findViewById(R.id.datos_estado_cuenta_egresos)).setVisibility(View.GONE);
         ((ProgressBar)context.findViewById(R.id.progressbar_estado_cuenta)).setVisibility(View.VISIBLE);
     }
 
@@ -107,31 +112,38 @@ public class Tarea_estado_cuenta extends AsyncTask<Void,Void,View> {
             publishProgress();
             return null;
         }
-
-        mRenderer.addSeriesRenderer(this.generar_renderer(6,Color.GREEN,PointStyle.POINT));
-        mRenderer.addSeriesRenderer(this.generar_renderer(6,Color.BLUE,PointStyle.POINT));
+        HashMap<String,Double> resolucion= Gestor_hardware.obtener_resolucion_pantalla(context);
+//        "(480*160) / 328 " trend lite
+        Double dps=Gestor_hardware.calcular_tamaño_fuente(resolucion,10);
+        int fontSize= dps.intValue();       //modulo dividido poco mas de 2.5 da 33 px en en galaxy trend lite
+//        int fontSize=36;
+        Double grosor_linea=dps%4;   //modulo de 8 da 3 en en galaxy trend lite
+        Log.d("dps",dps+"");
+        Log.d("font-size",fontSize+"");
+        Log.d("grosor_linea",grosor_linea+"");
+        mRenderer.addSeriesRenderer(this.generar_renderer(grosor_linea.intValue(),Color.GREEN,PointStyle.POINT));
+        mRenderer.addSeriesRenderer(this.generar_renderer(grosor_linea.intValue(),Color.BLUE,PointStyle.POINT));
         mRenderer.setYLabelsAlign(Paint.Align.RIGHT);
-        mRenderer.setLegendTextSize(45);
+        mRenderer.setLegendTextSize(fontSize);
         mRenderer.setXAxisMin(0);
         mRenderer.setXAxisMax(maxX*2);
         mRenderer.setYAxisMin(10);
         mRenderer.setFitLegend(true);
-        mRenderer.setLegendHeight(15);
+        mRenderer.setLegendHeight(fontSize);
         mRenderer.setShowAxes(true);
         mRenderer.setShowGridX(true);
         mRenderer.setGridColor(Color.GRAY);
         mRenderer.setMarginsColor(Color.argb(0x00, 0xff, 0x00, 0x00));
         mRenderer.setApplyBackgroundColor(true);
         mRenderer.setPanEnabled(false, false);
-        mRenderer.setLabelsTextSize(25);
+        mRenderer.setLabelsTextSize(fontSize);
         mRenderer.setZoomEnabled(true,true);
         mRenderer.setTextTypeface(Typeface.MONOSPACE);
         mRenderer.setYLabelsAlign(Paint.Align.CENTER);
-        mRenderer.setAxisTitleTextSize(25);
+        mRenderer.setAxisTitleTextSize(fontSize+5);
 
         mRenderer.setMargins(new int[]{0, 50, 0, 0});
         GraphicalView chartView = ChartFactory.getLineChartView(context, dataset, mRenderer);
-//        Looper.loop();
         return chartView;
     }
 
@@ -142,8 +154,10 @@ public class Tarea_estado_cuenta extends AsyncTask<Void,Void,View> {
             context.finish();
             return;
         }
+        ((CardView)context.findViewById(R.id.chart_cardView)).setVisibility(View.GONE);
         ((ProgressBar)context.findViewById(R.id.progressbar_estado_cuenta)).setVisibility(View.GONE);
         ((LinearLayout)context.findViewById(R.id.layout_saldo)).setVisibility(View.VISIBLE);
+        ((CardView)context.findViewById(R.id.chart_cardView)).setVisibility(View.VISIBLE);
         ((LinearLayout)context.findViewById(R.id.chart)).setVisibility(View.VISIBLE);
         LinearLayout chartLyt= (LinearLayout) context.findViewById(R.id.chart);
         chartLyt.addView(chartView,0);
@@ -155,14 +169,15 @@ public class Tarea_estado_cuenta extends AsyncTask<Void,Void,View> {
         ((TextView)context.findViewById(R.id.semana_egresos)).setText("$"+String.valueOf(df.format(pesos_semana_egresos)));
         ((TextView)context.findViewById(R.id.mes_egresos)).setText("$"+String.valueOf(df.format(pesos_mes_egresos)));
         ((TextView)context.findViewById(R.id.saldo_cuenta)).setText("$"+saldo_actual);
-        ((LinearLayout)context.findViewById(R.id.datos_estado_cuenta_ingresos)).setVisibility(View.VISIBLE);
-        ((LinearLayout)context.findViewById(R.id.datos_estado_cuenta_egresos)).setVisibility(View.VISIBLE);
+        ((CardView)context.findViewById(R.id.datos_estado_cuenta_ingresos)).setVisibility(View.VISIBLE);
+        ((CardView)context.findViewById(R.id.datos_estado_cuenta_egresos)).setVisibility(View.VISIBLE);
+
     }
+
     protected XYSeries generar_serie(String titulo){
         XYSeries series = new XYSeries(titulo);
         series.add(0f,0f);
         SimpleDateFormat parser=new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat Formatter=new SimpleDateFormat("dd-MM-yyyy");
         SimpleDateFormat Formatterdia=new SimpleDateFormat("dd");
         Vector<String> datos_egresos=CobroDigital.webservice.obtener_datos();
         Object transicion_egresos[] = datos_egresos.toArray();

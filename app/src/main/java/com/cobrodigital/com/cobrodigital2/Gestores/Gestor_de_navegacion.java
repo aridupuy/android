@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.cobrodigital.com.cobrodigital2.Modulos.Boletas.Boletas;
 import com.cobrodigital.com.cobrodigital2.Modulos.Estado_cuenta.Estado_cuenta;
+import com.cobrodigital.com.cobrodigital2.Modulos.Retiros.Retiros;
 import com.cobrodigital.com.cobrodigital2.Pagador;
 import com.cobrodigital.com.cobrodigital2.R;
 import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.Transacciones;
@@ -31,18 +32,24 @@ public class Gestor_de_navegacion {
             else{
                 Gestor_de_mensajes_usuario.mensaje("Usted ya esta asociado a una cuenta CobroDigital.",context);
             }
-        } else if (id == R.id.nav_transacciones) {
+        }
+        else if (id == R.id.nav_transacciones) {
             this.OnClickListarTransacciones(context);
-        } else if (id == R.id.nav_estado) {
+        }
+        else if (id == R.id.nav_estado) {
             this.estado_cuenta(context);
-        }  else if (id == R.id.nav_tools) {
+        }
+        else if (id == R.id.nav_tools) {
             this.Configurar(context);
-
-        } else if (id == R.id.nav_compartir) {
+        }
+        else if (id == R.id.nav_compartir) {
 
         }
         else if(id==R.id.nav_boleta){
             this.generar_boleta(context);
+        }
+        else if(id==R.id.nav_retiros){
+            this.retiros(context);
         }
 
 
@@ -62,8 +69,7 @@ public class Gestor_de_navegacion {
         context.startActivity(configuracion);
     }
     public void OnClickPagadorNew(View view) {
-        Intent pagador = new Intent(context, Pagador.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(pagador);
+        (context).startActivity(new Intent(context, com.cobrodigital.com.cobrodigital2.Model.Pagador.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
     }
     public static void generar_boleta(Context context){
 
@@ -71,5 +77,8 @@ public class Gestor_de_navegacion {
     }
     public static void estado_cuenta(Context context){
         (context).startActivity(new Intent(context,Estado_cuenta.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+    }
+    public static void retiros(Context context){
+        (context).startActivity(new Intent(context,Retiros.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
     }
 }
