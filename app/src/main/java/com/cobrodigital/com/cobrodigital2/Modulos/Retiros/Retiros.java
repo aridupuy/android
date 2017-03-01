@@ -25,6 +25,8 @@ public class Retiros extends AppCompatActivity implements NavigationView.OnNavig
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_retiros);
         navigationView.setNavigationItemSelectedListener(this);
+
+
     }
 
 

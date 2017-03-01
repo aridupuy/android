@@ -1,14 +1,18 @@
 package com.cobrodigital.com.cobrodigital2.Modulos.Retiros.Adapters;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.cobrodigital.com.cobrodigital2.Model.Banco;
+import com.cobrodigital.com.cobrodigital2.Modulos.Retiros.Retiro_importe;
 import com.cobrodigital.com.cobrodigital2.R;
 
 import java.util.Vector;
@@ -17,11 +21,12 @@ import java.util.Vector;
  * Created by ariel on 21/02/17.
  */
 
-public class Lista_bancos_adapter extends ArrayAdapter {
+public class Lista_bancos_adapter extends ArrayAdapter implements AdapterView.OnItemClickListener {
     Vector<Banco> items;
     Fragment context;
     private LayoutInflater inflater;
     private int resource;
+
 
     public Lista_bancos_adapter(Fragment context ,int resource ,Vector<Banco> items){
         super(context.getActivity().getApplicationContext() ,resource ,items);
@@ -41,6 +46,20 @@ public class Lista_bancos_adapter extends ArrayAdapter {
         ((TextView) v.findViewById(R.id.Cuit)).setText(items.get(i).getCuit().toString());
         return v;
     }
-
-
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        int position=adapterView.getPositionForView(view);
+        ArrayAdapter<?> adapter =(ArrayAdapter<?>) adapterView.getAdapter();
+        Banco banco = (Banco)adapter.getItem(position);
+        Intent intent = new Intent(context.getActivity(), Retiro_importe.class);
+        Fragment fragment=context.getFragmentManager().findFragmentById(R.id.include_detalle_saldo_fragment);
+        String disponible=((TextView)fragment.getView().findViewById(R.id.disponible)).getText().toString();
+        Bundle bundle = new Bundle();
+        bundle.putString("Nombre",banco.getNombre());
+        bundle.putString("Cuit",banco.getCuit());
+        bundle.putString("Titular",banco.getTitular());
+        bundle.putString("Disponible",disponible);
+        intent.putExtra("banco",bundle);
+        context.startActivity(intent);
+    }
 }

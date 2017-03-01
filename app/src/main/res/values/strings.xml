@@ -57,4 +57,5 @@
     <string name="title_activity_detalle__transacciones">Detalle_Transacciones</string>
     <string name="title_activity_enviar_correo">Enviar_correo</string>
     <string name="title_activity_estado_cuenta">Estado_cuenta</string>
+    <string name="title_activity_retiro_importe">Retiro_importe</string>
 </resources>

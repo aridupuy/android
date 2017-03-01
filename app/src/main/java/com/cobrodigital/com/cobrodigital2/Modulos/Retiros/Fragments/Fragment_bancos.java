@@ -31,7 +31,7 @@ public class Fragment_bancos extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View v= inflater.inflate(R.layout.fragment_bancos,container, false);
         ListView lista= (ListView) v.findViewById(R.id.lista_bancos);
-        Tarea_bancos tarea= new Tarea_bancos(this,lista);
+        Tarea_bancos tarea= new Tarea_bancos(this,lista,v);
         tarea.execute();
         return v;
     }

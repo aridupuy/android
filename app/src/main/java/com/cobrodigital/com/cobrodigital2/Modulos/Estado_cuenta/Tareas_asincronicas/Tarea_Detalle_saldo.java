@@ -1,13 +1,11 @@
 package com.cobrodigital.com.cobrodigital2.Modulos.Estado_cuenta.Tareas_asincronicas;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.cobrodigital.com.cobrodigital2.Modulos.Estado_cuenta.Detalle_saldo;
+import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
 import com.cobrodigital.com.cobrodigital2.Modulos.Estado_cuenta.Fragment.Detalle_saldo_fragment;
 import com.cobrodigital.com.cobrodigital2.R;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
@@ -15,20 +13,8 @@ import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 public class Tarea_Detalle_saldo extends AsyncTask <Void,Void,HashMap<String,String>>{
 public static final String SALDO = "saldo";
     protected Fragment context;
@@ -60,6 +46,7 @@ public static final String SALDO = "saldo";
                     Resultado.put("saldo_disponible",Json.getString("saldo_disponible"));
                     Resultado.put("encaje",Json.getString("encaje"));
                 }
+                return null;
             }
         }catch (JSONException e) {e.printStackTrace();}
         catch (Exception e){e.printStackTrace();}
@@ -68,22 +55,25 @@ public static final String SALDO = "saldo";
 
     @Override
     protected void onPostExecute(HashMap<String, String> Resultado) {
-        Log.d("Inicie","inicie");
-        Double saldo = Double.parseDouble(Resultado.get("saldo"));
-        Double saldo_disponible = Double.parseDouble(Resultado.get("saldo_disponible"));
-        Double aun_no_liquidado = Double.parseDouble(Resultado.get("aun_no_liquidado"));
-        Double encaje = Double.parseDouble(Resultado.get("encaje"));
-        DecimalFormat df = new DecimalFormat("###,###,###,###,###.##");
-        df.setDecimalSeparatorAlwaysShown(true);
-        df.setMinimumFractionDigits(2);
-        ((TextView)this.view.findViewById(R.id.saldo_estado_saldo)).setText("$"+df.format(saldo));
-        ((TextView)this.view.findViewById(R.id.disponible)).setText("$"+df.format(saldo_disponible));
-        ((TextView)this.view.findViewById(R.id.enCuenta)).setText("$"+df.format(saldo));
-        ((TextView)this.view.findViewById(R.id.liq)).setText("$"+df.format(aun_no_liquidado));
-        ((TextView)this.view.findViewById(R.id.encaje)).setText("$"+df.format(encaje));
-        this.view.findViewById(R.id.progressbar_fragment_detalle_saldo).setVisibility(View.GONE);
-        this.view.findViewById(R.id.contenido_detalle_saldo).setVisibility(View.VISIBLE);
-        Log.d("Termine","Termine");
+        if(Resultado!=null){
+            Double saldo = Double.parseDouble(Resultado.get("saldo"));
+            Double saldo_disponible = Double.parseDouble((Resultado.get("saldo_disponible")!=null)?Resultado.get("saldo_disponible"):"0");
+            Double aun_no_liquidado = Double.parseDouble((Resultado.get("aun_no_liquidado") !=null)?Resultado.get("aun_no_liquidado") :"0");
+            Double encaje = Double.parseDouble((Resultado.get("encaje") !=null)?Resultado.get("encaje") :"0");
+            DecimalFormat df = new DecimalFormat("###,###,###,###,###.##");
+            df.setDecimalSeparatorAlwaysShown(true);
+            df.setMinimumFractionDigits(2);
+            ((TextView)this.view.findViewById(R.id.saldo_estado_saldo)).setText("$"+df.format(saldo));
+            ((TextView)this.view.findViewById(R.id.disponible)).setText("$"+df.format(saldo_disponible));
+            ((TextView)this.view.findViewById(R.id.enCuenta)).setText("$"+df.format(saldo));
+            ((TextView)this.view.findViewById(R.id.liq)).setText("$"+df.format(aun_no_liquidado));
+            ((TextView)this.view.findViewById(R.id.encaje)).setText("$"+df.format(encaje));
+            this.view.findViewById(R.id.progressbar_fragment_detalle_saldo).setVisibility(View.GONE);
+            this.view.findViewById(R.id.contenido_detalle_saldo).setVisibility(View.VISIBLE);
+        }
+        else {
+            Gestor_de_mensajes_usuario.mensaje("Error al obtener los saldos.");
+        }
     }
 
 }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.cobrodigital.com.cobrodigital2">
 
     <uses-sdk
@@ -113,7 +112,12 @@
             android:label="@string/title_activity_estado_cuenta"
             android:theme="@style/AppTheme" />
         <activity android:name=".Modulos.Estado_cuenta.Detalle_saldo" />
-        <activity android:name=".Modulos.Retiros.Retiros"></activity>
+        <activity android:name=".Modulos.Retiros.Retiros" />
+        <activity
+            android:name=".Modulos.Retiros.Retiro_importe"
+            android:label="@string/title_activity_retiro_importe"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".Modulos.Retiros.Retiro_confirmacion"></activity>
     </application>
 
 </manifest>
