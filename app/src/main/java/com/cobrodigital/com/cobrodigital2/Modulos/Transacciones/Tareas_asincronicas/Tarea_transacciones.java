@@ -1,13 +1,10 @@
 package com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.Tareas_asincronicas;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.SQLException;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
@@ -17,12 +14,12 @@ import android.widget.HeaderViewListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.Adapters.Lista_transaccion_adapter;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_credenciales;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
 import com.cobrodigital.com.cobrodigital2.Model.Transaccion;
-import com.cobrodigital.com.cobrodigital2.R;
+import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.Adapters.Lista_transaccion_adapter;
 import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.Transacciones;
+import com.cobrodigital.com.cobrodigital2.R;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 
 import org.json.JSONArray;
@@ -85,6 +82,8 @@ public class Tarea_transacciones extends AsyncTask<String, Integer, Vector<Trans
 
     @Override
     protected Vector<Transaccion> doInBackground(String... input) {
+        if(context.getActivity()==null)
+            return null;
         if(!cargando) {
             ////////////////////////Semaforo///////////////////////////////
             SharedPreferences preferencias=context.getActivity().getSharedPreferences("Transacciones",Context.MODE_PRIVATE);
@@ -190,21 +189,27 @@ public class Tarea_transacciones extends AsyncTask<String, Integer, Vector<Trans
                 Log.d("Excepcion",e.getMessage());
                 return;
             }
-            if(listadapter!=null){
-                Lista_transaccion_adapter adapter= ((Lista_transaccion_adapter) ((ArrayAdapter) listadapter.getWrappedAdapter()));
-                if (adapter!=null){
-                    adapter.addItems(VectorTransaccion);
-                    adapter.notifyDataSetChanged();
+            if(context.getContext()!=null){
+                if(listadapter!=null){
+                    Lista_transaccion_adapter adapter= ((Lista_transaccion_adapter) ((ArrayAdapter) listadapter.getWrappedAdapter()));
+                    if (adapter!=null){
+                        adapter.addItems(VectorTransaccion);
+                        adapter.notifyDataSetChanged();
+                    }
+                    transacciones.addAll(VectorTransaccion);//= (Vector<Transaccion>) adapter.getItems();
                 }
-                transacciones.addAll(VectorTransaccion);//= (Vector<Transaccion>) adapter.getItems();
+                else {
+                    if(null!=new Lista_transaccion_adapter(context.getContext(), R.layout.item_transacciones, VectorTransaccion)) {
+                        lista.setAdapter(new Lista_transaccion_adapter(context.getContext(), R.layout.item_transacciones, VectorTransaccion));
+                        transacciones = VectorTransaccion;
+                    }
+                    else
+                        return;
+                }
             }
-            else {
-                if(null!=new Lista_transaccion_adapter(context.getContext(), R.layout.item_transacciones, VectorTransaccion)) {
-                    lista.setAdapter(new Lista_transaccion_adapter(context.getContext(), R.layout.item_transacciones, VectorTransaccion));
-                    transacciones = VectorTransaccion;
-                }
-                else
-                    return;
+            else{
+                Log.e("Error","Ha ocurrido un error el activity se ha cerrado?");
+                return;
             }
             lista.setOnScrollListener(new AbsListView.OnScrollListener() {
                 @Override
@@ -267,13 +272,12 @@ public class Tarea_transacciones extends AsyncTask<String, Integer, Vector<Trans
             view.findViewById(R.id.tr_toolbar).setVisibility(View.VISIBLE);
         }
         else{
-            //mejorar este caso
-            Gestor_de_mensajes_usuario.mensaje("No Existen transacciones que mostrar",context.getContext());
-            TextView saldo = (TextView) view.findViewById(R.id.Saldo);
-            lista.removeFooterView(footer);
-            saldo.setVisibility(View.VISIBLE);
-            saldo.setText("No Existen transacciones que mostrar");
-            view.findViewById(R.id.tr_toolbar).setVisibility(View.VISIBLE);
+                Gestor_de_mensajes_usuario.mensaje("No Existen transacciones que mostrar",context.getContext());
+                TextView saldo = (TextView) view.findViewById(R.id.Saldo);
+                lista.removeFooterView(footer);
+                saldo.setVisibility(View.VISIBLE);
+                saldo.setText("No Existen transacciones que mostrar");
+                view.findViewById(R.id.tr_toolbar).setVisibility(View.VISIBLE);
         }
     }
 

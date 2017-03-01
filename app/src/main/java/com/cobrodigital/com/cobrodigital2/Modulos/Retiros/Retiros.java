@@ -17,21 +17,14 @@ public class Retiros extends AppCompatActivity implements NavigationView.OnNavig
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_retiros);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarEstadoSaldo);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarRetiros);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_retiros);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_retiros);
-        navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) this);
-
-//        Detalle_saldo_fragment fragment=Detalle_saldo_fragment.newInstance();
-//        FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
-//        ft.add(R.id.include_detalle_saldo_fragment, fragment).commit();
-//        FragmentTransaction ft2=getSupportFragmentManager().beginTransaction();
-//        Fragment_bancos fragment2= Fragment_bancos.newInstance();
-//        ft2.add(R.id.include_fragment_bancos, fragment2).commit();
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
 
