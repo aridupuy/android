@@ -3,12 +3,8 @@ package com.cobrodigital.com.cobrodigital2.Webservice;
 import android.annotation.SuppressLint;
 import android.util.Log;
 
-import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.j256.ormlite.field.types.StringType;
-import com.j256.ormlite.logger.LoggerFactory;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,14 +16,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.ConnectException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -49,6 +42,7 @@ public abstract class Webservice {
     public static Webservice_enviar_correo webservice_enviar_correo;
     public static Webservice_estadisticas webservice_estadisticas;
     public static Webservice_detalle_saldo webservice_detalle_saldo;
+    public static Webservice_cuentas_bancarias webservice_cuentas_bancarias;
 
     private static final String URL  = "https://www.cobrodigital.com:14365/ws3/";
     protected static final String method = "POST";

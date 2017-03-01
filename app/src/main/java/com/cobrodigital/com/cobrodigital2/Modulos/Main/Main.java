@@ -21,15 +21,11 @@ import android.view.ViewGroup;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_credenciales;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_navegacion;
-import com.cobrodigital.com.cobrodigital2.Model.Credencial;
 import com.cobrodigital.com.cobrodigital2.Modulos.Estado_cuenta.Estado_cuenta;
-import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.Transacciones;
 import com.cobrodigital.com.cobrodigital2.R;
-import com.cobrodigital.com.cobrodigital2.Services.serviceBoot;
-import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 
 public class Main extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    final public static boolean emulador=true;
+    final public static boolean emulador=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
