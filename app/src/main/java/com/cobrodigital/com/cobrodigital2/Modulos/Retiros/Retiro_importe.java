@@ -39,8 +39,8 @@ public class Retiro_importe extends AppCompatActivity implements NavigationView.
         }
         this.Nombre=bundle.getString("Nombre");
         this.titular=bundle.getString("Titular");
-        this.cuit=bundle.getString("cuit");
-        this.saldo_disponible=bundle.getString("disponible");
+        this.cuit=bundle.getString("Cuit");
+        this.saldo_disponible=bundle.getString("Disponible");
         ((TextView)findViewById(R.id.Nombre)).setText(this.Nombre);
         ((TextView)findViewById(R.id.Titular)).setText(this.titular);
         ((TextView)findViewById(R.id.Cuit)).setText(this.cuit);
@@ -67,7 +67,8 @@ public class Retiro_importe extends AppCompatActivity implements NavigationView.
                 intent.putExtra("Titular",this.titular);
                 intent.putExtra("Cuit",this.cuit);
                 intent.putExtra("Disponible",this.saldo_disponible);
-                intent.putExtra("plata",plata);
+                intent.putExtra("Plata",plata);
+
                 startActivity(intent);
                 break;
             case R.id.cancelar_retiro:

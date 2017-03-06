@@ -58,7 +58,7 @@ public class Lista_bancos_adapter extends ArrayAdapter implements AdapterView.On
         bundle.putString("Nombre",banco.getNombre());
         bundle.putString("Cuit",banco.getCuit());
         bundle.putString("Titular",banco.getTitular());
-        bundle.putString("Disponible",disponible);
+        bundle.putString("Disponible",disponible.replace("$",""));
         intent.putExtra("banco",bundle);
         context.startActivity(intent);
     }

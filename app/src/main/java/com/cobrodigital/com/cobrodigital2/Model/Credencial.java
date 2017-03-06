@@ -83,7 +83,6 @@ public class Credencial {
                 this.setId_credencial(credencial.getId_credencial());
                 this.set_IdComercio(credencial.get_IdComercio());
                 this.set_sid((credencial.get_sid()));
-
             }
 //        if(PRUEBA){
 //            this.setId_credencial(1);

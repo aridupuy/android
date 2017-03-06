@@ -14,7 +14,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.HashMap;
+import java.util.Locale;
+
 public class Tarea_Detalle_saldo extends AsyncTask <Void,Void,HashMap<String,String>>{
 public static final String SALDO = "saldo";
     protected Fragment context;
@@ -60,8 +63,12 @@ public static final String SALDO = "saldo";
             Double saldo_disponible = Double.parseDouble((Resultado.get("saldo_disponible")!=null)?Resultado.get("saldo_disponible"):"0");
             Double aun_no_liquidado = Double.parseDouble((Resultado.get("aun_no_liquidado") !=null)?Resultado.get("aun_no_liquidado") :"0");
             Double encaje = Double.parseDouble((Resultado.get("encaje") !=null)?Resultado.get("encaje") :"0");
-            DecimalFormat df = new DecimalFormat("###,###,###,###,###.##");
+            DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.ENGLISH);
+            otherSymbols.setDecimalSeparator('.');
+            otherSymbols.setGroupingSeparator(',');
+            DecimalFormat df = new DecimalFormat("###,###,###,###.##", otherSymbols);
             df.setDecimalSeparatorAlwaysShown(true);
+//            df.setDecimalSeparatorAlwaysShown(true);
             df.setMinimumFractionDigits(2);
             ((TextView)this.view.findViewById(R.id.saldo_estado_saldo)).setText("$"+df.format(saldo));
             ((TextView)this.view.findViewById(R.id.disponible)).setText("$"+df.format(saldo_disponible));

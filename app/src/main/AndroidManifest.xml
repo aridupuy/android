@@ -6,6 +6,16 @@
         android:maxSdkVersion="8"
         android:targetSdkVersion="24" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <permission
+        android:name="net.sgoliver.android.newgcm.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="net.sgoliver.android.newgcm.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
@@ -26,6 +36,18 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <receiver
+            android:name=".Services.BroadcastReceiver.GSMBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <category android:name="net.sgoliver.android.newgcm" />
+            </intent-filter>
+        </receiver>
+
+        <!--<service android:name=".GCMIntentService" />-->
+
         <activity android:name=".Modulos.Main.Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -117,7 +139,11 @@
             android:name=".Modulos.Retiros.Retiro_importe"
             android:label="@string/title_activity_retiro_importe"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Modulos.Retiros.Retiro_confirmacion"></activity>
+        <activity android:name=".Modulos.Retiros.Retiro_confirmacion" />
+
+        <service
+            android:name=".Services.BroadcastReceiver.GSMBroadcastReceiver"
+            android:exported="false"></service>
     </application>
 
 </manifest>

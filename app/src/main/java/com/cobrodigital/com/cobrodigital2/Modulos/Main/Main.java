@@ -24,8 +24,20 @@ import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_navegacion;
 import com.cobrodigital.com.cobrodigital2.Modulos.Estado_cuenta.Estado_cuenta;
 import com.cobrodigital.com.cobrodigital2.R;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+
 public class Main extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    final public static boolean emulador=false;
+    final public static boolean emulador = false;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,19 +55,29 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
             }
         }
         super.onCreate(savedInstanceState);
-       this.ejecutar();
+        try {
+            this.ejecutar();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+
     }
+
     //clicks de botones
-    public void onClickEscanear(View view){
-        Gestor_de_navegacion navegacion=new Gestor_de_navegacion(this);
+    public void onClickEscanear(View view) {
+        Gestor_de_navegacion navegacion = new Gestor_de_navegacion(this);
         navegacion.escanear(this);
         return;
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -71,20 +93,22 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
 
         return super.onOptionsItemSelected(item);
     }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-       Gestor_de_navegacion navegacion=new Gestor_de_navegacion(this);
+        Gestor_de_navegacion navegacion = new Gestor_de_navegacion(this);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return navegacion.navegar(item.getItemId());
 
     }
-    private void ejecutar(){
+
+    private void ejecutar() throws NoSuchPaddingException, PackageManager.NameNotFoundException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, InvalidKeyException {
 
         setContentView(R.layout.activity_main);
 
-        if(Gestor_de_credenciales.esta_asociado()!=false || (Gestor_de_credenciales.re_asociar(getApplicationContext()))!=false) {
+        if (Gestor_de_credenciales.esta_asociado() != false || (Gestor_de_credenciales.re_asociar(getApplicationContext())) != false) {
 
             View cuenta = findViewById(R.id.textView7);
             ((ViewGroup) cuenta.getParent()).removeView(cuenta);
@@ -103,27 +127,44 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
 //        serviceBoot sb=new serviceBoot(this.getApplicationContext());
 //        sb.startTimer();
     }
+
     @Override
     //capturo el resultado del scanner
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
-                Gestor_de_credenciales.asociar(getApplicationContext(),intent);
-                Gestor_de_mensajes_usuario.mensaje("Usuario loggeado correctamente.",getApplicationContext());
+                Gestor_de_credenciales.asociar(getApplicationContext(), intent,this);
+                Gestor_de_mensajes_usuario.mensaje("Usuario loggeado correctamente.", getApplicationContext());
             } else if (resultCode == RESULT_CANCELED) {
-                Gestor_de_mensajes_usuario mensajes_usuario=new Gestor_de_mensajes_usuario(getApplicationContext());
+                Gestor_de_mensajes_usuario mensajes_usuario = new Gestor_de_mensajes_usuario(getApplicationContext());
                 mensajes_usuario.mensaje("La operación fué cancelada");
             }
         }
-        ejecutar();
+        try {
+            ejecutar();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        ejecutar();
+        try {
+            ejecutar();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-    static public Context getContext(){
-        Main activity=new Main();
+
+    static public Context getContext() {
+        Main activity = new Main();
         return activity.getBaseContext();
     }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+
 }

@@ -5,9 +5,12 @@ import android.os.StrictMode;
 
 import com.cobrodigital.com.cobrodigital2.Model.Credencial;
 import com.cobrodigital.com.cobrodigital2.Webservice.Webservice;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 public class CobroDigital {
     public static Credencial credencial;
+    public static GoogleCloudMessaging GCM;
+    public static String regid;
     public static Webservice webservice;
     private static Context context;
     public CobroDigital(Credencial credencial, Context context) throws Exception{
