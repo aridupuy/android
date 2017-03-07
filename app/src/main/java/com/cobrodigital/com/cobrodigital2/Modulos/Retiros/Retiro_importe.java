@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -17,7 +16,9 @@ import android.widget.TextView;
 
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_navegacion;
 import com.cobrodigital.com.cobrodigital2.R;
-public class Retiro_importe extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener {
+import com.cobrodigital.com.cobrodigital2.core.Navegacion;
+
+public class Retiro_importe extends Navegacion implements View.OnClickListener {
     protected  String cuit,titular,Nombre,saldo_disponible;
 
     @Override

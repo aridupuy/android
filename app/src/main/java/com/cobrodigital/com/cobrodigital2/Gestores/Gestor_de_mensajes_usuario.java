@@ -24,8 +24,8 @@ public class Gestor_de_mensajes_usuario extends Toast {
         }
     }
     public static void mensaje(String mensaje){
-        Toast toast = Toast.makeText(context,mensaje,Toast.LENGTH_LONG);
-        toast.show();
+            Toast toast = Toast.makeText(context,mensaje,Toast.LENGTH_LONG);
+            toast.show();
     }
 
 }

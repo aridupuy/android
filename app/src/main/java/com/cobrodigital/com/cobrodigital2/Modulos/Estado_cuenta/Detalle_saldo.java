@@ -1,28 +1,21 @@
 package com.cobrodigital.com.cobrodigital2.Modulos.Estado_cuenta;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_navegacion;
 import com.cobrodigital.com.cobrodigital2.Modulos.Estado_cuenta.Fragment.Detalle_saldo_fragment;
-import com.cobrodigital.com.cobrodigital2.Modulos.Estado_cuenta.Tareas_asincronicas.Tarea_Detalle_saldo;
-import com.cobrodigital.com.cobrodigital2.Modulos.Tools.Tools;
-import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.fragment.Detalle_transacciones_fragment;
-import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.fragment.Transacciones_fragment;
 import com.cobrodigital.com.cobrodigital2.R;
+import com.cobrodigital.com.cobrodigital2.core.Navegacion;
 
-import java.io.IOException;
-
-public class Detalle_saldo extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Detalle_saldo extends Navegacion {
     protected String saldo="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {

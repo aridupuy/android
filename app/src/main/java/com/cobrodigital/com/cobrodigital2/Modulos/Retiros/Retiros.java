@@ -5,14 +5,14 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_navegacion;
 import com.cobrodigital.com.cobrodigital2.R;
+import com.cobrodigital.com.cobrodigital2.core.Navegacion;
 
-public class Retiros extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class Retiros extends Navegacion {
         @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,8 +25,6 @@ public class Retiros extends AppCompatActivity implements NavigationView.OnNavig
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_retiros);
         navigationView.setNavigationItemSelectedListener(this);
-
-
     }
 
 

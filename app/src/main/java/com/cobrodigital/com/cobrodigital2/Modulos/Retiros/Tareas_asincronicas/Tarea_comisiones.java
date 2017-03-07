@@ -14,6 +14,7 @@ import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.security.InvalidKeyException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -29,6 +30,8 @@ import javax.crypto.NoSuchPaddingException;
 
 public class Tarea_comisiones extends AsyncTask<Double,Void,Vector<Comision>> {
     private Activity context;
+    private Double monto;
+    private Double disponible;
 //    private View view;
     public Tarea_comisiones(Activity context){
         this.context=context;
@@ -38,11 +41,13 @@ public class Tarea_comisiones extends AsyncTask<Double,Void,Vector<Comision>> {
     protected void onPreExecute() {
         super.onPreExecute();
         context.findViewById(R.id.progressbar_retiro_confirmacion).setVisibility(View.VISIBLE);
+        context.findViewById(R.id.mensaje_linear).setVisibility(View.GONE);
         context.findViewById(R.id.contenido_confirmacion_retiro).setVisibility(View.GONE);
     }
     @Override
     protected Vector<Comision> doInBackground(Double... doubles) {
-        Double monto=doubles[0];
+        monto=doubles[0];
+        disponible=doubles[1];
         Vector<Comision> comisiones=new Vector<Comision>();
         try {
             CobroDigital.webservice.webservice_comision.obtener_comision_retiros(monto);
@@ -80,18 +85,55 @@ public class Tarea_comisiones extends AsyncTask<Double,Void,Vector<Comision>> {
     }
     protected void onPostExecute(Vector<Comision> comisiones){
         super.onPostExecute(comisiones);
-        for (Comision comision: comisiones) {
-            Double monto_pagador=Double.parseDouble(comision.getMonto_pagador());
-            Double monto_marchand=Double.parseDouble(comision.getMonto_marchand());
-            ((TextView)context.findViewById(R.id.Importe_a_acreditar)).setText("$"+String.valueOf(monto_pagador));
-            ((TextView)context.findViewById(R.id.Comision)).setText("$"+String.valueOf((monto_marchand-monto_pagador)));
-            ((TextView)context.findViewById(R.id.Importe)).setText("$"+String.valueOf(monto_marchand));
+        if(comisiones.size()>0) {
+            for (Comision comision : comisiones) {
+                if (this.validar(comision, monto)) {
+                    Double monto_pagador_double = Double.parseDouble(comision.getMonto_pagador());
+                    Double monto_marchand_double = Double.parseDouble(comision.getMonto_marchand());
+                    BigDecimal monto_pagador = new BigDecimal(monto_pagador_double);
+                    BigDecimal monto_marchand = new BigDecimal(monto_marchand_double);
+                    ((TextView) context.findViewById(R.id.Importe_a_acreditar)).setText("$" + monto_pagador.toString());
+                    ((TextView) context.findViewById(R.id.Comision)).setText("$" + String.valueOf((monto_marchand_double- monto_pagador_double)));
+                    ((TextView) context.findViewById(R.id.Importe)).setText("$" + monto_marchand.toString());
+                } else {
+                    context.findViewById(R.id.contenido_confirmacion_retiro).setVisibility(View.VISIBLE);
+                    context.findViewById(R.id.mensaje_linear).setVisibility(View.VISIBLE);
+                    context.findViewById(R.id.datos_retiro_confirmacion).setVisibility(View.GONE);
+                    context.findViewById(R.id.botonera_error).setVisibility(View.VISIBLE);
+                    context.findViewById(R.id.botonera_estandar).setVisibility(View.GONE);
+                    context.findViewById(R.id.progressbar_retiro_confirmacion).setVisibility(View.GONE);
+                    return;
+                }
+            }
+        }
+        else {
+            ((TextView)context.findViewById(R.id.mensaje)).setText("El monto no puede ser menor o igual a la comision.");
+            context.findViewById(R.id.contenido_confirmacion_retiro).setVisibility(View.VISIBLE);
+            context.findViewById(R.id.mensaje_linear).setVisibility(View.VISIBLE);
+            context.findViewById(R.id.botonera_error).setVisibility(View.VISIBLE);
+            context.findViewById(R.id.botonera_estandar).setVisibility(View.GONE);
+            context.findViewById(R.id.datos_retiro_confirmacion).setVisibility(View.GONE);
+            context.findViewById(R.id.progressbar_retiro_confirmacion).setVisibility(View.GONE);
+            return;
         }
         context.findViewById(R.id.contenido_confirmacion_retiro).setVisibility(View.VISIBLE);
         context.findViewById(R.id.progressbar_retiro_confirmacion).setVisibility(View.GONE);
-
+        context.findViewById(R.id.botonera_error).setVisibility(View.GONE);
     }
-
-
-
+    private Boolean validar(Comision comision,Double plata){
+        if(monto<=0){
+            ((TextView)context.findViewById(R.id.mensaje)).setText("El monto no puede ser menor o igual a cero.");
+            return false;
+        }
+        if(monto<=(Double.parseDouble(comision.getMonto_marchand())-Double.parseDouble(comision.getMonto_pagador()))){
+            ((TextView)context.findViewById(R.id.mensaje)).setText("El monto debe ser superior a la comision.");
+            return false;
+        }
+        if(monto>=disponible){
+            ((TextView)context.findViewById(R.id.mensaje)).setText("Saldo disponible insuficiente para realizar la operación.");
+            return false;
+        }
+        return true;
+    }
 }
+

@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
 import com.cobrodigital.com.cobrodigital2.Model.Banco;
 import com.cobrodigital.com.cobrodigital2.Modulos.Retiros.Retiro_importe;
 import com.cobrodigital.com.cobrodigital2.R;
@@ -54,6 +55,10 @@ public class Lista_bancos_adapter extends ArrayAdapter implements AdapterView.On
         Intent intent = new Intent(context.getActivity(), Retiro_importe.class);
         Fragment fragment=context.getFragmentManager().findFragmentById(R.id.include_detalle_saldo_fragment);
         String disponible=((TextView)fragment.getView().findViewById(R.id.disponible)).getText().toString();
+        if(disponible.equals("")){
+            Gestor_de_mensajes_usuario.mensaje("Por favor espere....",context.getContext());
+            return;
+        }
         Bundle bundle = new Bundle();
         bundle.putString("Nombre",banco.getNombre());
         bundle.putString("Cuit",banco.getCuit());

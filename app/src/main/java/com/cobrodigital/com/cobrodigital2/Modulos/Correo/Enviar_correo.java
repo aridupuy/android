@@ -5,20 +5,18 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
+
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_navegacion;
-import com.cobrodigital.com.cobrodigital2.Modulos.Boletas.Boletas;
 import com.cobrodigital.com.cobrodigital2.Modulos.Boletas.Tareas_asincronicas.Tarea_generar_boleta;
 import com.cobrodigital.com.cobrodigital2.Modulos.Correo.Tareas_asincronicas.Tarea_enviar_correo;
 import com.cobrodigital.com.cobrodigital2.R;
-import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
-public class Enviar_correo extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import com.cobrodigital.com.cobrodigital2.core.Navegacion;
+
+public class Enviar_correo extends Navegacion {
     int nro_Boleta;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

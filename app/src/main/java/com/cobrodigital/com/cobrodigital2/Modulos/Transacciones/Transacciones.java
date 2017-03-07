@@ -1,4 +1,5 @@
 package com.cobrodigital.com.cobrodigital2.Modulos.Transacciones;
+
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,21 +10,22 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_navegacion;
-import com.cobrodigital.com.cobrodigital2.R;
 import com.cobrodigital.com.cobrodigital2.Modulos.Tools.Tools;
 import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.fragment.Detalle_transacciones_fragment;
 import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.fragment.Transacciones_fragment;
+import com.cobrodigital.com.cobrodigital2.R;
+import com.cobrodigital.com.cobrodigital2.core.Navegacion;
+
 import java.io.IOException;
 /**
  * Created by Ariel on 28/08/16.
  */
-public class Transacciones extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Transacciones extends Navegacion{
     ///////////constantes/////////////////////////////
     public static final String FILTROS = "filtros";
     public static final String TIPO = "tipo";

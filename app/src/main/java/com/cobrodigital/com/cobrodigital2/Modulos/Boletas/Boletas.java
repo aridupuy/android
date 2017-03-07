@@ -1,13 +1,11 @@
 package com.cobrodigital.com.cobrodigital2.Modulos.Boletas;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -21,13 +19,12 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.cobrodigital.com.cobrodigital2.Modulos.Boletas.Tareas_asincronicas.Tarea_generar_boleta;
-import com.cobrodigital.com.cobrodigital2.Modulos.Correo.Enviar_correo;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_navegacion;
-import com.cobrodigital.com.cobrodigital2.Model.Boleta;
+import com.cobrodigital.com.cobrodigital2.Modulos.Boletas.Tareas_asincronicas.Tarea_generar_boleta;
 import com.cobrodigital.com.cobrodigital2.R;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
+import com.cobrodigital.com.cobrodigital2.core.Navegacion;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,7 +33,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Vector;
 
-public class Boletas extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class Boletas extends Navegacion {
 
     final Calendar calendario = Calendar.getInstance();
     String date_1;

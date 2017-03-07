@@ -49,11 +49,11 @@ public static final String SALDO = "saldo";
                     Resultado.put("saldo_disponible",Json.getString("saldo_disponible"));
                     Resultado.put("encaje",Json.getString("encaje"));
                 }
-                return null;
+                return Resultado;
             }
         }catch (JSONException e) {e.printStackTrace();}
         catch (Exception e){e.printStackTrace();}
-        return Resultado;
+        return null;
     }
 
     @Override
@@ -79,7 +79,8 @@ public static final String SALDO = "saldo";
             this.view.findViewById(R.id.contenido_detalle_saldo).setVisibility(View.VISIBLE);
         }
         else {
-            Gestor_de_mensajes_usuario.mensaje("Error al obtener los saldos.");
+            Gestor_de_mensajes_usuario.mensaje("Error al obtener los saldos.",context.getContext());
+            context.getActivity().finish();
         }
     }
 
