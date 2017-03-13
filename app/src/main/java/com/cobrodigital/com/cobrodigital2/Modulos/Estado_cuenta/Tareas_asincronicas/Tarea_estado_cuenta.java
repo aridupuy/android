@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Looper;
 import android.support.v7.widget.CardView;
 import android.util.Log;
@@ -22,7 +21,6 @@ import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.chart.PointStyle;
-import org.achartengine.model.TimeSeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
@@ -36,10 +34,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Vector;
 
 /**
@@ -75,8 +70,10 @@ public class Tarea_estado_cuenta extends AsyncTask<Void,Void,View> {
 
     @Override
     protected View doInBackground(Void[] Voids) {
-        Looper.prepare();
-
+        if (Looper.myLooper() == null)
+        {
+            Looper.prepare();
+        }
         try {
             CobroDigital.webservice.webservice_saldo.consultar_saldo();
             if (CobroDigital.webservice.obtener_resultado().equals("1")) {
@@ -101,13 +98,23 @@ public class Tarea_estado_cuenta extends AsyncTask<Void,Void,View> {
         try {
             CobroDigital.webservice.webservice_estadisticas.obtener_estadisticas_mes_ingresos();
             dataset.addSeries(0,this.generar_serie("Ingresos")); //generar serie puede ver los datos accediendo directamente al objeto webservice.
-        } catch (Exception e) {
+        }catch (javax.net.ssl.SSLHandshakeException ex){
+            Gestor_de_mensajes_usuario.dialogo("No podemos procesar la solicitud, intente mas tarde",context);
+            ex.printStackTrace();
+            return null;
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
         try {
             CobroDigital.webservice.webservice_estadisticas.obtener_estadisticas_mes_egresos();
             dataset.addSeries(1,this.generar_serie("Egresos")); //generar serie puede ver los datos accediendo directamente al objeto webservice.
-        } catch (Exception e) {
+        }catch (javax.net.ssl.SSLHandshakeException ex){
+            Gestor_de_mensajes_usuario.dialogo("No podemos procesar la solicitud, intente mas tarde",context);
+            ex.printStackTrace();
+            return null;
+        }
+        catch (Exception e) {
             e.printStackTrace();
             publishProgress();
             return null;
@@ -150,8 +157,7 @@ public class Tarea_estado_cuenta extends AsyncTask<Void,Void,View> {
     @Override
     protected void onPostExecute(View chartView) {
         if(chartView==null){
-            Gestor_de_mensajes_usuario.mensaje("Ah ocurrido un error",context);
-            context.finish();
+            Gestor_de_mensajes_usuario.dialogo("Ha ocurrido un error, intente mas tarde.",context);
             return;
         }
         ((CardView)context.findViewById(R.id.chart_cardView)).setVisibility(View.GONE);

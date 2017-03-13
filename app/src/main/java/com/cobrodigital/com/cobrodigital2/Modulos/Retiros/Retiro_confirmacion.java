@@ -1,5 +1,6 @@
 package com.cobrodigital.com.cobrodigital2.Modulos.Retiros;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -79,13 +80,18 @@ public class Retiro_confirmacion extends Navegacion {
 
     @Override
     public void processFinish(Boolean resultado) {
+        Intent intent = this.getIntent();
         if(!resultado){
             for (Object log : CobroDigital.webservice.webservice_retiro.obtener_log()){
                 Gestor_de_mensajes_usuario.mensaje(log.toString(),getApplicationContext());
+                this.setResult(RESULT_CANCELED, intent);
+                finish();
             }
         }
-        else
+        else{
             Gestor_de_mensajes_usuario.mensaje("Petición generada correctamente.",this);
-        finish();
+            this.setResult(RESULT_OK, intent);
+            finish();
+        }
     }
 }

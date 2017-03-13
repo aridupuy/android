@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +21,7 @@ import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_navegacion;
 import com.cobrodigital.com.cobrodigital2.Modulos.Estado_cuenta.Estado_cuenta;
 import com.cobrodigital.com.cobrodigital2.R;
+import com.cobrodigital.com.cobrodigital2.Services.FCM.Tareas_asincronicas.Tarea_registrar;
 import com.cobrodigital.com.cobrodigital2.core.Navegacion;
 
 import java.io.UnsupportedEncodingException;
@@ -32,7 +32,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
-public class Main extends Navegacion {
+public class Main extends Navegacion implements Tarea_registrar.AsyncResponse {
     final public static boolean emulador = false;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -94,16 +94,6 @@ public class Main extends Navegacion {
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        Gestor_de_navegacion navegacion = new Gestor_de_navegacion(this);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return navegacion.navegar(item.getItemId());
-
-    }
-
     private void ejecutar() throws NoSuchPaddingException, PackageManager.NameNotFoundException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, InvalidKeyException {
 
         setContentView(R.layout.activity_main);
@@ -122,18 +112,19 @@ public class Main extends Navegacion {
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+//
+//        Registrador registrador = new Registrador(getContext());
+//        registrador.onTokenRefresh();
 
 //        serviceBoot sb=new serviceBoot(this.getApplicationContext());
 //        sb.startTimer();
     }
-
     @Override
     //capturo el resultado del scanner
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
-                Gestor_de_credenciales.asociar(getApplicationContext(), intent,this);
+                Gestor_de_credenciales.iniciar_asociacion(getApplicationContext(), intent,this);
                 Gestor_de_mensajes_usuario.mensaje("Usuario loggeado correctamente.", getApplicationContext());
             } else if (resultCode == RESULT_CANCELED) {
                 Gestor_de_mensajes_usuario mensajes_usuario = new Gestor_de_mensajes_usuario(getApplicationContext());

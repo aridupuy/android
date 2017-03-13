@@ -1,8 +1,10 @@
 package com.cobrodigital.com.cobrodigital2.Modulos.Retiros.Tareas_asincronicas;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 
 /**
@@ -29,7 +31,11 @@ public class Tarea_retiros extends AsyncTask<Object,Boolean,Boolean> {
         nombre=(String)objects[3];
         try {
             CobroDigital.webservice.webservice_retiro.realizar_peticion(cuit, titular, plata, nombre);
-        } catch (Exception e) {
+        }catch (javax.net.ssl.SSLHandshakeException ex){
+            Gestor_de_mensajes_usuario.dialogo("No podemos procesar la solicitud, intente mas tarde", (Activity)context);
+            return null;
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
         if(CobroDigital.webservice.obtener_resultado().equals("1")){

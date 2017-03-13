@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
@@ -44,6 +45,7 @@ public class serviceBoot extends BroadcastReceiver {
                         //File path=new File("");
                         Vector<String> servicios = new Vector<String>();
                         servicios.add(PAQUETE+"serviceTransacciones");
+                        servicios.add(PAQUETE+"FCM"+"Registrador");
                         //Añadir los demas Servicios
                         for (String servicio : servicios) {
                             //Levanto dinamicamente todos los servicios disponibles excepto a si mismo

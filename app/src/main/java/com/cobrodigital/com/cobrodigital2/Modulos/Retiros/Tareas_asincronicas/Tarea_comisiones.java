@@ -64,7 +64,11 @@ public class Tarea_comisiones extends AsyncTask<Double,Void,Vector<Comision>> {
                     return comisiones;
                 }
             }
-        } catch (IllegalBlockSizeException e) {
+        }
+        catch (javax.net.ssl.SSLHandshakeException ex){
+            Gestor_de_mensajes_usuario.dialogo("No podemos procesar la solicitud, intente mas tarde",context);
+        }
+        catch (IllegalBlockSizeException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();

@@ -4,24 +4,23 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
-import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.Detalle_transacciones;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
-import com.cobrodigital.com.cobrodigital2.R;
+import com.cobrodigital.com.cobrodigital2.Modulos.Tools.Tools;
+import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.Detalle_transacciones;
 import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.Tareas_asincronicas.Tarea_transacciones;
 import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.Transacciones;
+import com.cobrodigital.com.cobrodigital2.R;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -207,16 +206,16 @@ public class Transacciones_fragment extends Fragment {
                                     .commit();
                         }
                     }catch (Exception ex){
-                        Log.wtf("Error",ex.getMessage());
+                        Tools.developerLog(ex.getMessage());
                         return;
                     }
                 }
             });
         }catch (IOException ex){
-            Log.e("Error",ex.getMessage());
+            Tools.developerLog(ex.getMessage());
             return null;
         }catch (Exception ex){
-            Log.wtf("Error",ex.getMessage());
+            Tools.developerLog(ex.getMessage());
             return null;
         }
         return vista;

@@ -1,12 +1,10 @@
 package com.cobrodigital.com.cobrodigital2.Modulos.Correo.Tareas_asincronicas;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.EditText;
 
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
-import com.cobrodigital.com.cobrodigital2.Modulos.Boletas.Tareas_asincronicas.Tarea_generar_boleta;
 import com.cobrodigital.com.cobrodigital2.Modulos.Correo.Enviar_correo;
 import com.cobrodigital.com.cobrodigital2.R;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
@@ -39,7 +37,10 @@ public class Tarea_enviar_correo extends AsyncTask<Integer,Integer,Boolean> {
         String mensaje="Se ha generado una nueva boleta";//poner un mensaje mas bonito aqui;
         try {
             CobroDigital.webservice.webservice_enviar_correo.enviar_boleta_correo(destinatario,asunto,mensaje,nro_Boleta);
-        } catch (Exception e) {
+        }catch (javax.net.ssl.SSLHandshakeException ex){
+            Gestor_de_mensajes_usuario.dialogo("No podemos procesar la solicitud, intente mas tarde",context);
+        }
+        catch (Exception e) {
             e.printStackTrace();
             return false;
         }

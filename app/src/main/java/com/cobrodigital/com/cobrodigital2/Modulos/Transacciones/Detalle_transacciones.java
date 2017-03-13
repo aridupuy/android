@@ -8,7 +8,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_navegacion;
@@ -36,7 +35,6 @@ public class Detalle_transacciones extends Navegacion {
         FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
         ft=ft.add(R.id.include_detalle_transacciones_activity, fragment);
         int res=ft.commit();
-        Log.d("res",res+"");
     }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {

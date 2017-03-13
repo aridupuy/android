@@ -69,8 +69,7 @@ public class Retiro_importe extends Navegacion implements View.OnClickListener {
                 intent.putExtra("Cuit",this.cuit);
                 intent.putExtra("Disponible",this.saldo_disponible);
                 intent.putExtra("Plata",plata);
-
-                startActivity(intent);
+                startActivityForResult(intent,1);
                 break;
             case R.id.cancelar_retiro:
                 finish();
@@ -82,5 +81,14 @@ public class Retiro_importe extends Navegacion implements View.OnClickListener {
 
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Intent intent = new Intent();
+        if(resultCode==RESULT_CANCELED){
+            setResult(RESULT_CANCELED,intent);
+        }
+        setResult(RESULT_OK,intent);
+        finish();
+    }
 }

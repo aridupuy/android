@@ -3,6 +3,7 @@ package com.cobrodigital.com.cobrodigital2.Webservice;
 import android.annotation.SuppressLint;
 import android.util.Log;
 
+import com.cobrodigital.com.cobrodigital2.Modulos.Tools.Tools;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 import com.google.gson.Gson;
 
@@ -45,6 +46,7 @@ public abstract class Webservice {
     public static Webservice_cuentas_bancarias webservice_cuentas_bancarias;
     public static Webservice_comision webservice_comision;
     public static Webservice_retiro webservice_retiro;
+    public static Webservice_registrar webservice_registrar;
 
     private static final String URL  = "https://www.cobrodigital.com:14365/ws3/";
     protected static final String method = "POST";
@@ -52,7 +54,7 @@ public abstract class Webservice {
     protected static LinkedHashMap<Object, Object> array_a_enviar = new LinkedHashMap();
     protected static LinkedHashMap resultado = new LinkedHashMap();
 
-    private static void ejecutar(String metodo_webservice, LinkedHashMap array) throws IOException,java.net.ConnectException, KeyManagementException, NoSuchAlgorithmException, JSONException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException {
+    private static void ejecutar(String metodo_webservice, LinkedHashMap array) throws IOException,KeyManagementException, NoSuchAlgorithmException, JSONException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException {
         array_a_enviar.put("idComercio", CobroDigital.credencial.get_IdComercio());
         array_a_enviar.put("sid", CobroDigital.credencial.get_sid());
         if (metodo_webservice == null) {
@@ -69,7 +71,7 @@ public abstract class Webservice {
     }
 
     @SuppressLint("LongLogTag")
-    private static void enviar_https(String httpsurl, Map<?, ?> array_a_enviar) throws IOException,JSONException {
+    private static void enviar_https(String httpsurl, Map<?, ?> array_a_enviar) throws IOException,JSONException{
         Log.d("Enviando","Enviando datos a Cobrodigital");
         URL myurl = new URL(httpsurl);
         HttpsURLConnection con = (HttpsURLConnection) myurl.openConnection();
@@ -87,7 +89,7 @@ public abstract class Webservice {
         wr.close();
         int responseCode = con.getResponseCode();
         if(responseCode!=200){
-            Log.d("Error","Error en la comunicacion");
+            Tools.developerLog("Error en la comunicacion");
             return ;
         }
         InputStream ins = con.getInputStream();
@@ -99,7 +101,6 @@ public abstract class Webservice {
             response += inputLine;
         }
         JSONObject jo = new JSONObject(response);
-        System.out.println(jo.toString());
         Vector log = new Vector();
         Vector dato = new Vector();
         if (jo.has("datos")) {
@@ -123,7 +124,7 @@ public abstract class Webservice {
         in.close();
     }
 
-    public static void ejecutar() throws NoSuchAlgorithmException,java.net.ConnectException, IOException, KeyManagementException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException, JSONException {
+    public static void ejecutar() throws NoSuchAlgorithmException, IOException, KeyManagementException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException, JSONException {
         ejecutar(metodo_web_service, (LinkedHashMap) array_a_enviar);
     }
 

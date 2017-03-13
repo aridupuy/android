@@ -51,7 +51,10 @@ public static final String SALDO = "saldo";
                 }
                 return Resultado;
             }
-        }catch (JSONException e) {e.printStackTrace();}
+        }catch (javax.net.ssl.SSLHandshakeException ex){
+            Gestor_de_mensajes_usuario.dialogo("No podemos procesar la solicitud, intente mas tarde",context.getActivity());
+        }
+        catch (JSONException e) {e.printStackTrace();}
         catch (Exception e){e.printStackTrace();}
         return null;
     }
@@ -79,8 +82,8 @@ public static final String SALDO = "saldo";
             this.view.findViewById(R.id.contenido_detalle_saldo).setVisibility(View.VISIBLE);
         }
         else {
-            Gestor_de_mensajes_usuario.mensaje("Error al obtener los saldos.",context.getContext());
-            context.getActivity().finish();
+            Gestor_de_mensajes_usuario.dialogo("Ha ocurrido un error de comunicación, intente mas tarde.",context.getActivity());
+//            context.getActivity().finish();
         }
     }
 

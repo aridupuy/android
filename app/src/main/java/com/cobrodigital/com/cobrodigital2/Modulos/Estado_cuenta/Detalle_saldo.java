@@ -7,11 +7,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_navegacion;
 import com.cobrodigital.com.cobrodigital2.Modulos.Estado_cuenta.Fragment.Detalle_saldo_fragment;
+import com.cobrodigital.com.cobrodigital2.Modulos.Tools.Tools;
 import com.cobrodigital.com.cobrodigital2.R;
 import com.cobrodigital.com.cobrodigital2.core.Navegacion;
 
@@ -35,7 +35,7 @@ public class Detalle_saldo extends Navegacion {
         FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
         ft=ft.add(R.id.include_detalle_saldo, fragment);
         int res=ft.commit();
-        Log.d("res",res+"");
+        Tools.developerLog(res+"");
     }
 
     @Override

@@ -61,7 +61,10 @@ public class Tarea_bancos extends AsyncTask<Void,Void,Vector<Banco>> {
                     return bancos;
                 }
             }
-        } catch (IllegalBlockSizeException e) {
+        }catch (javax.net.ssl.SSLHandshakeException ex){
+            Gestor_de_mensajes_usuario.dialogo("No podemos procesar la solicitud, intente mas tarde",context.getActivity());
+        }
+        catch (IllegalBlockSizeException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();

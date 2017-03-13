@@ -6,7 +6,6 @@ import android.database.SQLException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
@@ -17,6 +16,7 @@ import android.widget.TextView;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_credenciales;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
 import com.cobrodigital.com.cobrodigital2.Model.Transaccion;
+import com.cobrodigital.com.cobrodigital2.Modulos.Tools.Tools;
 import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.Adapters.Lista_transaccion_adapter;
 import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.Transacciones;
 import com.cobrodigital.com.cobrodigital2.R;
@@ -140,26 +140,22 @@ public class Tarea_transacciones extends AsyncTask<String, Integer, Vector<Trans
                         System.out.println("No hay datos disponibles");
                         return null;
                     }
-                } else {
-                    try {
-                        Thread.currentThread().sleep(tiempo_estimado_de_espera);
-                        this.doInBackground(input);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                        System.out.println("Comunicacion fallida!");
-                        Gestor_de_mensajes_usuario.mensaje("Comunicacion fallida!", context.getContext());
-                        return null;
-                    }
                 }
-
-            } catch (SQLException e) {
-                System.out.println("No hace falta agregar");
+                else{
+                    Tools.developerLog("Error en la comunicacion.");
+                    Gestor_de_mensajes_usuario.dialogo("No podemos procesar la solicitud, intente mas tarde.",context.getActivity());
+                }
+            }catch (javax.net.ssl.SSLHandshakeException ex){
+                Gestor_de_mensajes_usuario.dialogo("No podemos procesar la solicitud, intente mas tarde",context.getActivity());
+            }
+            catch (SQLException e) {
+                Tools.developerLog("No hace falta agregar");
             } catch (JSONException e) {
-                System.out.println("Error en la lectura de datos.");
+                Tools.developerLog("Error en la lectura de datos.");
             } catch (MalformedURLException e) {
-                System.out.println("Error en el envio de datos.");
+                Tools.developerLog("Error en el envio de datos.");
             } catch (IOException e) {
-                System.out.println("Error de entrada salida.");
+                Tools.developerLog("Error de entrada salida.");
             }
             ////////////////////////Semaforo///////////////////////////////
             editor.remove("ocupado").commit();
@@ -180,13 +176,12 @@ public class Tarea_transacciones extends AsyncTask<String, Integer, Vector<Trans
             view.findViewById(R.id.textView5).setVisibility(View.VISIBLE);
             TextView saldo = (TextView) view.findViewById(R.id.Saldo);
             saldo.setVisibility(View.VISIBLE);
-            Transaccion transaccion;
             HeaderViewListAdapter listadapter=null;
             try{
                 listadapter=(HeaderViewListAdapter)lista.getAdapter();
             }
             catch (ClassCastException e){
-                Log.d("Excepcion",e.getMessage());
+                Tools.developerLog(e.getMessage());
                 return;
             }
             if(context.getContext()!=null){
@@ -208,7 +203,7 @@ public class Tarea_transacciones extends AsyncTask<String, Integer, Vector<Trans
                 }
             }
             else{
-                Log.e("Error","Ha ocurrido un error el activity se ha cerrado?");
+                Tools.developerLog("Ha ocurrido un error el activity se ha cerrado?");
                 return;
             }
             lista.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -243,7 +238,7 @@ public class Tarea_transacciones extends AsyncTask<String, Integer, Vector<Trans
                             tr.execute(desde,hasta,tipo,cantidad_transacciones_a_mostrar);
                             tr.cargando=false;
                         }catch (IOException ex){
-                            Log.d("Error", ex.getMessage());
+                            Tools.developerLog(ex.getMessage());
                             return;
                         }
                     }
@@ -257,7 +252,7 @@ public class Tarea_transacciones extends AsyncTask<String, Integer, Vector<Trans
                     if (transicion_saldo.length > 0) {
                         JSONObject saldoJson= new JSONObject((String) transicion_saldo[0]);
                         saldo_total= saldoJson.getString(this.SALDO);
-                        Log.wtf("saldo",saldoJson.toString());
+                        Tools.developerLog(saldoJson.toString());
                     }
                 }
                 else
