@@ -70,6 +70,7 @@ public class Tarea_generar_boleta extends AsyncTask<String, Integer, Integer>{
     protected void onPostExecute(Integer nro_boleta) {
         super.onPostExecute(nro_boleta);
         context.findViewById(R.id.progressbar_Boleta).setVisibility(View.GONE);
+        context.findViewById(R.id.vista_boletas).setVisibility(View.VISIBLE);
         Intent intent= new Intent(context,Enviar_correo.class);
         if(nro_boleta!=-1)
             intent.putExtra(NRO_BOLETA,nro_boleta);
@@ -79,5 +80,6 @@ public class Tarea_generar_boleta extends AsyncTask<String, Integer, Integer>{
             return;
         }
         context.startActivity(intent);
+        context.reload();
     }
 }

@@ -1,19 +1,13 @@
 package com.cobrodigital.com.cobrodigital2.Model;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
-import com.cobrodigital.com.cobrodigital2.Factory.credencialFactory;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_cifrado;
-import com.cobrodigital.com.cobrodigital2.Modulos.Main.Main;
-import com.j256.ormlite.field.DataType;
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
-import java.util.List;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -22,14 +16,11 @@ import javax.crypto.NoSuchPaddingException;
 /**
  * Created by Ariel on 6/09/16.
  */
-@DatabaseTable(tableName = "Credencial")
 public class Credencial {
-    private static boolean PRUEBA=false;
-    @DatabaseField(id=true,index = true)
-    private int Id_credencial;
-    @DatabaseField(unique = true,dataType = DataType.BYTE_ARRAY)
+    public static final String CREDENCIAL = "credencial";
+    public static final String ID_COMERCIO = "IdComercio";
+    public static final String SID = "sid";
     private byte[] sid;
-    @DatabaseField(unique = true,dataType = DataType.BYTE_ARRAY)
     private byte[] IdComercio;
     protected Context context;
     public Credencial(String IdComercio,String sid,Context context) {
@@ -40,11 +31,15 @@ public class Credencial {
     public Credencial(Context context){
         this.context=context;
     }
-    public int getId_credencial() {
-        return Id_credencial;
+    public boolean is_null_IdComercio(){
+        if(IdComercio==null)
+            return true;
+        return false;
     }
-    public void setId_credencial(int id_credencial) {
-        Id_credencial = id_credencial;
+    public boolean is_null_sid(){
+        if(sid==null)
+            return true;
+        return false;
     }
     public void set_IdComercio(String IdComercio){
         Gestor_de_cifrado cifrado=new Gestor_de_cifrado();
@@ -71,32 +66,51 @@ public class Credencial {
         Gestor_de_cifrado cifrado=new Gestor_de_cifrado();
         return cifrado.descifra(sid);
     }
+    public boolean guardar_credencial() {
 
-    public Credencial obtenerCredencial() throws SQLException, ClassNotFoundException, NoSuchPaddingException, InvalidKeyException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
-        credencialFactory factory=new credencialFactory(context);
-        List<Credencial> Credenciales=(List<Credencial>)factory.select();
-        if(Main.emulador){
-            return this;
+            SharedPreferences sh = context.getSharedPreferences(CREDENCIAL, context.MODE_PRIVATE);
+        try {
+            if(sh.edit().putString(ID_COMERCIO, get_IdComercio()).putString(SID, get_sid()).commit())
+                return true;
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+            return false;
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+            return false;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return false;
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+            return false;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return false;
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
         }
-        if(Credenciales.size()>0)
-            for (Credencial credencial:Credenciales) {
-                this.setId_credencial(credencial.getId_credencial());
-                this.set_IdComercio(credencial.get_IdComercio());
-                this.set_sid((credencial.get_sid()));
-            }
-//        if(PRUEBA){
-//            this.setId_credencial(1);
-//            this.set_IdComercio("FL662997");
-//            this.set_sid("ABZ0ya68K791phuu76gQ5L662J6F2Y4j7zqE2Jxa3Mvd22TWNn4iip6L9yq");
-//        }
-        if(this.IdComercio==null || this.sid==null)
-            return null;
+        return false;
+    }
+    public Credencial obtenerCredencial() {
+        SharedPreferences sh = context.getSharedPreferences(CREDENCIAL,context.MODE_PRIVATE);
+        String id_comercio=sh.getString(ID_COMERCIO,"");
+        if(!id_comercio.equals("")){
+            set_IdComercio(id_comercio);
+        }
+        String sid = sh.getString(SID,"");
+        if(!sid.equals("")){
+            set_sid(sid);
+        }
         return this;
     }
-    public boolean BorrarCredencial() throws SQLException, ClassNotFoundException {
-        credencialFactory factory=new credencialFactory(this.context);
-        if(factory.delete(this))
+    public boolean BorrarCredencial() {
+        SharedPreferences sh = context.getSharedPreferences(CREDENCIAL,context.MODE_PRIVATE);
+        if(sh.edit().clear().commit()){
+            this.sid=null;
+            this.IdComercio=null;
             return true;
+        }
         return false;
     }
 

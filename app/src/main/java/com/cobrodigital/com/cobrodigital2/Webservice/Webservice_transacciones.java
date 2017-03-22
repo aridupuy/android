@@ -1,6 +1,6 @@
 package com.cobrodigital.com.cobrodigital2.Webservice;
 
-import android.util.Log;
+import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -17,6 +17,8 @@ public class Webservice_transacciones extends Webservice{
             array_a_enviar.clear();
             array_a_enviar.put("desde", fecha_desde);
             array_a_enviar.put("hasta", fecha_hasta);
+            array_a_enviar.put("idComercio", CobroDigital.credencial.get_IdComercio());
+            array_a_enviar.put("sid",CobroDigital.credencial.get_sid());
             if(offset!=0 && limit!=0){
                 array_a_enviar.put("offset", offset);
                 array_a_enviar.put("limit", limit);

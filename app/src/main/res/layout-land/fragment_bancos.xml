@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="250dp">
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:layout_margin="20dp"
+        android:layout_centerInParent="true"
+        android:padding="10dp"
+        >
+
+        <RelativeLayout
+            android:id="@+id/bancos_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/bancos_titulo"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:background="#8b8b8b"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cuentas Bancarias"
+                android:textSize="23dp"
+                android:gravity="center_horizontal"/>
+            <TextView
+                android:id="@+id/mensaje_bancos"
+                android:layout_alignParentBottom="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:layout_below="@+id/bancos_titulo"
+                android:padding="5dp"
+                android:visibility="gone"
+                android:text="Debe ingresar Cuentas Bancarias para solicitar un retiro."
+                />
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/lista_bancos"
+                android:layout_below="@id/bancos_titulo"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

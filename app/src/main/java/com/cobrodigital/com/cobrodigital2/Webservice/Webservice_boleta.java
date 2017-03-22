@@ -1,25 +1,15 @@
 package com.cobrodigital.com.cobrodigital2.Webservice;
 
-import android.text.Html;
-import android.text.Spanned;
 import android.util.Log;
 
-import com.cobrodigital.com.cobrodigital2.Model.Transaccion;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
-import com.google.gson.Gson;
-import com.google.zxing.client.result.URIResultParser;
-import com.google.zxing.client.result.VCardResultParser;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Array;
-import java.util.List;
 import java.util.Vector;
 
 import javax.crypto.BadPaddingException;
@@ -34,6 +24,8 @@ public class Webservice_boleta extends Webservice {
     public static int generar_boleta(String identificador, String campo_a_buscar, String concepto, String fecha_1, String importe_1, String modelo, String fecha_2, String importe_2, String fecha_3, String importe_3) throws Exception {
         metodo_web_service = "generar_boleta";
         array_a_enviar.clear();
+        array_a_enviar.put("idComercio", CobroDigital.credencial.get_IdComercio());
+        array_a_enviar.put("sid",CobroDigital.credencial.get_sid());
         array_a_enviar.put("identificador", identificador);
         array_a_enviar.put("buscar", campo_a_buscar);
         Vector<String> temp_fecha = new Vector<String>();

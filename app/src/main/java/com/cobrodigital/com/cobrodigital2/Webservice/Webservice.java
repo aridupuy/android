@@ -36,6 +36,7 @@ import javax.net.ssl.HttpsURLConnection;
  */
 
 public abstract class Webservice {
+    public static final String CAMPO_CLAVE = "token";
     public static Webservice_boleta webservice_boleta;
     public static Webservice_pagador webservice_pagador;
     public static Webservice_transacciones webservice_transacciones;
@@ -48,15 +49,15 @@ public abstract class Webservice {
     public static Webservice_retiro webservice_retiro;
     public static Webservice_registrar webservice_registrar;
 
-    private static final String URL  = "https://www.cobrodigital.com:14365/ws3/";
+    private static final String URL  = "https://www.cobrodigital.com:14365/service/";
     protected static final String method = "POST";
     protected static String metodo_web_service = "";
     protected static LinkedHashMap<Object, Object> array_a_enviar = new LinkedHashMap();
     protected static LinkedHashMap resultado = new LinkedHashMap();
 
     private static void ejecutar(String metodo_webservice, LinkedHashMap array) throws IOException,KeyManagementException, NoSuchAlgorithmException, JSONException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException {
-        array_a_enviar.put("idComercio", CobroDigital.credencial.get_IdComercio());
-        array_a_enviar.put("sid", CobroDigital.credencial.get_sid());
+        array_a_enviar.put(CAMPO_CLAVE, CobroDigital.token_id.getToken());
+//        array_a_enviar.put("sid", CobroDigital.credencial.get_sid());
         if (metodo_webservice == null) {
             metodo_webservice = metodo_web_service;
         }
@@ -66,7 +67,7 @@ public abstract class Webservice {
         } else {
             array_a_procesar= (LinkedHashMap) array;
         }
-        array_a_procesar.put("metodo_webservice", metodo_webservice);
+        array_a_procesar.put("metodo_service", metodo_webservice);
         enviar_https(URL, array_a_procesar);
     }
 
@@ -107,6 +108,7 @@ public abstract class Webservice {
             JSONArray datos = jo.getJSONArray("datos");
 
             for (int i = 0; i < datos.length(); i++) {
+                Log.d("recibe log: ",datos.get(i).toString());
                 dato.add(i, (String) datos.get(i));
             }
         }
@@ -114,6 +116,7 @@ public abstract class Webservice {
             JSONArray logs=jo.getJSONArray("log");
             for (int j = 0; j < logs.length(); j++) {
                 String logstring = logs.getString(j);
+                Log.d("recibe log: ",logstring);
                 log.add(j, (logstring));
             }
         }

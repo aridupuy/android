@@ -18,6 +18,7 @@ public class LectorQR extends Activity {
             CobroDigital.credencial=new Credencial(context);
             CobroDigital.credencial.set_IdComercio(jsonObject.getString("IdComercio").toString());
             CobroDigital.credencial.set_sid(jsonObject.getString("sid"));
+            CobroDigital.credencial.guardar_credencial();
         }
         else
             return;

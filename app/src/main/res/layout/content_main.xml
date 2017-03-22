@@ -12,7 +12,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
 
     tools:showIn="@layout/app_bar_main"
-    tools:context=".Modulos.Index.Index">
+    tools:context=".Modulos.Main.Main">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -23,17 +23,5 @@
         android:gravity="bottom"
         tools:context=".Modulos.Index.Index"
         tools:ignore="UselessParent">
-
-
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:gravity="center_vertical|center_horizontal"
-            android:background="#e85252"
-            android:onClick="onClickEscanear"
-            android:textColor="#ede5e5"
-            android:text="@string/con_ctate_con_tu_cuenta"/>
-
-    </LinearLayout>
+        </LinearLayout>
 </RelativeLayout>

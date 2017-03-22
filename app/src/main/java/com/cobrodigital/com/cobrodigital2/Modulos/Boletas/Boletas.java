@@ -1,6 +1,7 @@
 package com.cobrodigital.com.cobrodigital2.Modulos.Boletas;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -10,8 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -21,17 +20,14 @@ import android.widget.TextView;
 
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_navegacion;
+import com.cobrodigital.com.cobrodigital2.Modulos.Boletas.Tareas_asincronicas.Tarea_estructura;
 import com.cobrodigital.com.cobrodigital2.Modulos.Boletas.Tareas_asincronicas.Tarea_generar_boleta;
 import com.cobrodigital.com.cobrodigital2.R;
-import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
 import com.cobrodigital.com.cobrodigital2.core.Navegacion;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-import java.util.Vector;
 
 public class Boletas extends Navegacion {
 
@@ -40,15 +36,7 @@ public class Boletas extends Navegacion {
     String date_2;
     String date_3;
     int nro_boleta;
-    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear,int dayOfMonth) {
-            calendario.set(Calendar.YEAR, year);
-            calendario.set(Calendar.MONTH, monthOfYear);
-            calendario.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        }
 
-    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,33 +88,8 @@ public class Boletas extends Navegacion {
 
     }
     private void cargar_spiner(){
-        List<String> estructura_clientes=new ArrayList<String>();
-        estructura_clientes.add("campo para buscar");
-        try {
-            if(CobroDigital.webservice.webservice_pagador.consultar_estructura_pagadores()=="1"){
-                Vector datos=CobroDigital.webservice.obtener_datos();
-                for (int i=0; i < datos.size();i++ ) {
-                    estructura_clientes.add(((String) datos.get(i)).replace("\"",""));
-                }
-            }
-        } catch (Exception e) {
-            Log.d("Error",e.getMessage()+"/");
-        }
-        Spinner spinner= (Spinner) findViewById(R.id.campo_a_buscar);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, estructura_clientes);
-        spinner.setAdapter(arrayAdapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                ((TextView)findViewById(R.id.identificador)).setHint("Ingrese "+((String)adapterView.getItemAtPosition(i)).toLowerCase());
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-
-            }
-        });
-
-
+        Tarea_estructura estructura = new Tarea_estructura(this);
+        estructura.execute();
     }
     private void actualizar_fecha(int id,Calendar calendario){
         SimpleDateFormat formatter_vista= new SimpleDateFormat("dd-MM-yyyy");
@@ -190,19 +153,55 @@ public class Boletas extends Navegacion {
                 ((Button)findViewById(R.id.sup2)).setVisibility(View.GONE);
             }
         });
-        View.OnClickListener clicklistener= new View.OnClickListener() {
+        findViewById(R.id.fecha_1).setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(Boletas.this, date, calendario
-                        .get(Calendar.YEAR), calendario.get(Calendar.MONTH),
-                        calendario.get(Calendar.DAY_OF_MONTH)).show();
-                actualizar_fecha(v.getId(),calendario);
+                si_elige_fecha(R.id.fecha_1);
+
             }
-        };
-        findViewById(R.id.fecha_1).setOnClickListener(clicklistener);
-        findViewById(R.id.fecha_2).setOnClickListener(clicklistener);
-        findViewById(R.id.fecha_3).setOnClickListener(clicklistener);
+        });
+      findViewById(R.id.fecha_2).setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              si_elige_fecha(R.id.fecha_2);
+
+          };
+      });
+      findViewById(R.id.fecha_3).setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              si_elige_fecha(R.id.fecha_3);
+
+          };
+      });
+//        findViewById(R.id.fecha_2).setOnClickListener(clicklistener);
+//        findViewById(R.id.fecha_3).setOnClickListener(clicklistener);
+    }
+    public void si_elige_fecha(final int id){
+        new DatePickerDialog(Boletas.this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,int dayOfMonth) {
+                calendario.set(Calendar.YEAR, year);
+                calendario.set(Calendar.MONTH, monthOfYear);
+                calendario.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                actualizar_fecha(id,calendario);
+            }
+        }, calendario
+                .get(Calendar.YEAR), calendario.get(Calendar.MONTH),
+                calendario.get(Calendar.DAY_OF_MONTH)).show();
+
+    }
+//    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+//
+//    };
+    public void reload() {
+        Intent intent = getIntent();
+        overridePendingTransition(0, 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(intent);
     }
     private boolean validar_formulario(){
         Gestor_de_mensajes_usuario.context=getApplicationContext();

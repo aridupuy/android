@@ -12,7 +12,7 @@ public class Token_google  {
     public static final String CLAVE_PREFERENCIA = "Token_google";
     protected String token;
     protected Context context;
-    public Token_google(String token, Context context){
+    public Token_google(String token,Context context){
         this.setToken(token);
         this.setContext(context);
     }
@@ -20,11 +20,14 @@ public class Token_google  {
     public void setContext(Context context) {
         this.context = context;
     }
-
     public Context getContext() {
         return context;
     }
-
+    public boolean is_null_token(){
+        if(token==null)
+            return true;
+        return false;
+    }
     public void setToken(String token) {
         this.token = token;
     }

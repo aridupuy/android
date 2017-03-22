@@ -1,20 +1,12 @@
 package com.cobrodigital.com.cobrodigital2.Model;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
 
-import com.cobrodigital.com.cobrodigital2.Factory.transaccionFactory;
-import com.j256.ormlite.android.apptools.OpenHelperManager;
-import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.field.types.DoubleObjectType;
 import com.j256.ormlite.table.DatabaseTable;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.sql.SQLException;
 
 @DatabaseTable(tableName = "Transaccion")
 public class Transaccion{
@@ -164,19 +156,10 @@ public class Transaccion{
             this.setComision((String)dato.get("Comisión"));
             this.setNeto((String)dato.get("Neto"));
             this.setSaldo_acumulado((String)dato.get("Saldo acumulado"));
-//            transaccionFactory factory = new transaccionFactory(context);
-//            factory.guardar(this);
         } catch (JSONException e1) {
             System.out.println(e1.getMessage());
             return null;
         }
-//        catch (SQLException e) {
-//            e.printStackTrace();
-//            return this;
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
         return this;
     }
 

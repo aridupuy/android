@@ -14,7 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_credenciales;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
@@ -56,12 +55,14 @@ public class Main extends Navegacion implements Tarea_registrar.AsyncResponse {
         }
         super.onCreate(savedInstanceState);
         try {
+
+
             this.ejecutar();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
+
 
     }
 
@@ -95,46 +96,36 @@ public class Main extends Navegacion implements Tarea_registrar.AsyncResponse {
     }
 
     private void ejecutar() throws NoSuchPaddingException, PackageManager.NameNotFoundException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, InvalidKeyException {
-
-        setContentView(R.layout.activity_main);
-
-        if (Gestor_de_credenciales.esta_asociado() != false || (Gestor_de_credenciales.re_asociar(getApplicationContext())) != false) {
-
-            View cuenta = findViewById(R.id.textView7);
-            ((ViewGroup) cuenta.getParent()).removeView(cuenta);
-            startActivity(new Intent(this, Estado_cuenta.class));
+        setContentView(R.layout.activity_loggin);
+        if (Gestor_de_credenciales.esta_asociado()== false) {
+            if (Gestor_de_credenciales.re_asociar(getApplicationContext()) != false) {
+                setContentView(R.layout.activity_main);
+                Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                drawer.setDrawerListener(toggle);
+                toggle.syncState();
+                NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+                navigationView.setNavigationItemSelectedListener(this);
+                startActivity(new Intent(this, Estado_cuenta.class));
+            }
         }
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-//
-//        Registrador registrador = new Registrador(getContext());
-//        registrador.onTokenRefresh();
-
-//        serviceBoot sb=new serviceBoot(this.getApplicationContext());
-//        sb.startTimer();
     }
     @Override
     //capturo el resultado del scanner
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
-                Gestor_de_credenciales.iniciar_asociacion(getApplicationContext(), intent,this);
-                Gestor_de_mensajes_usuario.mensaje("Usuario loggeado correctamente.", getApplicationContext());
+                if(!Gestor_de_credenciales.iniciar_asociacion(getApplicationContext(), intent,this)){
+//                    Gestor_de_mensajes_usuario.mensaje("Revisar credenciales.", getApplicationContext());
+                    return;
+                }
+//                else
+//                    Gestor_de_mensajes_usuario.mensaje("Usuario loggeado correctamente.", getApplicationContext());
             } else if (resultCode == RESULT_CANCELED) {
                 Gestor_de_mensajes_usuario mensajes_usuario = new Gestor_de_mensajes_usuario(getApplicationContext());
                 mensajes_usuario.mensaje("La operación fué cancelada");
             }
-        }
-        try {
-            ejecutar();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
