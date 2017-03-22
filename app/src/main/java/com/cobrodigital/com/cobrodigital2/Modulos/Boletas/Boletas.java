@@ -42,8 +42,8 @@ public class Boletas extends Navegacion {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_boletas);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_boletas);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_boletas);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -59,7 +59,6 @@ public class Boletas extends Navegacion {
                 String identificador=((EditText)findViewById(R.id.identificador)).getText().toString();
                 String concepto=((EditText)findViewById(R.id.concepto)).getText().toString();
                 String modelo="init";
-
                 String fecha_1 = date_1;
                 String importe_1=((EditText)findViewById(R.id.importe_1)).getText().toString();
                 String fecha_2=null;
@@ -290,4 +289,3 @@ public class Boletas extends Navegacion {
         return true;
     }
 }
-

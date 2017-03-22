@@ -1,7 +1,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_gravity="center_vertical"
     >
 
@@ -9,7 +9,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_detalle_transacciones"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context="com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.fragment.Detalle_transacciones_fragment">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -26,13 +26,15 @@
         tools:showIn="@layout/activity_detalle_transaccion">
         <LinearLayout
             android:id="@+id/linea1_detalle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="55dp"
             android:paddingRight="15dp"
             android:orientation="vertical"
             android:gravity="start"
             android:weightSum="1"
+            android:layout_weight="1"
+            android:paddingStart="0dp"
             android:textAlignment="textStart">
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -40,6 +42,7 @@
                 android:paddingTop="15dp"
                 >
                 <TextView
+                    android:textSize="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Fecha"/>
@@ -50,6 +53,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp">
                 <TextView
+                    android:textSize="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nro_Boleta"/>
@@ -60,6 +64,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp">
                 <TextView
+                    android:textSize="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nombre"/>
@@ -70,6 +75,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp">
                 <TextView
+                    android:textSize="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Identificacion"/>
@@ -80,6 +86,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp">
                 <TextView
+                    android:textSize="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Info"/>
@@ -90,6 +97,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp">
                 <TextView
+                    android:textSize="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Concepto"/>
@@ -100,16 +108,19 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp">
                 <TextView
+                    android:textSize="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Bruto"/>
 
             </LinearLayout>
             <LinearLayout
+                android:textSize="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp">
                 <TextView
+                    android:textSize="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Comision"/>
@@ -120,6 +131,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp">
                 <TextView
+                    android:textSize="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Neto"/>
@@ -130,20 +142,22 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp">
                 <TextView
+                    android:textSize="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Saldo acumulado"/>
-
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/linea2_detalle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="55dp"
             android:paddingRight="10dp"
+            android:paddingStart="0dp"
             android:orientation="vertical"
             android:gravity="start"
+            android:layout_weight="1"
             android:weightSum="1"
             android:textAlignment="textStart">
             <LinearLayout
@@ -151,6 +165,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp">
                 <TextView
+                    android:textSize="10dp"
                     android:id="@+id/fecha"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -161,6 +176,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp">
                 <TextView
+                    android:textSize="10dp"
                     android:id="@+id/nro_boleta"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -171,6 +187,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp">
                 <TextView
+                    android:textSize="10dp"
                     android:id="@+id/nombre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -181,6 +198,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp">
                 <TextView
+                    android:textSize="10dp"
                     android:id="@+id/identificacion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -191,6 +209,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp">
                 <TextView
+                    android:textSize="10dp"
                     android:id="@+id/info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -201,6 +220,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp">
                 <TextView
+                    android:textSize="10dp"
                     android:id="@+id/concepto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -211,6 +231,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp">
                 <TextView
+                    android:textSize="10dp"
                     android:id="@+id/bruto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -221,6 +242,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp">
                 <TextView
+                    android:textSize="10dp"
                     android:id="@+id/comision"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -231,6 +253,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp">
                 <TextView
+                    android:textSize="10dp"
                     android:id="@+id/neto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -241,6 +264,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp">
                 <TextView
+                    android:textSize="10dp"
                     android:id="@+id/saldo_acumulado"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>

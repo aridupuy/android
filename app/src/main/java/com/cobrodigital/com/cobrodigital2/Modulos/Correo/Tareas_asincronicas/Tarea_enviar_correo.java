@@ -13,12 +13,16 @@ import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
  * Created by ariel on 25/01/17.
  */
 
-public class Tarea_enviar_correo extends AsyncTask<Integer,Integer,Boolean> {
+public class Tarea_enviar_correo extends AsyncTask<Integer,Integer,Boolean>{
     protected Enviar_correo context;
-    public Tarea_enviar_correo(Enviar_correo context){
+    protected AsyncResponse callback;
+    public Tarea_enviar_correo(Enviar_correo context, AsyncResponse callback){
         this.context=context;
+        this.callback=callback;
     }
-
+    public interface AsyncResponse {
+        void processFinish(Boolean resultado);
+    }
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
@@ -42,8 +46,10 @@ public class Tarea_enviar_correo extends AsyncTask<Integer,Integer,Boolean> {
         }
         catch (Exception e) {
             e.printStackTrace();
+            callback.processFinish(false);
             return false;
         }
+        callback.processFinish(true);
         return true;
     }
 

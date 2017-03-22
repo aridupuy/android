@@ -6,6 +6,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -21,9 +22,10 @@ public class Enviar_correo extends Navegacion {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("Boletas", "creada la boleta");
         setContentView(R.layout.activity_enviar_correo);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_correo);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -39,9 +41,15 @@ public class Enviar_correo extends Navegacion {
         });
     }
     private boolean enviar_mail(int nro_Boleta){
-        Tarea_enviar_correo tarea=new Tarea_enviar_correo(this);
+        Tarea_enviar_correo tarea=new Tarea_enviar_correo(this,new Tarea_enviar_correo.AsyncResponse(){
+            @Override
+            public void processFinish(Boolean resultado) {
+                if(resultado)
+                    finish();
+                return;
+            }
+        });
         tarea.execute(nro_Boleta);
-        finish();
         return true;
     }
     @Override

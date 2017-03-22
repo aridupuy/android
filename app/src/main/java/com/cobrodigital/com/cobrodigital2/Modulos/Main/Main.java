@@ -11,6 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -55,9 +56,24 @@ public class Main extends Navegacion implements Tarea_registrar.AsyncResponse {
         }
         super.onCreate(savedInstanceState);
         try {
-
-
-            this.ejecutar();
+            if (!Gestor_de_credenciales.esta_asociado()) {
+                if (!Gestor_de_credenciales.re_asociar(getApplicationContext())) {
+                    setContentView(R.layout.activity_loggin);
+                    Log.d("mensaje","inicio como loggin");
+                    return;
+                }
+                setContentView(R.layout.activity_main);
+                Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                drawer.setDrawerListener(toggle);
+                toggle.syncState();
+                NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+                navigationView.setNavigationItemSelectedListener(this);
+                startActivity(new Intent(this, Estado_cuenta.class));
+//                startActivity(new Intent(this, Transacciones.class));
+            }
+            Log.d("mensaje","no se pudo reasociar");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -96,20 +112,7 @@ public class Main extends Navegacion implements Tarea_registrar.AsyncResponse {
     }
 
     private void ejecutar() throws NoSuchPaddingException, PackageManager.NameNotFoundException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, InvalidKeyException {
-        setContentView(R.layout.activity_loggin);
-        if (Gestor_de_credenciales.esta_asociado()== false) {
-            if (Gestor_de_credenciales.re_asociar(getApplicationContext()) != false) {
-                setContentView(R.layout.activity_main);
-                Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-                drawer.setDrawerListener(toggle);
-                toggle.syncState();
-                NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-                navigationView.setNavigationItemSelectedListener(this);
-                startActivity(new Intent(this, Estado_cuenta.class));
-            }
-        }
+
     }
     @Override
     //capturo el resultado del scanner
@@ -132,11 +135,7 @@ public class Main extends Navegacion implements Tarea_registrar.AsyncResponse {
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        try {
-            ejecutar();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        finish();
     }
 
     static public Context getContext() {

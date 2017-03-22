@@ -272,6 +272,7 @@ public class Tarea_transacciones extends AsyncTask<String, Integer, Vector<Trans
                 lista.removeFooterView(footer);
                 saldo.setVisibility(View.VISIBLE);
                 saldo.setText("No Existen transacciones que mostrar");
+                saldo.setTextSize(10);
                 view.findViewById(R.id.tr_toolbar).setVisibility(View.VISIBLE);
         }
     }

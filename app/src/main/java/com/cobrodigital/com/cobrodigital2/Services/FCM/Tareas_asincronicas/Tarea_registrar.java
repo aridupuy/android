@@ -108,6 +108,7 @@ public class Tarea_registrar extends AsyncTask<String, Void, Void> {
             NavigationView navigationView = (NavigationView) this.activity.findViewById(R.id.nav_view);
             navigationView.setNavigationItemSelectedListener(this.activity);
             this.activity.startActivity(new Intent(this.activity, Estado_cuenta.class));
+
         }
     }
 }

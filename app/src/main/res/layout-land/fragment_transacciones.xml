@@ -8,19 +8,18 @@
     android:fillViewport="true"
     tools:context="com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.Transacciones">
     <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-    >
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
         <android.support.design.widget.AppBarLayout
             android:id="@+id/titulo"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/colorBackgroundFloating"
             android:theme="@style/AppTheme.AppBarOverlay">
         </android.support.design.widget.AppBarLayout>
         <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_below="@+id/titulo"
             android:layout_centerHorizontal="true"
@@ -43,7 +42,7 @@
                 >
                 <LinearLayout
                     android:id="@+id/tr_toolbar"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:weightSum="4">
                 <TextView
@@ -72,13 +71,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_gravity="right"
+                    android:gravity="right|end"
                     android:layout_toRightOf="@+id/Saldo"
                     />
                 </LinearLayout>
 
                 <ListView
                     android:id="@+id/lista"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tr_toolbar"
                     android:layout_centerHorizontal="true"
