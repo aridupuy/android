@@ -1,4 +1,4 @@
-package com.cobrodigital.com.cobrodigital2.Modulos.Tools;
+package com.cobrodigital.com.cobrodigital2.core;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

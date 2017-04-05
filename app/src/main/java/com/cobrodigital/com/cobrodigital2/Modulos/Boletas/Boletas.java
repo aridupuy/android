@@ -23,6 +23,8 @@ import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_navegacion;
 import com.cobrodigital.com.cobrodigital2.Modulos.Boletas.Tareas_asincronicas.Tarea_estructura;
 import com.cobrodigital.com.cobrodigital2.Modulos.Boletas.Tareas_asincronicas.Tarea_generar_boleta;
 import com.cobrodigital.com.cobrodigital2.R;
+import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
+import com.cobrodigital.com.cobrodigital2.core.Config;
 import com.cobrodigital.com.cobrodigital2.core.Navegacion;
 
 import java.text.ParseException;
@@ -58,7 +60,7 @@ public class Boletas extends Navegacion {
                 String campo_a_buscar=((Spinner)findViewById(R.id.campo_a_buscar)).getSelectedItem().toString();
                 String identificador=((EditText)findViewById(R.id.identificador)).getText().toString();
                 String concepto=((EditText)findViewById(R.id.concepto)).getText().toString();
-                String modelo="init";
+                String modelo= CobroDigital.config.get(Config.POSICION_MODELO_BOLETA);
                 String fecha_1 = date_1;
                 String importe_1=((EditText)findViewById(R.id.importe_1)).getText().toString();
                 String fecha_2=null;

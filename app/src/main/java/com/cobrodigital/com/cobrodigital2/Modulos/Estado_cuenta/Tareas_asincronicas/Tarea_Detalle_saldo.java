@@ -73,7 +73,6 @@ public static final String SALDO = "saldo";
             df.setDecimalSeparatorAlwaysShown(true);
 //            df.setDecimalSeparatorAlwaysShown(true);
             df.setMinimumFractionDigits(2);
-            ((TextView)this.view.findViewById(R.id.saldo_estado_saldo)).setText("$"+df.format(saldo));
             ((TextView)this.view.findViewById(R.id.disponible)).setText("$"+df.format(saldo_disponible));
             ((TextView)this.view.findViewById(R.id.enCuenta)).setText("$"+df.format(saldo));
             ((TextView)this.view.findViewById(R.id.liq)).setText("$"+df.format(aun_no_liquidado));

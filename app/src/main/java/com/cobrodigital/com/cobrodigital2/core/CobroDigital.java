@@ -7,14 +7,17 @@ import android.os.StrictMode;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
 import com.cobrodigital.com.cobrodigital2.Model.Credencial;
 import com.cobrodigital.com.cobrodigital2.Model.Token_google;
-import com.cobrodigital.com.cobrodigital2.Modulos.Tools.Tools;
 import com.cobrodigital.com.cobrodigital2.Webservice.Webservice;
 
+import java.util.HashMap;
+
 public class CobroDigital {
+
     public static Credencial credencial;
     public static Token_google token_id;
     public static Webservice webservice;
     private static Context context;
+    public static HashMap<String,String> config;
     public CobroDigital(Credencial credencial, Context context) throws Exception{
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -26,6 +29,7 @@ public class CobroDigital {
         if(Tools.isOnlineNet())
             Gestor_de_mensajes_usuario.dialogo("Por favor verifique su conectividad.",(Activity)context);
         this.context=context;
+        this.config= Config.get_instance_config(this.config,context);
     }
     public CobroDigital(String idComercio, String sid, Context context) throws Exception {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -39,8 +43,6 @@ public class CobroDigital {
         this.context=context;
         this.credencial.set_IdComercio(idComercio);
         this.credencial.set_sid(sid);
+        this.config= Config.get_instance_config(this.config,context);
     }
-
-
-
 }

@@ -16,11 +16,11 @@ import android.widget.TextView;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_credenciales;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
 import com.cobrodigital.com.cobrodigital2.Model.Transaccion;
-import com.cobrodigital.com.cobrodigital2.Modulos.Tools.Tools;
 import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.Adapters.Lista_transaccion_adapter;
 import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.Transacciones;
 import com.cobrodigital.com.cobrodigital2.R;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
+import com.cobrodigital.com.cobrodigital2.core.Tools;
 
 import org.json.JSONArray;
 import org.json.JSONException;

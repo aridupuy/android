@@ -10,6 +10,7 @@ import com.cobrodigital.com.cobrodigital2.Model.Token_google;
 import com.cobrodigital.com.cobrodigital2.Services.FCM.Registrador;
 import com.cobrodigital.com.cobrodigital2.Services.FCM.Tareas_asincronicas.Tarea_registrar;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
+import com.cobrodigital.com.cobrodigital2.core.Config;
 import com.cobrodigital.com.cobrodigital2.core.LectorQR;
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -51,6 +52,7 @@ public class Gestor_de_credenciales {
             context.startService(intento);
             if(!asociar(context, intent, activity))
                 return false;
+        CobroDigital.config= Config.get_instance_config(CobroDigital.config,context);
         return true;
     }
     public static boolean asociar(Context context, Intent intent,Activity activity){
@@ -78,6 +80,7 @@ public class Gestor_de_credenciales {
         CobroDigital.credencial=credencial.obtenerCredencial();
         CobroDigital.token_id= new Token_google(Token_google.obtener_token(context),context);
         if (CobroDigital.credencial!=null && !CobroDigital.credencial.is_null_IdComercio() && !CobroDigital.credencial.is_null_sid() && CobroDigital.token_id!=null && !CobroDigital.token_id.is_null_token()) {
+            CobroDigital.config= Config.get_instance_config(CobroDigital.config,context);
             return true;
         }
         return false;

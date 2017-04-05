@@ -23,6 +23,7 @@ import com.cobrodigital.com.cobrodigital2.Modulos.Estado_cuenta.Estado_cuenta;
 import com.cobrodigital.com.cobrodigital2.R;
 import com.cobrodigital.com.cobrodigital2.Services.FCM.Tareas_asincronicas.Tarea_registrar;
 import com.cobrodigital.com.cobrodigital2.core.Navegacion;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
@@ -34,6 +35,8 @@ import javax.crypto.NoSuchPaddingException;
 
 public class Main extends Navegacion implements Tarea_registrar.AsyncResponse {
     final public static boolean emulador = false;
+    public static final String TOPIC = "COBRODIGITAL";
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -70,6 +73,8 @@ public class Main extends Navegacion implements Tarea_registrar.AsyncResponse {
                 toggle.syncState();
                 NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
                 navigationView.setNavigationItemSelectedListener(this);
+//                FirebaseInstanceId.getInstance().getToken();
+                FirebaseMessaging.getInstance().subscribeToTopic(TOPIC);
                 startActivity(new Intent(this, Estado_cuenta.class));
 //                startActivity(new Intent(this, Transacciones.class));
             }

@@ -39,9 +39,9 @@
                         android:paddingLeft="20dp"
                         android:textAlignment="textStart"
                         android:textColor="#D1030F"
-                        android:text="Saldo"/>
+                        android:text="Disponible"/>
                     <TextView
-                        android:id="@+id/saldo_estado_saldo"
+                        android:id="@+id/disponible"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -50,31 +50,7 @@
                         android:textAlignment="textEnd"
                         android:textColor="#D1030F"/>
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:weightSum="4">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:paddingLeft="20dp"
 
-                        android:text="Disponible"/>
-                    <TextView
-                        android:id="@+id/disponible"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:paddingRight="25dp"
-                        android:gravity="right"
-                         
-/>
-                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

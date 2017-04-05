@@ -3,8 +3,8 @@ package com.cobrodigital.com.cobrodigital2.Webservice;
 import android.annotation.SuppressLint;
 import android.util.Log;
 
-import com.cobrodigital.com.cobrodigital2.Modulos.Tools.Tools;
 import com.cobrodigital.com.cobrodigital2.core.CobroDigital;
+import com.cobrodigital.com.cobrodigital2.core.Tools;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;

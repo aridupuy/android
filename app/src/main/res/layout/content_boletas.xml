@@ -59,13 +59,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
+        android:paddingLeft="15dp"
         android:layout_marginRight="30dp"
         android:layout_gravity="center"
         android:gravity="center"
         android:textAlignment="center"
         android:background="@drawable/celda"
         android:maxLines="1"
-        android:hint="@string/campo_a_buscar"/>
+        android:hint="@string/campo_a_buscar"
+        />
     <EditText
         android:id="@+id/identificador"
         android:layout_width="match_parent"

@@ -19,6 +19,36 @@
         android:gravity="bottom"
         tools:context=".Modulos.Tools.Configuracion"
         tools:ignore="UselessParent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_gravity="center_vertical|bottom"
+            android:gravity="center_vertical|center_horizontal"
+
+            android:onClick=""
+            tools:ignore="HardcodedText"
+            android:orientation="vertical"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/borde_error"
+            >
+            <EditText
+                android:background="#FFFFFF"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:id="@+id/nombre_plantilla"
+                android:hint="Nombre de su plantilla"/>
+            <TextView
+                android:background="#e85252"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="#ede5e5"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Cambiar Plantilla de boleta"
+                android:onClick="onclickPlantilla"/>
+        </LinearLayout>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="120dp"

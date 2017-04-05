@@ -15,11 +15,11 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_navegacion;
-import com.cobrodigital.com.cobrodigital2.Modulos.Tools.Tools;
 import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.fragment.Detalle_transacciones_fragment;
 import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.fragment.Transacciones_fragment;
 import com.cobrodigital.com.cobrodigital2.R;
 import com.cobrodigital.com.cobrodigital2.core.Navegacion;
+import com.cobrodigital.com.cobrodigital2.core.Tools;
 
 import java.io.IOException;
 /**

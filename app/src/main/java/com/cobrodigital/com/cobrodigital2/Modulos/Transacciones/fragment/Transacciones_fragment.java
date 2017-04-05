@@ -16,11 +16,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
-import com.cobrodigital.com.cobrodigital2.Modulos.Tools.Tools;
 import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.Detalle_transacciones;
 import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.Tareas_asincronicas.Tarea_transacciones;
 import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.Transacciones;
 import com.cobrodigital.com.cobrodigital2.R;
+import com.cobrodigital.com.cobrodigital2.core.Tools;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
