@@ -79,7 +79,8 @@ public class Tarea_generar_boleta extends AsyncTask<String, Integer, Integer>{
             Gestor_de_mensajes_usuario.mensaje(CobroDigital.webservice.obtener_log().toString());
             return;
         }
-        context.startActivity(intent);
-        context.reload();
+        Gestor_de_mensajes_usuario.dialogo("Boleta generada correctamente.",context);
+//        context.startActivity(intent);
+//        context.reload();
     }
 }

@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_navegacion;
 import com.cobrodigital.com.cobrodigital2.Modulos.Cobrar_por_correo.Tareas_asincronicas.Tarea_cobrar_por_correo;
 import com.cobrodigital.com.cobrodigital2.R;
@@ -44,15 +45,17 @@ public class Cobrar_por_correo extends Navegacion {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String nombre=((EditText)findViewById(R.id.Nombre_cobxcorreo)).getText().toString();
-                String apellido=((EditText)findViewById(R.id.apellido_cobxcorreo)).getText().toString();
-                String email=((EditText)findViewById(R.id.correo_cobxcorreo)).getText().toString();
-                String concepto=((EditText)findViewById(R.id.concepto_cobxcorreo)).getText().toString();
-                String documento=((EditText)findViewById(R.id.documento_cobxcorreo)).getText().toString();
-                String direccion=((EditText)findViewById(R.id.direccion_cobxcorreo)).getText().toString();
-                String fecha= date_1;
-                String importe=((EditText)findViewById(R.id.importecobrarxcorreo)).getText().toString();
-                generar_boleta(nombre,apellido,concepto,email,documento,direccion,fecha,importe);
+                if(validar_formulario()) {
+                    String nombre = ((EditText) findViewById(R.id.Nombre_cobxcorreo)).getText().toString();
+                    String apellido = ((EditText) findViewById(R.id.apellido_cobxcorreo)).getText().toString();
+                    String email = ((EditText) findViewById(R.id.correo_cobxcorreo)).getText().toString();
+                    String concepto = ((EditText) findViewById(R.id.concepto_cobxcorreo)).getText().toString();
+                    String documento = ((EditText) findViewById(R.id.documento_cobxcorreo)).getText().toString();
+                    String direccion = ((EditText) findViewById(R.id.direccion_cobxcorreo)).getText().toString();
+                    String fecha = date_1;
+                    String importe = ((EditText) findViewById(R.id.importecobrarxcorreo)).getText().toString();
+                    generar_boleta(nombre, apellido, concepto, email, documento, direccion, fecha, importe);
+                }
             }
         });
         findViewById(R.id.fecha_cobrarxcorreo).setOnClickListener(new View.OnClickListener() {
@@ -109,6 +112,58 @@ public class Cobrar_por_correo extends Navegacion {
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Gestor_de_navegacion navegacion = new Gestor_de_navegacion(getApplicationContext());
         return navegacion.navegar(item.getItemId());
+    }
+    private boolean validar_formulario(){
+        Gestor_de_mensajes_usuario.context=getApplicationContext();
+        ((EditText)findViewById(R.id.Nombre_cobxcorreo)).setBackgroundResource(0);
+        ((EditText)findViewById(R.id.apellido_cobxcorreo)).setBackgroundResource(0);
+        ((EditText)findViewById(R.id.correo_cobxcorreo)).setBackgroundResource(0);
+        ((TextView)findViewById(R.id.concepto_cobxcorreo)).setBackgroundResource(0);
+        ((EditText)findViewById(R.id.documento_cobxcorreo)).setBackgroundResource(0);
+        ((TextView)findViewById(R.id.fecha_cobrarxcorreo)).setBackgroundResource(0);
+        ((EditText)findViewById(R.id.direccion_cobxcorreo)).setBackgroundResource(0);
+        ((TextView)findViewById(R.id.importecobrarxcorreo)).setBackgroundResource(0);
+        if(((EditText)findViewById(R.id.Nombre_cobxcorreo)).getText().toString().equals("") ){
+            Gestor_de_mensajes_usuario.mensaje("Falta Ingresar el Nombre");
+            ((EditText)findViewById(R.id.Nombre_cobxcorreo)).setBackgroundResource(R.drawable.borde_error);
+            return false;
+        }
+        if((((EditText)findViewById(R.id.apellido_cobxcorreo)).getText().toString()).equals("")){
+            Gestor_de_mensajes_usuario.mensaje("Falta Ingresar el Apellido");
+            ((EditText)findViewById(R.id.apellido_cobxcorreo)).setBackgroundResource(R.drawable.borde_error);
+            return false;
+        }
+        if((((EditText)findViewById(R.id.documento_cobxcorreo)).getText().toString()).equals("")){
+            Gestor_de_mensajes_usuario.mensaje("Falta Ingresar el Documento ");
+            ((EditText)findViewById(R.id.documento_cobxcorreo)).setBackgroundResource(R.drawable.borde_error);
+            return false;
+        }
+        if((((EditText)findViewById(R.id.direccion_cobxcorreo)).getText().toString()).equals("")){
+            Gestor_de_mensajes_usuario.mensaje("Falta Ingresar la Direccion ");
+            ((EditText)findViewById(R.id.direccion_cobxcorreo)).setBackgroundResource(R.drawable.borde_error);
+            return false;
+        }
+        if((((EditText)findViewById(R.id.correo_cobxcorreo)).getText().toString()).equals("")){
+            Gestor_de_mensajes_usuario.mensaje("Falta Ingresar el Correo Electronico");
+            ((EditText)findViewById(R.id.correo_cobxcorreo)).setBackgroundResource(R.drawable.borde_error);
+            return false;
+        }
+        if((((EditText)findViewById(R.id.concepto_cobxcorreo)).getText().toString()).equals("")){
+            Gestor_de_mensajes_usuario.mensaje("Falta Ingresar el concepto ");
+            ((EditText)findViewById(R.id.concepto_cobxcorreo)).setBackgroundResource(R.drawable.borde_error);
+            return false;
+        }
+        if((((TextView)findViewById(R.id.fecha_cobrarxcorreo)).getText().toString()).equals("")){
+            Gestor_de_mensajes_usuario.mensaje("Falta Ingresar la Fecha de vencimiento");
+            ((TextView)findViewById(R.id.fecha_cobrarxcorreo)).setBackgroundResource(R.drawable.borde_error);
+            return false;
+        }
+        if((((EditText)findViewById(R.id.importecobrarxcorreo)).getText().toString()).equals("")){
+            Gestor_de_mensajes_usuario.mensaje("Falta Ingresar el Importe ");
+            ((EditText)findViewById(R.id.importecobrarxcorreo)).setBackgroundResource(R.drawable.borde_error);
+            return false;
+        }
+        return true;
     }
 
 }

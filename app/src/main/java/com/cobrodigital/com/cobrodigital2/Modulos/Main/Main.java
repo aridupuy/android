@@ -4,13 +4,10 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,45 +41,66 @@ public class Main extends Navegacion implements Tarea_registrar.AsyncResponse {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (ContextCompat.checkSelfPermission(this,
+        setContentView(R.layout.init);
+        super.onCreate(savedInstanceState);
+        final Navegacion _this=this;
+        if (ContextCompat.checkSelfPermission(_this,
                 Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
 
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+            if (ActivityCompat.shouldShowRequestPermissionRationale(_this,
                     Manifest.permission.CAMERA)) {
 
             } else {
-                ActivityCompat.requestPermissions(this,
+                ActivityCompat.requestPermissions(_this,
                         new String[]{Manifest.permission.CAMERA},
                         12);
             }
         }
-        super.onCreate(savedInstanceState);
-        try {
-            if (!Gestor_de_credenciales.esta_asociado()) {
-                if (!Gestor_de_credenciales.re_asociar(getApplicationContext())) {
-                    setContentView(R.layout.activity_loggin);
-                    Log.d("mensaje","inicio como loggin");
-                    return;
-                }
-                setContentView(R.layout.activity_main);
-                Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-                drawer.setDrawerListener(toggle);
-                toggle.syncState();
-                NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-                navigationView.setNavigationItemSelectedListener(this);
-//                FirebaseInstanceId.getInstance().getToken();
-                FirebaseMessaging.getInstance().subscribeToTopic(TOPIC);
-                startActivity(new Intent(this, Estado_cuenta.class));
-//                startActivity(new Intent(this, Transacciones.class));
-            }
-            Log.d("mensaje","no se pudo reasociar");
+        new AsyncTask<Void,Void,Boolean>(){
+            @Override
+            protected Boolean doInBackground(Void... voids) {
+                try {
+                    if (!Gestor_de_credenciales.esta_asociado()) {
+                        if (!Gestor_de_credenciales.re_asociar(getApplicationContext())) {
+                            return false;
+                        }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//                        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//                        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//                        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(_this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//                        drawer.setDrawerListener(toggle);
+//                        toggle.syncState();
+//                        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+//                        navigationView.setNavigationItemSelectedListener(_this);
+
+//                startActivity(new Intent(this, Transacciones.class));
+                    }
+                    return true;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Log.d("mensaje","no se pudo reasociar");
+                return false;
+            }
+
+            @Override
+            protected void onPostExecute(Boolean aBoolean) {
+                super.onPostExecute(aBoolean);
+                if(!aBoolean){
+                    _this.setContentView(R.layout.activity_loggin);
+                    Log.d("mensaje","inicio como loggin");
+                }
+                else{
+//                    _this.setContentView(R.layout.activity_main);
+//                    FirebaseInstanceId.getInstance().getToken();
+                    FirebaseMessaging.getInstance().subscribeToTopic(TOPIC);
+                    _this.startActivity(new Intent(_this, Estado_cuenta.class));
+                    _this.finish();
+                }
+            }
+        }.execute();
+
 
 
     }
