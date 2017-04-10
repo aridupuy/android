@@ -7,9 +7,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+
         android:weightSum="3"
         >
         <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/imagen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/logo"

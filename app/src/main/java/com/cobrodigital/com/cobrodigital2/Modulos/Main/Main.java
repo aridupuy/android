@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_credenciales;
 import com.cobrodigital.com.cobrodigital2.Gestores.Gestor_de_mensajes_usuario;
@@ -57,7 +59,17 @@ public class Main extends Navegacion implements Tarea_registrar.AsyncResponse {
                         12);
             }
         }
+        final Animation animFadein = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.transparecia);
+        findViewById(R.id.imagen).startAnimation(animFadein);
+
         new AsyncTask<Void,Void,Boolean>(){
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+            }
             @Override
             protected Boolean doInBackground(Void... voids) {
                 try {
@@ -95,13 +107,11 @@ public class Main extends Navegacion implements Tarea_registrar.AsyncResponse {
 //                    _this.setContentView(R.layout.activity_main);
 //                    FirebaseInstanceId.getInstance().getToken();
                     FirebaseMessaging.getInstance().subscribeToTopic(TOPIC);
-                    _this.startActivity(new Intent(_this, Estado_cuenta.class));
-                    _this.finish();
+                    startActivity(new Intent(_this, Estado_cuenta.class));
+                    finish();
                 }
             }
         }.execute();
-
-
 
     }
 
