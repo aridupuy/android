@@ -96,12 +96,7 @@ public class Boletas extends Navegacion {
         SimpleDateFormat formatter_vista= new SimpleDateFormat("dd-MM-yyyy");
         SimpleDateFormat formatter_back= new SimpleDateFormat("yyyyMMdd");
         ((TextView)findViewById(id)).setText(formatter_vista.format(calendario.getTime()));
-        if(id==R.id.fecha_1)
-            date_1=formatter_back.format(calendario.getTime());
-        if(id==R.id.fecha_2)
-            date_2=formatter_back.format(calendario.getTime());
-        if(id==R.id.fecha_3)
-            date_3=formatter_back.format(calendario.getTime());
+        date_1=formatter_back.format(calendario.getTime());
     }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {

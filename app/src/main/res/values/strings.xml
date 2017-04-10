@@ -27,14 +27,22 @@
     <string name="aceptar">Aceptar</string>
     <string name="campo_a_buscar">Campo a buscar</string>
     <string name="cancelar">Cancelar</string>
+    <string name="apellido">Apellido</string>
+    <string name="documento">Documento</string>
+    <string name="direccion">Direccion</string>
+    <string name="correo">E-mail</string>
     <string name="concepto">Concepto</string>
     <string name="fecha_1er_vto">Fecha 1er vto</string>
+    <string name="fecha_vto">Fecha vto</string>
     <string name="fecha_2do_vto">Fecha 2do vto</string>
     <string name="fecha_3er_vto">Fecha 3er vto</string>
+    <string name="importe">Importe</string>
     <string name="importe_1">Importe 1</string>
     <string name="importe_2">Importe 2</string>
     <string name="importe_3">Importe 3</string>
+    <string name="nombre">Nombre</string>
     <string name="valor">Valor</string>
+    <string name="enviar">Enviar</string>
 
     <string name="notificacion_notification_title_template">Notificacion: %1$s</string>
 
@@ -57,5 +65,7 @@
     <string name="title_activity_detalle__transacciones">Detalle_Transacciones</string>
     <string name="title_activity_enviar_correo">Enviar_correo</string>
     <string name="title_activity_estado_cuenta">Estado_cuenta</string>
-    <string name="title_activity_retiro_importe">Retiro_importe</string>
+    <string name="title_activity_retiro_importe">Importe de Retiro</string>
+    <string name="title_activity_retiro">Iniciar Retiro</string>
+    <string name="title_activity_cobrar_por_correo">Cobrar por Correo</string>
 </resources>

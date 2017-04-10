@@ -15,9 +15,13 @@
             android:icon="@drawable/ic_exchange"
             android:title="Listar Transacciones"/>
         <item
-            android:id="@+id/nav_boleta"
+            android:id="@+id/nav_cobxcorreo"
             android:icon="@drawable/ic_envelope"
             android:title="Cobrar por Correo"/>
+        <item
+            android:id="@+id/nav_boleta"
+            android:icon="@drawable/ic_envelope"
+            android:title="Generar Boleta"/>
         <item
             android:id="@+id/nav_retiros"
             android:icon="@drawable/ic_local_atm_black"

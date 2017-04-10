@@ -55,7 +55,7 @@ public abstract class Webservice {
     protected static LinkedHashMap<Object, Object> array_a_enviar = new LinkedHashMap();
     protected static LinkedHashMap resultado = new LinkedHashMap();
 
-    private static void ejecutar(String metodo_webservice, LinkedHashMap array) throws IOException,KeyManagementException, NoSuchAlgorithmException, JSONException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException {
+    private static boolean ejecutar(String metodo_webservice, LinkedHashMap array) throws IOException,KeyManagementException, NoSuchAlgorithmException, JSONException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException {
         array_a_enviar.put(CAMPO_CLAVE, CobroDigital.token_id.getToken());
 //        array_a_enviar.put("sid", CobroDigital.credencial.get_sid());
         if (metodo_webservice == null) {
@@ -69,6 +69,9 @@ public abstract class Webservice {
         }
         array_a_procesar.put("metodo_service", metodo_webservice);
         enviar_https(URL, array_a_procesar);
+        if(resultado.size()>0)
+            return true;
+        return false;
     }
 
     @SuppressLint("LongLogTag")
@@ -127,8 +130,9 @@ public abstract class Webservice {
         in.close();
     }
 
-    public static void ejecutar() throws NoSuchAlgorithmException, IOException, KeyManagementException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException, JSONException {
+    public static boolean ejecutar() throws NoSuchAlgorithmException, IOException, KeyManagementException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException, JSONException {
         ejecutar(metodo_web_service, (LinkedHashMap) array_a_enviar);
+        return false;
     }
 
 //    private static String http_build_query(Map<?, ?> data) {

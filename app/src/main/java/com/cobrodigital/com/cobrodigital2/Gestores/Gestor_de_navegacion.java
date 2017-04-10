@@ -3,16 +3,15 @@ package com.cobrodigital.com.cobrodigital2.Gestores;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.cobrodigital.com.cobrodigital2.Modulos.Boletas.Boletas;
+import com.cobrodigital.com.cobrodigital2.Modulos.Cobrar_por_correo.Cobrar_por_correo;
 import com.cobrodigital.com.cobrodigital2.Modulos.Estado_cuenta.Estado_cuenta;
 import com.cobrodigital.com.cobrodigital2.Modulos.Retiros.Retiros;
-import com.cobrodigital.com.cobrodigital2.Pagador;
-import com.cobrodigital.com.cobrodigital2.R;
-import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.Transacciones;
 import com.cobrodigital.com.cobrodigital2.Modulos.Tools.Configuracion;
+import com.cobrodigital.com.cobrodigital2.Modulos.Transacciones.Transacciones;
+import com.cobrodigital.com.cobrodigital2.R;
 
 /**
  * Created by ariel on 16/01/17.
@@ -47,6 +46,8 @@ public class Gestor_de_navegacion {
         }
         else if(id==R.id.nav_boleta){
             this.generar_boleta(context);
+        } else if(id==R.id.nav_cobxcorreo){
+            this.cobrar_por_correo(context);
         }
         else if(id==R.id.nav_retiros){
             this.retiros(context);
@@ -80,5 +81,8 @@ public class Gestor_de_navegacion {
     }
     public static void retiros(Context context){
         (context).startActivity(new Intent(context,Retiros.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+    }
+    public static void cobrar_por_correo(Context context){
+        (context).startActivity(new Intent(context,Cobrar_por_correo.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
     }
 }

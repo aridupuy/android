@@ -92,10 +92,12 @@ public class Tarea_bancos extends AsyncTask<Void,Void,Vector<Banco>> {
             lista.setVisibility(View.GONE);
             return;
         }
-        Lista_bancos_adapter adapter=new Lista_bancos_adapter(context, R.layout.item_transacciones, bancos);
-        lista.setAdapter(adapter);
-        lista.setOnItemClickListener(adapter);
-        view.findViewById(R.id.bancos_content).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.mensaje_bancos).setVisibility(View.GONE);
+        if(bancos!=null && bancos.size()>0){
+            Lista_bancos_adapter adapter=new Lista_bancos_adapter(context, R.layout.item_transacciones, bancos);
+            lista.setAdapter(adapter);
+            lista.setOnItemClickListener(adapter);
+            view.findViewById(R.id.bancos_content).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.mensaje_bancos).setVisibility(View.GONE);
+        }
     }
 }
